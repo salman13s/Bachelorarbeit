@@ -1,0 +1,383 @@
+
+
+\documentclass[12pt,oneside]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Zusaetzliche Pakete  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumerate}  
+\usepackage{fancyhdr}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{palatino}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[options ]{algorithm2e}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[english,german]{babel}
+\usepackage{xcolor}
+\usepackage{amsfonts}
+\usepackage{etoolbox}
+\usepackage[]{algorithm2e}
+\usepackage{blindtext}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+
+% notendig für Definitionen und Theoreme
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%folgende Zeile auskommentieren für englische Arbeiten
+\usepackage[ngerman]{babel}
+%folgende Zeile auskommentieren für deutsche Arbeiten
+%\usepackage[ngerman, english]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[bookmarks]{hyperref}
+\usepackage[justification=centering]{caption}
+\usepackage[style=authoryear,natbib=true,backend=biber,maxbibnames=20]{biblatex}
+\usepackage{csquotes}
+\bibliography{literatur}
+
+\setlength{\parindent}{0em} 
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition der Kopfzeile %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+\setlength{\headheight}{16pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Definition des Deckblattes und der Titelseite  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\JMUTitle}[9]{
+
+  \thispagestyle{empty}
+  \vspace*{\stretch{1}}
+  {\parindent0cm
+  \rule{\linewidth}{.7ex}}
+  \begin{flushright}
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\Huge
+    #1\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\large
+    #2\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\small
+    #3
+  \end{flushright}
+  \rule{\linewidth}{.7ex}
+
+  \vspace*{\stretch{1}}
+  \begin{center}
+    \includegraphics[width=4in]{logo} \\
+    \vspace*{\stretch{1}}
+    \Large  Bachelorarbeit   \\
+
+    \vspace*{\stretch{2}}
+   \large Lehrstuhl für Informatik \\
+    \large und Mathematik\\
+    \large Universität Leipzig\\
+    \vspace*{\stretch{1}}
+    \large Betreuer:  #8 \\[1mm]
+    
+    \vspace*{\stretch{1}}
+    \large Leipzig, den #7
+  \end{center}
+}
+
+\titlespacing*{\section}
+{0pt}{3.5ex plus 1ex minus .2ex}{.2ex plus .2ex}
+\titlespacing*{\subsection}
+{0pt}{1.5ex plus 1ex minus .2ex}{.2ex plus .2ex}
+\titlespacing*{\subsubsection}
+{0pt}{1.5ex plus 1ex minus .2ex}{.2ex plus .2ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Beginn des Dokuments  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+  \JMUTitle
+      {Komplexität und Evaluation des AKS-Primzahltests  }  
+      {Salman Salman}                        
+      {3753924}
+      
+      {Fakultät für Informatik und Mathematik}  % Name der Fakultaet
+      {Leipzig 2020}                          % Ort und Jahr der Erstellung
+      {\today}                              % Tag der Abgabe
+      {}               % Name des Erstgutachters
+      {Zweitgutachter}                          % Name des Zweitgutachters
+      
+  \clearpage
+
+\lhead{}
+\pagenumbering{Roman} 
+    \setcounter{page}{1}
+
+\tableofcontents
+\clearpage
+
+\addcontentsline{toc}{section}{\listfigurename}
+\listoffigures
+
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
+\clearpage
+
+\setlength{\parskip}{0.5em} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Kurzzusammenfassung   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lhead{Abstract}
+\section*{Abstract}
+Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des mathematischen Primalitätsproblem benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert. Außerdem wird die Korrektheit des Algorithmus geprüft und bewiesen. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Einstellungen  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pagenumbering{arabic}  
+    \setcounter{page}{1}
+\lhead{\nouppercase{\leftmark}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Hauptteil  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Einleitung} \label{einleitung}
+Die Frage, ob eine Zahl eine Primzahl oder nicht, war schon im antiken Griechenland interessant, Euklid hat sich mit dieser Frage beschäftigt und hat beweisen, dass es unendlich viele Primzahlen gibt. Ein anderer griechischer Mathematiker Eratosthenes hat einen Algorithmus zur Bestimmung von Primzahlen vorgestellt, aber sein Algorithmus war trotz seiner Einfachheit ineffizient. Im Laufe der Jahre wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen abhängig waren oder probabilistisch waren. Das heißt randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können, aber der beste nicht probabilistische Algorithmus (vor AKS) konnte das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei n die Eingabegröße ist, solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus, der das Primalitätsproblem in Polynomialzeit lösen kann.\newline
+
+In dieser Arbeit wird der Algorithmus aus dem Orginalpaper studiert. Im ersten Abschnitt werden die nötigen Theoreme und Definitionen vorgestellt, welche im Folgenden verwendet werden. Im zweiten Abschnitt wird zuerst die Idee hinter dem Algorithmus erläutert. Danach wird der Algorithmus in seiner ursprünglichen Form angegeben, anschließend wird der Korrektheitsbeweis des Algorithmus geführt. Im dritten Abschnitt wird die Laufzeit des Algorithmus formal analysiert, dabei werden die einzelnen Schritte (Steps 1-5 im Orginalpaper) ausführlich analysiert. Darüber hinaus werden die Resultate der Laufzeitexperimente angegeben.    
+
+\subsection{Definitionen und Vorbereitungen}
+In diesem Abschnitt werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie und aus der Algebra, die für den AKS-Algorithmus relevant sind, definiert. Das Ziel hinter diesem Abschnitt, ist einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
+% Definitionen der Zhalentheorie 
+% Definitonen
+\subsubsection{Zahlentheorie}
+\theoremstyle{definition}
+\begin{definition}\label{Df_1}
+Seien $a,b \in \mathbb{N}$. Der \textbf{größte gemeinsame Teiler} von a und b wird mit gcd(a,b) bezeichnet, ist die größte positive Zahl n, sodass $n \mid a$ und n $ \mid b$
+\end{definition}
+
+\smallskip 
+
+\begin{definition}\label{Df_2}
+Zwei Zahlen $a,b \in \mathbb{N}$ heißen genau dann \textbf{Teilerfremd}, wenn $gcd(a,b) = 1$.
+\end{definition}
+
+\smallskip 
+
+\begin{definition}\label{Df_3}
+Seien a, b, n $\in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu b modulo n, wenn $n \mid a - b $ gilt, dies wird mit a $\equiv$ b (mod n) bezeichnet.  
+\end{definition}
+
+\smallskip 
+
+\begin{definition}\label{Df_4}
+Seien $r,n \in \mathbb{N}$ mit gcd(n,r) = 1, dann ist die \textbf{Ordnung} von n modulo r das kleinste k, sodass $n^k \equiv 1 (mod $ r). Die Ordnung wird mit $ord_{r}(n)$ bezeichnet.
+\end{definition}
+
+\smallskip
+
+
+\begin{definition}\label{Df_5}
+Sei $n \in \mathbb{N}$, die Primzahlzerlegung von n ist die Darstellung der Zahl als Produkt ihrer Primfaktoren \newline
+$n = p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{M}^{e_{M}} = \prod_{k=1}^{M} p_{k}$. Wobei $e_{k}$ die Vielfachheit der Primzahl $p_{k}$ ist.
+\end{definition}
+
+\smallskip
+
+% definiere U_n
+\begin{definition}\label{Df_6}
+Sei $n \in \mathbb{N}$ mit n > 1. Die Eulersche Phi-Funktion wird mit $\phi(n)$ bezeichnet, ist die Anzahl an Zahlen zwischen n und 0, die Teilerfremd sind. Außerdem ist $|\mathbb{U}_{n}| = \phi(n)$. Sei nun $n =p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{k}^{e_{k}}$ die Primzahlfaktorisierung von n, dann ist die Eulersche Phi-Funktion folgendermaßen definiert:\newline
+
+\centerline{\large $\phi(n) = n \prod_{i=1}^{k} (1 - \frac{1}{p_{i}})$}
+\end{definition}
+\smallskip
+% Theoreme
+\begin{theorem}[\textbf{Satz von Euler}]\label{Th_1}
+Seien $a,n \in \mathbb{N}$ und Teilerfremd, \newline dann gilt $a^{\phi(n)} \equiv 1 $(mod n).
+\end{theorem}
+
+\begin{theorem}[\textbf{Kleiner fermatscher Satz}]\label{Th_2}
+Sei $a \in \mathbb{N}$ und p eine Primzahl dann gilt:\newline
+\begin{enumerate}
+    \item a und p sind genau dann Teilerfremd, wenn $a^{p-1} \equiv 1 $ (mod p) gilt.
+    \newline
+    \item $\forall a $ gilt  $a^p \equiv a$ (mod p)
+\end{enumerate}
+\end{theorem}
+
+% Algerba
+
+\subsubsection{Algebra}
+Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Resultate die später vorkommen, werden hier zitiert. Außerdem werden Theoreme und Begriffe der Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
+\begin{flushleft}
+\begin{definition}
+Sei R ein Ring, dann ist ein \textbf{Polynomring R[X]} die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
+\end{definition}
+
+\smallskip 
+
+
+\begin{flushleft}
+\begin{theorem}
+${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
+\end{theorem}
+
+\begin{proof}
+Induktion: Für n = 2 ist es leicht zu sehen, dass ${5 \choose 2} > 2^3$. Sei nun das obere Theorem für ein beliebiges $k > 2 $, mit $ k \in \mathbb{N}$ erfüllt.\newline\newline
+für n = k + 1 ist das folgende zu zeigen: 
+
+\begin{equation}\label{ind_1}
+    \frac{(2k + 3)!}{(k + 2)!\cdot(k + 1)!} > 2^{k+2}.
+\end{equation}
+\newline\newline
+Die obere Ungleichung (\ref{ind_1}) lässt sich wie folgt umschreiben:\newline\newline
+
+
+\begin{equation}
+     \frac{(2k + 1)!}{(k + 1)! \cdot k!} \cdot \frac{(2k + 2) \cdot (2k + 3)}{(k + 2) \cdot (k + 1)} > 2^{k+1} \cdot 2.\newline\newline
+\end{equation}
+
+Der erste Teil auf der linken ist nach der Induktionshypothese größer als $2^{k+1}$. Es bleibt nur zu zeigen, dass der rechte Teil der Multiplikation größer als 2 ist, das heißt: \newline\newline
+
+\begin{equation}
+    \frac{(2k + 2) \cdot (2k + 3)}{(k + 2) \cdot (k + 1)} = \frac{2 \cdot (2k + 3 )}{k + 2} > 2
+\end{equation}
+
+
+
+\end{proof}
+
+\end{flushleft}
+\smallskip 
+
+\begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
+Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \in $R:\newline\newline
+\centerline{\large $(a + b)^n  = \sum_{k=1}^n {n \choose k} a^k b^{n-k}$}
+\end{theorem}
+\end{flushleft}
+
+\smallskip 
+
+\section{Der AKS-Primzahltest}
+\subsection{Grundidee des Algorithmus}
+Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz.
+\begin{flushleft}
+\begin{lemma}
+seien $a,n \in \mathbb{N}$ mit a < n und teilerfremd, dann ist n genau dann eine Primzahl, wenn \newline
+\begin{equation}\label{eq:1}
+\centerline{ $(X + a)^n = X^n +a $(mod n).}.
+\end{equation}\newline
+Dabei ist X ein Polynom über dem Ring $\mathbb{Z}_{n}[X]$
+\end{lemma}
+\begin{proof}
+Aus dem binomischen Lehrsatz(\ref{Th_3}) folgt, dass der Koeffizient von $X^i$ in dem Polynom ${n \choose i} a^{n-i}$ ist.\newline\newline
+$"\Rightarrow"$\newline
+Angenommen n ist eine Primzahl, dann ist es nach (\ref{Th_3}) offensichtlich, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten sind Null.\newline\smallskip Für i = 0 erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für i = n, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
+$(X + a)^n = a^n + 0 + 0 + ... + 0 + X^n = a^n + X^n$(mod n).\newline\newline
+$"\Leftarrow"$\newline
+Sei n nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor q von n, mit der Vielfachheit k(Dabei ist zu beachten, dass Für 1 < q < n, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
+Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
+\begin{equation}
+    {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
+\end{equation}
+\newline\newline
+Im Nenner lässt sich q! als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Das heißt $(X + a)^n \neq X^n + a $(mod n).
+\end{proof}
+
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl n zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von n Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl n eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar. Die Idee von AKS ist nicht nur modulo n, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen, um die Anzahl an Koeffizienten zu reduzieren, dabei wird r so gewählt, dass die Anzahl an Berechnungen kleiner ist als bei (\ref{eq:1}).
+Daher das Hauptziel Jetzt ist ein entsprechend kleines r zu wählen und zu testen, ob die Gleichung:\newline\newline
+\begin{equation}\label{eq:2}
+    \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
+\end{equation}
+
+erfüllt ist.\newline
+
+Nach Lemma 2.1\ref{eq:1} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von a und r erfüllt ist. Jedoch ist das geeignete r von oben durch log n beschränkt, das heißt der Algorithmus muss nur $log n$ a's testen, um eine Entscheidung über die Primalität der Zahl n zu treffen.
+
+\end{flushleft}
+\subsection{Der Algorithmus}
+%to do: schreibe den AKS Algorithmus
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwIn{$n \in \mathbb{N}, n \geq 2$.}
+
+\begin{enumerate}
+% STEP 1
+\item \textbf{if} $n = a^b, a \in \mathbb{N}, b \geq 1$ , \textbf{return} COMPOSITE.
+%STEP 2
+\item  finde das kleinste r, sodass $o_{r}(n) > log^2 n $.
+% STEP 3
+\item \textbf{if} $1 < gcd(a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
+%STEP 4
+\item \textbf{if} $n \leq r $, \textbf{return} PRIME.
+%STEP 5
+\item \textbf{for} a = 1 to $\lfloor \sqrt{\phi(r)}log n $:
+%STEP 6
+\item  \textbf{if}$(X + a)^n \neq X^n + a $(mod )
+ 
+\end{enumerate}
+ 
+\caption{AKS-Primzahltest}
+\end{algorithm}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Literaturverzeichnis wird 
+%% automatisch eingefügt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\lhead{}
+\printbibliography
+\addcontentsline{toc}{section}{\bibname}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Anhang (optional) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\section{Anhang A}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Eidesstattliche Erklärung
+%% muss angepasst werden 
+%% in Erklaerung.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{Erklaerung.tex}
+
+\end{document}
