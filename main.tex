@@ -160,7 +160,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lhead{Abstract}
 \section*{Abstract}
-Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des mathematischen Primalitätsproblem benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert. Außerdem wird die Korrektheit des Algorithmus geprüft und bewiesen. 
+Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des mathematischen Primalitätsproblem benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert. Außerdem wird die Korrektheit des Algorithmus experimentell geprüft und mathematisch bewiesen. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,7 +257,7 @@ ${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
 \end{theorem}
 
 \begin{proof}
-Induktion: Für n = 2 ist es leicht zu sehen, dass ${5 \choose 2} > 2^3$. Sei nun das obere Theorem für ein beliebiges $k > 2 $, mit $ k \in \mathbb{N}$ erfüllt.\newline\newline
+Induktion: Sei n = 2, offensichtlich gilt ${5 \choose 2} > 2^3$. Sei nun das obere Theorem für ein beliebiges $k > 2 $, mit $ k \in \mathbb{N}$ erfüllt.\newline\newline
 für n = k + 1 ist das folgende zu zeigen: 
 
 \begin{equation}\label{ind_1}
@@ -271,12 +271,13 @@ Die obere Ungleichung (\ref{ind_1}) lässt sich wie folgt umschreiben:\newline\n
      \frac{(2k + 1)!}{(k + 1)! \cdot k!} \cdot \frac{(2k + 2) \cdot (2k + 3)}{(k + 2) \cdot (k + 1)} > 2^{k+1} \cdot 2.\newline\newline
 \end{equation}
 
-Der erste Teil auf der linken ist nach der Induktionshypothese größer als $2^{k+1}$. Es bleibt nur zu zeigen, dass der rechte Teil der Multiplikation größer als 2 ist, das heißt: \newline\newline
+Der erste Teil der . Multiplikation auf der linken ist nach der Induktionshypothese größer als $2^{k+1}$. Es bleibt nur zu zeigen, dass der rechte Teil der Multiplikation größer als 2 ist, das heißt: \newline\newline
 
-\begin{equation}
+\begin{equation}\label{ind_eq}
     \frac{(2k + 2) \cdot (2k + 3)}{(k + 2) \cdot (k + 1)} = \frac{2 \cdot (2k + 3 )}{k + 2} > 2
 \end{equation}
 
+Es ist leicht zu sehen, dass die obere Ungleichung (\ref{ind_eq}) gilt. Weil die 2 auf der linken Seite der Ungleichung mit $\frac{2k + 3}{k + 1} > 1$ multipliziert wird.
 
 
 \end{proof}
@@ -290,8 +291,72 @@ Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \
 \end{theorem}
 \end{flushleft}
 
-\smallskip 
+\subsubsection{Zyklotomische Polynome}
 
+\begin{definition}
+Sei n eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
+\begin{equation}
+    \zeta^n = 1.
+\end{equation}
+Z.B. 1 und -1 sind die quadratischen Einheitswurzeln, und 1, -1, i, -i, sind die Einheitswurzeln für n = 4.    
+\end{definition}
+
+\smallskip
+
+\begin{definition}\label{ord_def}
+Sei $\mathbb{K}$ ein Körper, und $a \in \mathbb{K}^x$. Dann ist \textbf{Ordnung} $ ord_{ \mathbb{K} }(a)$ , die kleinste natürliche Zahl k, für die $a^k = 1 $ gilt, wenn ein solches k nicht existiert, dann hat a eine unendliche Ordnung. 
+\end{definition}
+
+\smallskip
+
+\begin{theorem}
+Sei $\mathbb{K}$ ein Körper mit m Elementen, dann gilt:
+\begin{equation}
+    a^{m-1} = 1
+\end{equation}
+für alle $a \in \mathbb{K}^x$
+\end{theorem}
+
+\smallskip
+
+\begin{theorem}
+Sei $\mathbb{K}$ ein Körper und $a \in K^x$. Weiterhin sei $ n \in \mathbb{N}$, mit $n \geq 1$. Dann ist $a^n = 1 \Leftrightarrow	 $ $ord_{\mathbb{K}}(a) \mid n$. 
+\end{theorem}
+
+\begin{proof}
+$"\Rightarrow"$\newline
+Sei $ord_{\mathbb{K}}(a) = k $, wenn $k \mid n$, dann $n = mk$, für ein $ m \geq 1$.
+\begin{equation}
+    a^n = a^{mk} = (a^k)^m. 
+\end{equation}
+$a^k$ ist definitionsmäßig(\ref{ord_def}) gleich 1. Daher gilt folgendes:
+
+\begin{equation}
+    a^n = a^{mk} = (a^k)^m = (1)^m = 1.
+\end{equation}
+$"\Leftarrow"$\newline
+Sei nun $a^m = 1$, Außerdem seien $i,j \in \mathbb{N}$, sodass:\newline
+$im + jk = gcd(m,k)$.Daebi ist k die Ordnung des Körpers(\ref{ord_def}) Weiterhin gilt: 
+\begin{equation}
+   a^{gcd(m,k)} = a^{im + jk} = (a^m)^i \cdot (a^k)^j = (1)^i (1)^k = 1.
+\end{equation}
+\end{proof}
+
+\begin{definition}\label{prim_ein}
+Die \textbf{n-te primitive Einheitswurzel} ist jede Einheitswurzel $\zeta$, für die $ord_{\mathbb{C}}(\zeta) = n $ gilt. Die Menge aller primitiven n-ten Einheitswurzeln wird mit \textbf{P(n)} bezeichnet. 
+\end{definition}
+
+\begin{definition}
+\textbf{Zyklotomisches Polynom:} das n-te zyklotomische Polynom $\Phi_{n}$ ist durch:\newline
+\begin{equation}
+    \Phi_{n}(x) = \prod_{\zeta \in P(n)} (x -\zeta).
+\end{equation}
+
+Dabei ist $P(n)$ die Menge aller primitiven n-ten Einheitswurzeln aus der Definition (\ref{prim_ein}). 
+\end{definition}
+
+\smallskip 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AKS ALGORITHMUS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der AKS-Primzahltest}
 \subsection{Grundidee des Algorithmus}
 Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz.
@@ -315,7 +380,7 @@ Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
     {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
 \end{equation}
 \newline\newline
-Im Nenner lässt sich q! als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Das heißt $(X + a)^n \neq X^n + a $(mod n).
+Im Nenner lässt sich q! als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod n).
 \end{proof}
 
 Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl n zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von n Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl n eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar. Die Idee von AKS ist nicht nur modulo n, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen, um die Anzahl an Koeffizienten zu reduzieren, dabei wird r so gewählt, dass die Anzahl an Berechnungen kleiner ist als bei (\ref{eq:1}).
@@ -345,7 +410,7 @@ Nach Lemma 2.1\ref{eq:1} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erf
 %STEP 4
 \item \textbf{if} $n \leq r $, \textbf{return} PRIME.
 %STEP 5
-\item \textbf{for} a = 1 to $\lfloor \sqrt{\phi(r)}log n $:
+\item \textbf{for} a = 1 to $\lfloor \sqrt{\phi(r)}log(n) \rfloor$:
 %STEP 6
 \item  \textbf{if}$(X + a)^n \neq X^n + a $(mod )
  
