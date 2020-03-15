@@ -133,7 +133,7 @@
       {Fakultät für Informatik und Mathematik}  % Name der Fakultaet
       {Leipzig 2020}                          % Ort und Jahr der Erstellung
       {\today}                              % Tag der Abgabe
-      {Professor Dr. Andreas Maletti}               % Name des Erstgutachters
+      {Prof. Dr. Andreas Maletti}               % Name des Erstgutachters
       {Zweitgutachter}                          % Name des Zweitgutachters
       
   \clearpage
@@ -177,14 +177,26 @@ Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptograph
 
 \section{Einleitung} \label{einleitung}
 Die Frage, ob eine Zahl eine Primzahl oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und hat beweisen, dass es unendlich viele Primzahlen gibt. Ein anderer griechischer Mathematiker Eratosthenes hat einen Algorithmus zur Bestimmung von Primzahlen vorgestellt, aber sein Algorithmus war trotz seiner Einfachheit ineffizient. Im Laufe der Jahre wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen abhängig waren oder probabilistisch waren. Das heißt randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Dennoch der beste nicht probabilistische Algorithmus (vor AKS) konnte das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei n die Eingabegröße ist. Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann.\newline
+\subsection{Zielsetzung}
+In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Orginalpaper behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach kommt die Analyse der Korrektheit, da wird die Korrektheit zuerst mathematisch bewiesen, das heißt, es wird ein bidirektionaler Beweis geführt, wo gezeigt wird, dass wenn der Algorithmus PRIME liefert, ist die Zahl auch eine Primzahl. Aber auch wenn die Eingabe eine Primzahl ist, liefert der Algorithmus PRIME. Dazu wird seine Korrektheit auf einem Rechner getestet. Der Algorithmus ist dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch zuerst mathematisch bewiesen. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell bewiesen.  
 
-In dieser Arbeit wird der Algorithmus aus dem Orginalpaper behandelt. Im ersten Kapitel werden die nötigen Theoreme und Definitionen dargestellt, welche später verwendet werden. Im zweiten Kapitel wird zuerst die Idee hinter dem Algorithmus erläutert. Danach wird der Algorithmus in seiner ursprünglichen Form angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus geführt. Im dritten Kapitel wird die Laufzeit des Algorithmus formal analysiert, dabei werden die einzelnen Schritte (Steps 1-5 im Orginalpaper) ausführlich analysiert. Darüber hinaus werden die Resultate der Laufzeitexperimente angegeben.    
+Um die Korrektheit zu demonstrieren, soll der Algorithmus in Python implementiert werden, dabei wird die Ausgabe des Algorithmus bei mehreren Zahlen(meistens große Zahlen) geprüft. Zudem soll auch die Laufzeit durch eine Grafik illustriert werden.  
 
-\subsection{Definitionen und Vorbereitungen}
-In diesem Abschnitt werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Theorie der zkyklotomischen Polynome, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
+
+\subsection{Gliederung der Arbeit}
+Die Arbeit gliedert sich in sechs Bestandteile, wobei der
+erste Teil die Einleitung darstellt. Dort wird ein kurzer Überblick in das Thema gegeben und die Zielsetzung der Arbeit definiert.
+
+Das zweite Kapitel enthält die Grundlagen und die Definitionen. Hier werden Terminologie und Konzepte erläutert, die für das weitere Verständnis der Arbeit eine Rolle spielen. 
+
+Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus dargestellt. 
+  
+
+\section{Definitionen und Grundlagen}
+In diesem kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Theorie der zkyklotomischen Polynome, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
 % Definitionen der Zhalentheorie 
 % Definitonen
-\subsubsection{Zahlentheorie}
+\subsection{Zahlentheorie}
 \theoremstyle{definition}
 \begin{definition}\label{Df_1}
 Seien $a,b \in \mathbb{N}$. Der \textbf{größte gemeinsame Teiler} von $a$ und $b$ wird mit $gcd(a,b)$ bezeichnet, ist die größte positive Zahl $n$, sodass $n \mid a$ und $n$ $ \mid b$
@@ -199,13 +211,13 @@ Zwei Zahlen $a,b \in \mathbb{N}$ heißen genau dann \textbf{Teilerfremd}, wenn $
 \smallskip
 
 \begin{definition}
-Seien n,m zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von m, als auch von m \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{LCM} bezeichnet.
+Seien $n,m$ zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von $n$, als auch von $m$ \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{LCM} bezeichnet.
 \end{definition}
 
 \smallskip 
 
 \begin{definition}\label{Df_3}
-Seien $a, b, n \in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu b modulo n, wenn $n \mid a - b $ gilt, dies wird mit a $\equiv$ b (mod n) bezeichnet.  
+Seien $a, b, n \in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu $b$ modulo $n$, wenn $n \mid a - b $ gilt, dies wird mit a $\equiv$ b (mod n) bezeichnet.  
 \end{definition}
 
 \smallskip 
@@ -255,11 +267,12 @@ Sei $a \in \mathbb{N}$ und p eine Primzahl dann gilt:\newline
 \end{enumerate}
 \end{theorem}
 
-% Algerba
+%Theoretische Informatik 
 
-\subsubsection{Algebra}
-Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Resultate die später vorkommen, werden hier zitiert. Außerdem werden Theoreme und Begriffe der Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
-\begin{flushleft}
+\subsection{Theoretische Grundlagen}
+
+Hier handelt es sich darum, die wichtigsten Begriffe und aus dem Gebiet der Komplexitätstheorie, eindeutig zu definieren.
+
 \begin{definition}
 Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
 \begin{equation}
@@ -271,6 +284,12 @@ Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
 \end{equation}
 Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann läuft er in Polynomialzeit von $log n$.
 \end{definition}
+
+% Algerba
+
+\subsection{Algebra}
+Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Resultate die später vorkommen, werden hier zitiert. Außerdem werden Theoreme und Begriffe der Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
+\begin{flushleft}
 
 \smallskip
 
@@ -335,69 +354,11 @@ Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \
 
 \smallskip
 
-\begin{lemma}\label{lemma_1}
-Für $m \geq 7$:\newline
-\begin{equation}
-    LCM(m) \geq 2^m.  
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, betrachte das folgende Integral für $n \geq 1$:\newline
-\begin{equation}\label{intg}
-    \begin{split}
-      \begin{aligned}
-        I_{n,m}&= \int_{0}^{1} x^{m-1} (1-x)^{n - m} dx \underbrace{=}_{(\ref{Th_3})} \int_{0}^{1} x^{m-1} \sum_{r = 0}^{n - m} (-1)^r {n - m\choose r} \cdot x^r dx \\
-        &= \sum_{r = 0}^{n - m}(-1)^r {n - m \choose r} \cdot \int_{0}^{1} x^{m + r - 1} 
-        = \sum_{r = 0}^{n - m} (-1)^r {n - m \choose r} \cdot \frac{x^{m+r}}{m+r}\Big|_0^1\\
-        &= \sum_{r = 0}^{n - m} (-1)^r {n - m \choose r} \cdot \frac{1}{m + r}
-      \end{aligned}
-    \end{split}
-\end{equation}
-
-Aus (\ref{intg}) ist es leicht zu sehen, $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$, für $1 \leq m \leq n$. Durch Induktion nach n - m und partielle Integration kann gezeigt werden, dass für $n \in \mathbb{N}$ und m, mit $1 \leq m \leq n$:
-\begin{equation}\label{I_mn}
-    I = \frac{1}{m \cdot {n \choose m}}
-\end{equation}
-
-gilt.\newline\newline
-
-Da $m + r \mid d_{n} $ und (\ref{I_mn}) gelten, muss
-\begin{equation}
-    m \cdot {n \choose m} \mid d_{n}
-\end{equation}
-$\forall m $ mit $1 \leq m \leq n $ auch gelten.\newline
-
-Somit gilt auch: 
-\begin{equation}\label{d2n}
-    n {2n\choose n} \mid d_{2n}
-\end{equation}
-
-Beziehungsweise 
-
-\begin{equation}\label{d2n1}
-    (2n + 1) {2n \choose n} = (n + 1) {2n + 1 \choose n + 1} \mid d_{2n + 1} 
-\end{equation}
-
-\smallskip
-Aus (\ref{d2n}) und (\ref{d2n1}) folgt $d_{n} \mid d_{n+1}$\newline\newline Sowie 
-\begin{equation}\label{helps}
-    n(2n + 1) {2n \choose n} \mid d_{2n + 1}
-\end{equation}
-\newline\newline
-Zeige jetzt,dass $d_{2n+1} $eine obere Schranke von $2^{2n + 1}$ ist.\newline\newline  
-$\Rightarrow d_{2n + 1} \underbrace{\geq}_{(\ref{helps})} n (2n + 1) {2n \choose n} \geq n \cdot 4^n \geq 2 \cdot 2^{2n} = 2^{2n + 2}$ für $n \geq 2$.\newline\newline
-Für $n \geq 4$ ist $d_{2n + 2} \geq d_{2n + 1} \geq 2^{2n + n }$, wenn diese Aussage für $n \geq 4 $ gilt, dann gilt sie auch für $n \geq 7$.\newline\newline Generell gilt: $d_{m} = LCM_{1 \leq m \leq n} \{m\} = LCM(m) \geq  2^m $.
-\end{proof}
-
-\smallskip
-
-
 \end{flushleft}
 
 
 % Polynome 
-\subsubsection{Zyklotomische Polynome}
+\subsection{Zyklotomische Polynome}
 
 \begin{definition}
 Sei n eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
@@ -532,8 +493,119 @@ erfüllt ist.\newline
 
 Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch $log^k(n)$ beschränkt, das heißt der Algorithmus muss nur $log^k(n)$ a's testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
 
-Als erstes ist zu zeigen, dass die Aussage über die obere Schranke von $r$ richtig ist.
+\end{flushleft}
+\subsection{Der Algorithmus}\label{algo}
+%to do: schreibe den AKS Algorithmus
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwIn{$n \in \mathbb{N}, n \geq 2$.}
 
+\begin{enumerate}
+% STEP 1
+\item \textbf{if} $n = a^b, a \in \mathbb{N}, b \geq 1$ , \textbf{return} COMPOSITE.
+%STEP 2
+\item  finde das kleinste r, sodass $o_{r}(n) > log^2 n $.
+% STEP 3
+\item \textbf{if} $1 < gcd(a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
+%STEP 4
+\item \textbf{if} $n \leq r $, \textbf{return} PRIME.
+%STEP 5
+\item \textbf{for} a = 1 to $\lfloor \sqrt{\phi(r)}log(n) \rfloor$:
+
+ \textbf{if}$(X + a)^n \neq X^n + a $(mod $X^r - 1, n$), \textbf{return} COMPOSITE.
+ %STEP 6
+ \item \textbf{return} PRIME.
+\end{enumerate}
+ 
+\caption{AKS-Primzahltest}
+\end{algorithm}
+
+\subsection{Korrektheitsbeweis}
+In diesem Kapitel wird der Korrektheitsbeweis geführt, das heißt es wird folgendes bewiesen.
+\begin{theorem}
+Der Algorithmus gibt genau dann PRIME zurück, wenn $n$ eine Primzahl ist.
+\end{theorem}
+Der Korrektheitsbeweis lässt sich in zwei Teilen zerlegen, der erste Teil befasst sich mit der Hinrichtung des Beweises. Also, dass der Algorithmus PRIME liefert, wenn die Eingabe eine Primzahl ist. Dies ist aber trivial und braucht keine Lemmas. Für den zweiten Teil(Rückrichtung) sind jedoch mehrere Lemmas und Sätze nötig. Diese werden in diesem Kapitel in der Reihenfolge, wie sie im Orginalpaper vorkamen, dargestellt und bewiesen. Zudem wird vor jedem Lemma kurz erläutert, warum dieses Lemma für den Algorithmus von Bedeutung ist. Das erste Lemma ist eine Eigenschaft für das kleinste gemeinsame Vielfaches von $m$ Zahlen.
+
+Das zweite Lemma beschäftigt sich mit der Existenz und der oberen Schranke vom $r$, das in der Grundidee erwähnt wurde.
+
+Danach kommt eine kurze Einführung zur introspektiven Zahlen und Polynome, dort wird der Begriff "introspektiv" vorgestellt und erklärt. Zudem werden Eigenschaften zyklotomischer Polynome bewiesen.
+
+Schließlich werden zwei sehr wichtige Gruppen definiert, für die zweite Gruppe wird eine obere Schranke bestimmt, die später für das Binomialkoeffizienten Abschätzung-Lemma relevant ist.
+
+\subsubsection{Erster Teil des Beweises(Hinrichtung)}
+\begin{theorem}
+Wenn $n$ eine Primzahl ist, dann gibt der Algorithmus PRIME zurück.
+\end{theorem}
+
+\begin{proof}
+Wenn $n$ eine Primzahl ist, wird der erste Schritt in (\ref{algo}) niemals COMPOSITE zurückgeben, da keine Primzahl sich als $a^b$ schreiben lässt, sonst wäre $n$ durch $a$ teilbar. Der dritte Schritt kann auch niemals COMPOSITE zurückgeben, da $gcd(a,n) = 1, \forall a$. Nach Lemma (\ref{hauptlemma}) kann der fünfte Schritt auch nie COMPOSITE zurückgeben. Daher muss der Algorithmus entweder bei viertem oder bei sechstem Schritt PRIME zurückgeben.  
+\end{proof}
+
+\subsubsection{Zweiter Teil des Beweises(Rückrichtung)}
+Für diesen Teil ist eine Vorarbeit nötig. Das erste wichtige Lemma ist die Abschätzung des kleinsten gemeinsamen Vielfaches.
+
+
+\begin{lemma}\label{lemma_1}
+Für $m \geq 7$:\newline
+\begin{equation}
+    LCM(m) \geq 2^m.  
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, betrachte das folgende Integral für $n \geq 1$:\newline
+\begin{equation}\label{intg}
+    \begin{split}
+      \begin{aligned}
+        I_{n,m}&= \int_{0}^{1} x^{m-1} (1-x)^{n - m} dx \underbrace{=}_{(\ref{Th_3})} \int_{0}^{1} x^{m-1} \sum_{r = 0}^{n - m} (-1)^r {n - m\choose r} \cdot x^r dx \\
+        &= \sum_{r = 0}^{n - m}(-1)^r {n - m \choose r} \cdot \int_{0}^{1} x^{m + r - 1} 
+        = \sum_{r = 0}^{n - m} (-1)^r {n - m \choose r} \cdot \frac{x^{m+r}}{m+r}\Big|_0^1\\
+        &= \sum_{r = 0}^{n - m} (-1)^r {n - m \choose r} \cdot \frac{1}{m + r}
+      \end{aligned}
+    \end{split}
+\end{equation}
+
+Aus (\ref{intg}) ist es leicht zu sehen, $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$, für $1 \leq m \leq n$.
+
+Durch Induktion nach $n - m$ und partielle Integration lässt sich zeigen, dass für $n \in \mathbb{N}$ und m, mit $1 \leq m \leq n$:
+\begin{equation}\label{I_mn}
+    I_{n,m} = \frac{1}{m \cdot {n \choose m}}
+\end{equation}
+
+gilt.\newline\newline
+
+
+Da $m + r \mid d_{n} $ und (\ref{I_mn}) gelten, muss
+\begin{equation}
+    m \cdot {n \choose m} \mid d_{n}
+\end{equation}
+$\forall m $ mit $1 \leq m \leq n $ auch gelten.\newline
+
+Somit gilt auch: 
+\begin{equation}\label{d2n}
+    n {2n\choose n} \mid d_{2n}
+\end{equation}
+
+Beziehungsweise 
+
+\begin{equation}\label{d2n1}
+    (2n + 1) {2n \choose n} = (n + 1) {2n + 1 \choose n + 1} \mid d_{2n + 1} 
+\end{equation}
+
+\smallskip
+Aus (\ref{d2n}) und (\ref{d2n1}) folgt $d_{n} \mid d_{n+1}$\newline\newline Sowie 
+\begin{equation}\label{helps}
+    n(2n + 1) {2n \choose n} \mid d_{2n + 1}
+\end{equation}
+\newline\newline
+Zeige jetzt,dass $d_{2n+1} $eine obere Schranke von $2^{2n + 1}$ ist.\newline\newline  
+$\Rightarrow d_{2n + 1} \underbrace{\geq}_{(\ref{helps})} n (2n + 1) {2n \choose n} \geq n \cdot 4^n \geq 2 \cdot 2^{2n} = 2^{2n + 2}$ für $n \geq 2$.\newline\newline
+Für $n \geq 4$ ist $d_{2n + 2} \geq d_{2n + 1} \geq 2^{2n + n }$, wenn diese Aussage für $n \geq 4 $ gilt, dann gilt sie auch für $n \geq 7$.\newline\newline Generell gilt: $d_{m} = LCM_{1 \leq m \leq n} \{m\} = LCM(m) \geq  2^m $.
+\end{proof}
+
+\textbf{Abschätzung von r}.\newline\newline
+Das zweite Lemma befasst sich mit der Abschätzung von $r$, das vorher bei der Grundidee erwähnt wurde. Dabei wird gezeigt, dass $r$ eine logarithmische obere Schranke hat.  
 
 \begin{lemma}
 Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) > log^2 n$.
@@ -567,7 +639,7 @@ Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein ge
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = {r_{1},r_{2},...,r_{t}}$ $r, 1 \leq r_i \leq B$, sodass $r_{i}$ das Produkt nicht teilt. Weiterhin sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$. Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $gcd(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
+Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = {r_{1},r_{2},...,r_{t}}$ $r, 1 \leq r_i \leq B$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$. Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $gcd(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
 $\Rightarrow a \mid n^{log B}$.\newline
 Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsame Primfaktoren haben($gcd(b,n) = 1$). Zudem $r_{m}$ war das kleinste Element aus $R$, das nicht durch $N_{B}$ teilbar ist, daher ist $r_{m}= b$ und $gcd(b,n) = 1$ beziehungsweise $gcd(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
 
@@ -576,36 +648,6 @@ Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das läs
 
 Aber wenn das gelten würde, wäre $r_{m}$ durch $N_{B}$ teilbar(z.B. durch $n^{log^2 n} -1$) und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
 \end{proof}
-
-\end{flushleft}
-\subsection{Der Algorithmus}
-%to do: schreibe den AKS Algorithmus
-\begin{algorithm}[H]
-\SetAlgoLined
-\KwIn{$n \in \mathbb{N}, n \geq 2$.}
-
-\begin{enumerate}
-% STEP 1
-\item \textbf{if} $n = a^b, a \in \mathbb{N}, b \geq 1$ , \textbf{return} COMPOSITE.
-%STEP 2
-\item  finde das kleinste r, sodass $o_{r}(n) > log^2 n $.
-% STEP 3
-\item \textbf{if} $1 < gcd(a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
-%STEP 4
-\item \textbf{if} $n \leq r $, \textbf{return} PRIME.
-%STEP 5
-\item \textbf{for} a = 1 to $\lfloor \sqrt{\phi(r)}log(n) \rfloor$:
-
- \textbf{if}$(X + a)^n \neq X^n + a $(mod $X^r - 1, n$), \textbf{return} COMPOSITE.
- %STEP 6
- \item \textbf{return} PRIME.
-\end{enumerate}
- 
-\caption{AKS-Primzahltest}
-\end{algorithm}
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
