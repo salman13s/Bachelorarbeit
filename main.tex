@@ -189,41 +189,41 @@ erste Teil die Einleitung darstellt. Dort wird ein kurzer Überblick in das Them
 
 Das zweite Kapitel enthält die Grundlagen und die Definitionen. Hier werden Terminologie und Konzepte erläutert, die für das weitere Verständnis der Arbeit eine Rolle spielen. 
 
-Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus dargestellt. 
+Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus geführt. 
   
 
 \section{Definitionen und Grundlagen}
-In diesem kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Theorie der zkyklotomischen Polynome, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
+In diesem Kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Theorie der zkyklotomischen Polynome, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
 % Definitionen der Zhalentheorie 
 % Definitonen
 \subsection{Zahlentheorie}
 \theoremstyle{definition}
 \begin{definition}\label{Df_1}
-Seien $a,b \in \mathbb{N}$. Der \textbf{größte gemeinsame Teiler} von $a$ und $b$ wird mit $gcd(a,b)$ bezeichnet, ist die größte positive Zahl $n$, sodass $n \mid a$ und $n$ $ \mid b$
+Seien $a,b \in \mathbb{N}$. Der \textbf{größte gemeinsame Teiler} von $a$ und $b$ wird mit $(a,b)$ bezeichnet, ist die größte positive Zahl $n$, sodass $n \mid a$ und $n$ $ \mid b$
 \end{definition}
 
 \smallskip 
 
 \begin{definition}\label{Df_2}
-Zwei Zahlen $a,b \in \mathbb{N}$ heißen genau dann \textbf{Teilerfremd}, wenn $gcd(a,b) = 1$.
+Zwei Zahlen $a,b \in \mathbb{N}$ heißen genau dann \textbf{Teilerfremd}, wenn $(a,b) = 1$.
 \end{definition}
 
 \smallskip
 
 \begin{definition}
-Seien $n,m$ zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von $n$, als auch von $m$ \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{LCM} bezeichnet.
+Seien $n, m$ zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von $n$, als auch von $m$ \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{LCM} bezeichnet.
 \end{definition}
 
 \smallskip 
 
 \begin{definition}\label{Df_3}
-Seien $a, b, n \in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu $b$ modulo $n$, wenn $n \mid a - b $ gilt, dies wird mit a $\equiv$ b (mod n) bezeichnet.  
+Seien $a, b, n \in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu $b$ modulo $n$, wenn $n \mid a - b $ gilt, dies wird mit $a = b$ (mod $n$) bezeichnet.  
 \end{definition}
 
 \smallskip 
 
 \begin{definition}\label{Df_4}
-Seien $r,n \in \mathbb{N}$ mit gcd(n,r) = 1, dann ist die \textbf{Ordnung} von n modulo r das kleinste k, sodass $n^k \equiv 1 (mod $ r). Die Ordnung wird mit $o_{r}(n)$ bezeichnet.
+Seien $r,n \in \mathbb{N}$ mit $(n,r) = 1$, dann ist die \textbf{Ordnung} von n modulo r das kleinste k, sodass $n^k = 1 (mod $ r). Die Ordnung wird mit $o_{r}(n)$ bezeichnet.
 \end{definition}
 
 \smallskip
@@ -231,14 +231,14 @@ Seien $r,n \in \mathbb{N}$ mit gcd(n,r) = 1, dann ist die \textbf{Ordnung} von n
 
 \begin{definition}\label{Df_5}
 Sei $n \in \mathbb{N}$, die Primzahlzerlegung von n ist die Darstellung der Zahl als Produkt ihrer Primfaktoren \newline
-$n = p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{M}^{e_{M}} = \prod_{k=1}^{M} p_{k}$. Wobei $e_{k}$ die Vielfachheit der Primzahl $p_{k}$ ist.
+$n = p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{M}^{e_{M}}$. Wobei $e_{k}$ die Vielfachheit der Primzahl $p_{k}$ ist.
 \end{definition}
 
 \smallskip
 
 % definiere U_n
 \begin{definition}\label{Df_6}
-Sei $n \in \mathbb{N}$ mit n > 1. Die \textbf{Eulersche Phi-Funktion} wird mit $\phi(n)$ bezeichnet, ist die Anzahl an Zahlen zwischen n und 0, die Teilerfremd sind.
+Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit $\phi(n)$ bezeichnet, ist die Anzahl der Zahlen k,$1 \leq k \leq n$, sodass $(k,n) = 1$
 \end{definition}
 
 \smallskip
@@ -253,30 +253,46 @@ Sei n eine natürlich Zahl, dann gilt:
 \smallskip
 % Theoreme
 \begin{theorem}[\textbf{Satz von Euler}]\label{Th_1}
-Seien $a,n \in \mathbb{N}$ und Teilerfremd, \newline dann gilt $a^{\phi(n)} \equiv 1 $(mod n).
+Seien $a,n \in \mathbb{N}$ teilerfremd, \newline dann gilt $a^{\phi(n)} = 1 $(mod n).
 \end{theorem}
+
+\begin{proof}
+    
+Seien $R =\{ a \in \mathbb{N} \mid (a,n) = 1 \} =  \{a_{1}, a_{2},...,a_{\phi(n)} \}$ und $c \in R, c \leq n$.\newline\newline Da $(c,n) = (a_{i},n) = 1$, gilt auch $(c \cdot a_{i}, n) = 1$ \newline\newline und damit ist auch $a_{i} = c \cdot a_{j}$(mod $n$) wahr für ein $a_{j} \in R \Rightarrow a_{i} = a_{j}$. Das heißt es gilt:\newline
+\begin{equation}
+     \prod_{k = 0}^{\phi(n)} c \cdot a_{k} =
+     c^{\phi(n)}\prod_{k = 0}^{\phi(n)} a_{k} = \prod_{k = 0}^{\phi(n)}  a_{k} (mod \, n )
+\end{equation}
+    
+     $\Rightarrow c^{\phi(n)} = 1$ (mod $n$).
+
+\end{proof}
 
 \smallskip
 
 \begin{theorem}[\textbf{Kleiner fermatscher Satz}]\label{Th_2}
 Sei $a \in \mathbb{N}$ und p eine Primzahl dann gilt:\newline
 \begin{enumerate}
-    \item a und p sind genau dann Teilerfremd, wenn $a^{p-1} \equiv 1 $ (mod p) gilt.
+    \item a und p sind genau dann Teilerfremd, wenn $a^{p-1} = 1 $ (mod p) gilt.
     \newline
-    \item $\forall a $ gilt  $a^p \equiv a$ (mod p)
+    \item $\forall a $ gilt  $a^p = a$ (mod p)
 \end{enumerate}
 \end{theorem}
 
 %Theoretische Informatik 
 
-\subsection{Theoretische Grundlagen}
+\subsection{Komplexitätstheorie}
 
-Hier handelt es sich darum, die wichtigsten Begriffe und aus dem Gebiet der Komplexitätstheorie, eindeutig zu definieren.
+Hier handelt es sich darum, die relevanten Begriffe und aus dem Gebiet der Komplexitätstheorie, eindeutig zu definieren. Grundlagen der Komplexitätstheorie, wie Turingmaschinen, Polynomiallaufzeit, und Entscheidungsprobleme werden in dieser Arbeit nicht definiert, jedoch sind sie eine Voraussetzung, um die hier behandelten Themen zu verstehen.   
+
+\begin{definition}
+In der Komplexitätstheorie ist \textbf{P} die Komplexitätsklasse, die alle Entscheidungsprobleme enthält, die in Polynomialzeit für deterministische Turingmaschinen lösbar sind. 
+\end{definition}
 
 \begin{definition}
 Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
 \begin{equation}
-    f(n) = O(t(n)) \cdot poly(log t(n))
+    f(n) = O(t(n) \cdot poly(log t(n)))
 \end{equation}
 \textbf{Beobachtung:}
 \begin{equation}
@@ -288,13 +304,13 @@ Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k
 % Algerba
 
 \subsection{Algebra}
-Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Resultate die später vorkommen, werden hier zitiert. Außerdem werden Theoreme und Begriffe der Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
+Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
 \begin{flushleft}
 
 \smallskip
 
 \begin{definition}
-Sei R ein Ring, dann ist ein \textbf{Polynomring R[X]} die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
+Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
 \end{definition}
 
 \smallskip 
@@ -307,7 +323,7 @@ Sei n eine Primzahl, dann gilt ${n \choose i} = 0 $(mod n).
 \begin{equation}\label{modb}
     {n \choose i} = \frac{(n - i - 1) \cdot \cdot \cdot (n - 1) \cdot n }{i!}
 \end{equation}
-Da n im Zähler steht und n eine Primzahl ist(nicht durch Zahlen im Nenner teilbar), muss die obere Gleichung (\ref{modb}) durch n teilbar sein. 
+Da $n$ im Zähler steht und n eine Primzahl ist(nicht durch Zahlen im Nenner teilbar), muss die obere Gleichung (\ref{modb}) durch n teilbar sein. 
 \end{proof}
 
 \smallskip
@@ -354,6 +370,12 @@ Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \
 
 \smallskip
 
+\begin{theorem}\label{funny_id}
+Seien $a,b,n \in \mathbb{N}$ Dann gilt\newline\newline \begin{equation}
+    a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{n -1 - k} b^k.
+\end{equation}
+\end{theorem}
+
 \end{flushleft}
 
 
@@ -365,7 +387,7 @@ Sei n eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ b
 \begin{equation}
     \zeta^n = 1.
 \end{equation}
-Z.B. 1 und -1 sind die quadratischen Einheitswurzeln, und 1, -1, i, -i, sind die Einheitswurzeln für n = 4.    
+Z.B. 1 und -1 sind die quadratischen Einheitswurzeln, und 1, -1, i, -i, sind die Einheitswurzeln für $n = 4$.    
 \end{definition}
 
 \smallskip
@@ -381,13 +403,13 @@ definiert sind, mit $1 \leq k \leq n$.
 \smallskip
 
 \begin{definition}\label{ord_def}
-Sei $\mathbb{K}$ ein Körper, und $a \in \mathbb{K}^x$. Dann ist \textbf{Ordnung} $ ord_{ \mathbb{K} }(a)$ , die kleinste natürliche Zahl k, für die $a^k = 1 $ gilt, wenn ein solches k nicht existiert, dann hat a eine unendliche Ordnung. 
+Sei $\mathbb{K}$ ein Körper, und $a \in \mathbb{K}^x$. Dann ist \textbf{Ordnung} $ ord_{ \mathbb{K} }(a)$ , die kleinste natürliche Zahl $k$, für die $a^k = 1 $ gilt, wenn ein solches $k$ nicht existiert, dann hat a eine unendliche Ordnung. 
 \end{definition}
 
 \smallskip
 
 \begin{theorem}
-Sei $\mathbb{K}$ ein Körper mit m Elementen, dann gilt:
+Sei $\mathbb{K}$ ein Körper mit $m$ Elementen, dann gilt:
 \begin{equation}
     a^{m-1} = 1
 \end{equation}
@@ -417,13 +439,13 @@ $a^k$ ist definitionsmäßig(\ref{ord_def}) gleich 1. Daher gilt folgendes:
 \end{equation}
 $"\Leftarrow"$\newline
 Sei nun $a^m = 1$, Außerdem seien $i,j \in \mathbb{N}$, sodass:\newline
-$im + jk = gcd(m,k)$. Dabei ist k die Ordnung des Körpers(\ref{ord_def}).\newline\newline
+$im + jk = (m,k)$. Dabei ist k die Ordnung des Körpers(\ref{ord_def}).\newline\newline
 Weiterhin gilt: 
 \begin{equation}\label{gcd_1}
-   a^{gcd(m,k)} = a^{im + jk} = (a^m)^i \cdot (a^k)^j = (1)^i (1)^k = 1.
+   a^{(m,k)} = a^{im + jk} = (a^m)^i \cdot (a^k)^j = (1)^i (1)^k = 1.
 \end{equation}
 
-Aus (\ref{gcd_1}) und Der Definition(\ref{ord_def}) folgt, dass $gcd(m,k) = k$ und somit $k \mid m$.
+Aus (\ref{gcd_1}) und Der Definition(\ref{ord_def}) folgt, dass $(m,k) = k$ und somit $k \mid m$.
 \end{proof}
 
 \smallskip
@@ -472,26 +494,26 @@ Dabei ist X ein Polynom über dem Ring $\mathbb{Z}_{n}[X]$
 \begin{proof}
 Aus dem binomischen Lehrsatz(\ref{Th_3}) folgt, dass der Koeffizient von $X^i$ in dem Polynom ${n \choose i} a^{n-i}$ ist.\newline\newline
 $"\Rightarrow"$\newline
-Angenommen n ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten sind Null.\newline\smallskip Für i = 0 erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für i = n, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
+Angenommen n ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten sind Null.\newline\smallskip Für i = 0 erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
 $(X + a)^n = a^n + 0 + 0 + ... + 0 + X^n = a^n + X^n$(mod n).\newline\newline
 $"\Leftarrow"$\newline
-Sei n nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor q von n, mit der Vielfachheit k(Dabei ist zu beachten, dass Für 1 < q < n, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
+Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor q von n, mit der Vielfachheit k(Dabei ist zu beachten, dass Für 1 < q < n, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
 Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 \begin{equation}
     {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
 \end{equation}
 \newline\newline
-Im Nenner lässt sich q! als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod n).
+Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod n).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl n zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von n Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl n eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar. Die Idee von AKS ist nicht nur modulo n, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen, um die Anzahl an Koeffizienten zu reduzieren, dabei wird r so gewählt, dass die Anzahl an Berechnungen kleiner ist als bei (\ref{eq:1}), da der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten hat. Dies kann für ein entsprechend kleines r in Polynomialzeit berechnet werden. Daher das Hauptziel Jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar. Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen, um die Anzahl an Koeffizienten zu reduzieren, dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner ist als bei (\ref{eq:1}), da der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten hat. Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel Jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
 \end{equation}
 
 erfüllt ist.\newline
 
-Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch $log^k(n)$ beschränkt, das heißt der Algorithmus muss nur $log^k(n)$ a's testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
+Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch $log n$ beschränkt, das heißt der Algorithmus muss nur $log n$ a's testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
 
 \end{flushleft}
 \subsection{Der Algorithmus}\label{algo}
@@ -506,7 +528,7 @@ Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen 
 %STEP 2
 \item  finde das kleinste r, sodass $o_{r}(n) > log^2 n $.
 % STEP 3
-\item \textbf{if} $1 < gcd(a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
+\item \textbf{if} $1 < (a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
 %STEP 4
 \item \textbf{if} $n \leq r $, \textbf{return} PRIME.
 %STEP 5
@@ -521,7 +543,7 @@ Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen 
 \end{algorithm}
 
 \subsection{Korrektheitsbeweis}
-In diesem Kapitel wird der Korrektheitsbeweis geführt, das heißt es wird folgendes bewiesen.
+
 \begin{theorem}
 Der Algorithmus gibt genau dann PRIME zurück, wenn $n$ eine Primzahl ist.
 \end{theorem}
@@ -529,20 +551,24 @@ Der Korrektheitsbeweis lässt sich in zwei Teilen zerlegen, der erste Teil befas
 
 Das zweite Lemma beschäftigt sich mit der Existenz und der oberen Schranke vom $r$, das in der Grundidee erwähnt wurde.
 
-Danach kommt eine kurze Einführung zur introspektiven Zahlen und Polynome, dort wird der Begriff "introspektiv" vorgestellt und erklärt. Zudem werden Eigenschaften zyklotomischer Polynome bewiesen.
+Danach wird eine kurze Einführung zu introspektiven Zahlen und Polynomen dargestellt, dort wird der Begriff introspektiv definiert und genauer erklärt. Darüber hinaus werden Eigenschaften introspektiver Polynome und Zahlen bewiesen.
 
-Schließlich werden zwei sehr wichtige Gruppen definiert, für die zweite Gruppe wird eine obere Schranke bestimmt, die später für das Binomialkoeffizienten Abschätzung-Lemma relevant ist.
+Schließlich werden zwei sehr wichtige Mengen definiert.% do some more stuff here
 
-\subsubsection{Erster Teil des Beweises(Hinrichtung)}
+\textbf{Erster Teil des Beweises($\Rightarrow$)}
 \begin{theorem}
 Wenn $n$ eine Primzahl ist, dann gibt der Algorithmus PRIME zurück.
 \end{theorem}
 
 \begin{proof}
-Wenn $n$ eine Primzahl ist, wird der erste Schritt in (\ref{algo}) niemals COMPOSITE zurückgeben, da keine Primzahl sich als $a^b$ schreiben lässt, sonst wäre $n$ durch $a$ teilbar. Der dritte Schritt kann auch niemals COMPOSITE zurückgeben, da $gcd(a,n) = 1, \forall a$. Nach Lemma (\ref{hauptlemma}) kann der fünfte Schritt auch nie COMPOSITE zurückgeben. Daher muss der Algorithmus entweder bei viertem oder bei sechstem Schritt PRIME zurückgeben.  
+Wenn $n$ eine Primzahl ist, gibt der erste Schritt in (\ref{algo}) niemals COMPOSITE zurück, da keine Primzahl sich als $a^b$ schreiben lässt, sonst wäre $n$ durch $a$ teilbar. Der dritte Schritt kann auch niemals COMPOSITE zurückgeben, da $(a,n) = 1, \forall a$. Nach Lemma (\ref{hauptlemma}) kann Schritt 5 auch nie COMPOSITE zurückgeben. Daher muss der Algorithmus entweder bei viertem oder bei sechstem Schritt PRIME zurückgeben.  
 \end{proof}
 
-\subsubsection{Zweiter Teil des Beweises(Rückrichtung)}
+\textbf{Zweiter Teil des Beweises($\Leftarrow$)}
+
+Hier wird die Rückrichtung bewiesen; also  wenn die Ausgabe PRIME ist, dann ist $n$ eine Primzahl.
+Wenn der Algorithmus bei Schritt 4 PRIME zurückgibt, dann muss $n$ eine Primzahl sein, da sonst der Algorithmus einen nicht trivialen Faktor von $n$ in Schritt 3 gefunden hätte. Das heißt, es bleibt nur der Fall bei Schritt 6. Der Algorithmus hat Zwei Hauptschritte, das sind Schritt 2 und Schritt 5. Bei Schritt 2 wird ein geeignetes $r$ gefunden und bei Schritt 5 wird verifiziert, ob die Gleichung (\ref{eq:2}) für mehrere a Werte gilt.    
+
 Für diesen Teil ist eine Vorarbeit nötig. Das erste wichtige Lemma ist die Abschätzung des kleinsten gemeinsamen Vielfaches.
 
 
@@ -605,7 +631,7 @@ Für $n \geq 4$ ist $d_{2n + 2} \geq d_{2n + 1} \geq 2^{2n + n }$, wenn diese Au
 \end{proof}
 
 \textbf{Abschätzung von r}.\newline\newline
-Das zweite Lemma befasst sich mit der Abschätzung von $r$, das vorher bei der Grundidee erwähnt wurde. Dabei wird gezeigt, dass $r$ eine logarithmische obere Schranke hat.  
+Das zweite Lemma befasst sich mit der Abschätzung von $r$, das vorher bei der Grundidee erwähnt wurde. Dabei wird gezeigt, dass $r$ eine logarithmische obere Schranke hat, und das ermöglicht die Polynomiallaufzeit.  
 
 \begin{lemma}
 Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) > log^2 n$.
@@ -613,10 +639,10 @@ Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) 
 
 \begin{proof}
 Der Beweis lässt sich in 3 Schritten zerlegen; zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt, als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen. 
-Sei $n \geq 1$.\newline\newline Für n = 2 und r = 3 gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
+Sei $n \geq 1$.\newline\newline Für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
 Ab jetzt wird angenommen, dass $n > 2$.\newline\newline
-\textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.
+\textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline\newline
 
 Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $LCM(B) \geq 2^B$. Als erstes ist zu zeigen: es existiert ein $r \leq B$, sodass
 \begin{equation}\label{prod_cor}
@@ -639,15 +665,111 @@ Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein ge
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = {r_{1},r_{2},...,r_{t}}$ $r, 1 \leq r_i \leq B$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$. Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $gcd(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
+Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$ $r, 1 \leq r_i \leq B$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$. Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
 $\Rightarrow a \mid n^{log B}$.\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsame Primfaktoren haben($gcd(b,n) = 1$). Zudem $r_{m}$ war das kleinste Element aus $R$, das nicht durch $N_{B}$ teilbar ist, daher ist $r_{m}= b$ und $gcd(b,n) = 1$ beziehungsweise $gcd(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem $r_{m}$ war das kleinste Element aus $R$, das $N_{B}$ teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
 
 Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r_{m}}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r_{m}$) wahr ist. daher gilt auch:\newline\newline
-\centerline{$n^k - 1 = 0 $(mod  $r_{m}$) $\Rightarrow r \mid n^k - 1$.}
+\centerline{$n^k - 1 = 0 $(mod  $r_{m}$) $\Rightarrow r_{m} \mid n^k - 1$.}
 
-Aber wenn das gelten würde, wäre $r_{m}$ durch $N_{B}$ teilbar(z.B. durch $n^{log^2 n} -1$) und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
+Aber wenn das gelten würde, würde $r_{m}$ $N_{B}$ teilen (z.B. $ r_{m} \mid n^{log^2 n} -1$) und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
 \end{proof}
+
+Bevor wir mit dem Beweis fortfahren, brauchen wir das folgende Lemma:
+
+\begin{lemma}\label{ord_prime_l}
+wenn $o_{r}(n) > 1$, dann existiert ein Primfaktor $p$ von $n$, sodass $o_{r}(p) > 1$ gilt. 
+\end{lemma}
+\begin{proof}
+Sei $o_{r}(n) > 1$, mit der Primfaktorzerlegung $n = \prod_{i = 1}^{M} p_{i}^{e_{i}}$.\newline\newline Weiterhin sei $o_{r}(p_{i}) = 1$,$\forall 1 \leq i \leq M$ (es existiert kein $p_{i} : o_{r}(p_{i}) > 1$).\newline\newline
+$\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich ist $n = \prod_{i = 1} ^{M} p_{i}^{e_{i}} = \prod_{i = 1} ^{M}(1)^{e_{i}} = 1 $(mod $r$).\newline\newline Daraus wird ersichtlich, dass $o_{r}(n) = 1$ und das ist ein Widerspruch zur Voraussetzung, dass $o_{r}(n) > 1$. Daher muss mindestens ein Primfaktor $p : o_{r}(p) > 1$.  
+\end{proof}
+
+\smallskip
+
+Nach Lemma (\ref{ord_prime_l}) muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(also, für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $l = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
+
+Der 5. Schritt des Algorithmus überprüft $l$ Gleichungen. Wir wollen nun die Ausgabe PRIME untersuchen, also nach Voraussetzung ist die Ausgabe PRIME . Das heißt, für alle Gleichungen $l$ gilt:\newline\newline
+\centerline{$(X + a)^n = X^n + a $ (mod $X^r - 1, n$)}.
+
+$\forall a$, $ 0 \leq a \leq l$.\newline\newline
+\textbf{Bemerkung:} Für a = 0 $\Rightarrow (X + 0)^n = X^n + 0$ und damit ist die Gleichung trivialerweise wahr.\newline\newline 
+Aus der oberen Gleichung kann man drei andere Gleichungen folgern:
+\begin{enumerate}
+    \item $(X + a)^n = X^n + a $(mod $X^r - 1, p$).
+$\forall$ $ 0 \leq a \leq l$.\newline\newline  
+Da $p$ ein Primfaktor von $n$, gilt auch nach Lemma \ref{hauptlemma} \newline
+\item $(X + a)^p = X^p + a $(mod $X^r - 1, p$).
+$\forall$ $0 \leq a \leq l$.\newline\newline
+Aus 1 und 2 gilt auch\newline
+\item $(X + a)^{\frac{n}{p}} = X^{\frac{n}{p}} + a $(mod $X^r - 1, p$).
+$\forall$ $0 \leq a \leq l$.\newline\newline
+\end{enumerate}
+
+Das heißt,$\forall$ $0 \leq a \leq l$, $n$, $\frac{n}{p}$ und $p$ haben ein identisches Verhalten bezüglich der obigen Gleichung. Diese Eigenschaft heißt Introspektivität.    
+
+
+\textbf{Introspektive Zahlen und Polynome:}
+Introspektive Zahlen und Polynome spielen eine große Rolle für den Korrektheitsbeweis des AKS-Primzahltests. Zunächst ist eine formale Definition von Introspektiven Zahlen beziehungsweise Polynomen nötig.
+
+\begin{definition}
+Seien $f(X)$ ein Polynom in $\mathbb{Z}[X]$ und $m \in \mathbb{N}$ , $m$ ist \textbf{introspektiv} bezüglich $f(X)$, wenn\newline\newline
+    \centerline{$[f(X)]^{m} = f(X^m)$ (mod $X^r - 1,p$)} 
+gilt. 
+\end{definition}
+
+Für den Korrektheitsbeweis ist eine Eigenschaft introspektiver Zahlen beziehungsweise Polynome relevant. Dies ist die Multiplikativität von solchen Zahlen und Polynomen.
+
+\smallskip
+
+\begin{lemma}\label{intros_num}
+Seien $m,m^{'}$ introspektive Zahlen bezüglich eines Polynoms $f(X)$ in $\mathbb{Z}[X]$. Dann ist $m \cdot m^{'}$ auch introspektiv bezüglich $f(X)$.
+\end{lemma}
+
+\begin{proof}
+Da $m$ bezüglich $f(X)$ introspektiv ist, gilt:\newline\newline
+\centerline{$[f(X)]^{m \cdot m^{'}} = [f(X)^{m}]^{m^{'}}$( mod $X^r - 1, p$).}\newline\newline
+$m^{'}$ ist auch introspektiv bezüglich $f(X^{m})$, das heißt es gilt auch:\newline\newline
+\centerline{$[f(X^m)]^{m^{'}} = f(X^{m \cdot m^{'}})$( mod $X^{m\cdot r} - 1, p$).}\newline\newline
+
+Offensichtlich gilt $X^{m \cdot r } - 1 = (X^{r})^{m} - (1)^m \underbrace{=}_{(\ref{funny_id})} (X^{r} - 1) \sum_{k = 0}^{m-1} X^{r \cdot k}$.\newline\newline$\Rightarrow X^{r} - 1\mid X^{mr} - 1$. Somit gilt auch\newline\newline
+\centerline{$[f(X^m)]^{m^{'}} = f(X^{m \cdot m^{'}})$( mod $X^{r} - 1,p$).}\newline
+
+Daraus folgt:\newline\newline
+\centerline{$[f(X)]^{m \cdot m^{'}} = f(X^{m \cdot m^{'}}) $( mod $X^r - 1, p$).}\newline
+
+Das heißt wenn eine Zahl $m$ bezüglich eines Polynoms $f(X)$ introspektiv ist, ist auch $m \cdot m^{'}$ bezüglich des selben Polynoms $f(X)$ introspektiv. 
+\end{proof}
+
+\smallskip
+
+\begin{lemma}
+wenn $m$ bezüglich der Polynome $f(X)$ und $g(X)$ introspektiv ist. Dann ist $m$ auch bezüglich $f(X) \cdot g(X)$ introspektiv.  
+\end{lemma}
+
+
+\begin{proof}\label{intros_pol}
+    \centerline{$[f(X) \cdot g(X)]^{m} = [f(X)]^m \cdot [g(X)]^m \underbrace{=}_{(\ref{intros_num})} f(X^m) \cdot g(X^m)$(mod $X^r - 1, p$).}
+\end{proof}
+
+Für den Beweis benötigen wir zwei Gruppen, wir definieren nun die folgenden Mengen:\newline\newline
+\centerline{\large $ I := \{ \frac{n^i}{p^i} \cdot p^j \mid i,j \geq 0$\},  $P := \{ \prod_{a = 0}^{l} (X + a)^{e_{a}} \mid e_{a} \geq 0 \}$.}\newline\newline
+Aus Lemma \ref{intros_num} und Lemma \ref{intros_pol} folgt, dass jedes Element $i \in I$ bezüglich jedes Polynoms $p \in P$ introspektiv ist.\newline\newline
+
+Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den Beweis von Bedeutung sind.\newline\newline
+
+Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$. Da $gcd(n,r) = gcd(p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
+
+Um die zweite Gruppe zu definieren, sind ein paar Eigenschaften von zyklotomischen Polynomen über endlichen Körpern erforderlich.
+
+\begin{lemma}[\textbf{Irreduzible Teiler zyklotomischer Polynome}] Sei $\mathbb{K}_{p}$ ein Körper und $Q_{r}(X)$ das r-te zyklotomische Polynom über $\mathbb{K}_{p}$. Dann existiert ein irreduzibler Teiler $h(X)$ von $X^r - 1$ über $\mathbb{K}_{p}$ vom Grad $o_{r}(p).$
+\end{lemma}
+
+\begin{proof}
+    
+\end{proof}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
