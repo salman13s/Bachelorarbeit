@@ -2,7 +2,7 @@
 Bachelorarbeit zum Thema AKS-Primzahltest
 
 # thesis 
-1. the thesis contains a theoretical overview of the AKS-Algorithm 
+1. the thesis contains a theoretical overview of the AKS-Algorithm(in German) 
 2. it also contains the runtime analysis of each step of the AKS-algorithm(including plots)
 
 
