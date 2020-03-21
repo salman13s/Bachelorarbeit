@@ -18,3 +18,5 @@ go to the directory code and run the aks.sage file to run the algorithm use `sag
 ## to see and run the run time analysis
 uncomment the lines where it says "uncomment to see the run time analysis"
 to see the plots presented in the thesis, go to code and run the file `newton.py`(uncomment the method you want analyse)   
+# acknowledgements
+Thanks to [Vijay Menon](https://arxiv.org/abs/1311.3785) for his code and explanations, which i used in the 5th of the algorithm
