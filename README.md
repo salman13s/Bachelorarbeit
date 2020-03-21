@@ -8,7 +8,9 @@ Bachelorarbeit zum Thema AKS-Primzahltest
 
 # prerequisites
 1. Python
-2. SageMath: [download at the official SageMath website](https://www.sagemath.org/)
+2. matplotlib: [Download here](https://matplotlib.org/tutorials/index.html)
+3. Scipy: [Download here](https://www.scipy.org/)
+2. SageMath: [Download at the official SageMath website](https://www.sagemath.org/)
 
 # how to run the code and the run time analysis 
 ## how to run the code
