@@ -37,6 +37,8 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 
+\newtheorem{prop}{Proposition}[section]
+
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 
@@ -187,12 +189,11 @@ Das zweite Kapitel enthält die Grundlagen und die Definitionen. Hier werden Ter
 
 Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus geführt.
 
-\subsection{Überblick}
-Eine natürliche Zahl $n \geq 2$ ist eine Primzahl, wenn keine der Zahlen $r \in (1,n)$ $n$ teilt, also $\forall r \in (1,n), r \nmid n$. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung aller Primzahlen von 1 bis zu einer gegebenen Zahl $n $ vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da wir uns nur dafür interessieren, ob die Zahl $n$ prim ist oder nicht. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die sogenannte Mersenne-Zahlen entwickelt, 51 der Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Der Algorithmus von Eratosthenes braucht länger als das Alter der Sonne, um zu entscheiden ob die obere Mersenne-Zahl eine Primzahl ist oder nicht. Deswegen ist es sinnvoll effizientere Algorithmen zu entwickeln. Ein anderer französischer Mathematiker Pierre de Fermat hat eine Gleichung zur Lösung des Primalitätsproblems gefunden, die für alle Primzahlen wahr ist, auf seine Gleichung bauen viele Primzahltests auf. \newline\newline
-Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Algorithmus ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch der beste nicht probabilistische Algorithmus (vor AKS) kann das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört. Der Algorithmus ist hauptsächlich für seine Polynomiallaufzeit bekannt, es gibt aber andere Eigenschaften, wie die \textbf{Allgemeinheit}, \textbf{Determinismus}, und \textbf{Unbedingtheit}. Ein allgemeiner Algorithmus ist ein Algorithmus, der für alle Zahlen funktioniert. In diesem Fall heißt dies, dass der AKS-Algorithmus für alle natürlichen Zahlen entscheiden kann, ob eine Zahl prim ist oder nicht.
+Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert.    
 
-Im Gegensatz zu einem probabilistischen Algorithmus ist der AKS-Algorithmus offensichtlich deterministisch, da er bei allen Zahlen immer das gleiche Ergebnis liefert, also der kann nicht einmal PRIME und einmal COMPOSITE für eine gegebene Zahl $n$ liefern.\newline
-Eine weitere wichtige Eigenschaft, die bei anderen mächtigen Primzahltests fehlt, ist die Unbedingtheit. Kayal und Saxena haben in ihrer Bachelorarbeit (Towards a deterministic polynomial-time Primality Test) einen bedingten Primzahltest dargestellt. Sie haben auch gezeigt, dass dieser Primzahltest als andere vorherigen Primzahltests stärker ist. Aber er baut auf die verallgemeinerte Riemannsche Hypothese(VRH) auf, obwohl die meisten Mathematiker an der VRH glauben, ist sie noch nicht bewiesen. Der AKS-Primzahltest ist unbedingt, das heißt seine Korrektheit ist nicht von solchen unbewiesen Hypothesen abhängig.       
+\subsection{Überblick}
+Eine natürliche Zahl $n \geq 2$ ist eine Primzahl, wenn keine der Zahlen $r \in (1,n)$ $n$ teilt, also $\forall r \in (1,n), r \nmid n$. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung aller Primzahlen von 1 bis zu einer gegebenen Zahl $n $ vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da wir uns nur dafür interessieren, ob die Zahl $n$ prim ist oder nicht. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die sogenannten Mersenne-Zahlen entwickelt, 51 der Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Der Algorithmus von Eratosthenes braucht länger als das Alter der Sonne, um zu entscheiden ob die obere Mersenne-Zahl eine Primzahl ist oder nicht. Deswegen ist es sinnvoll effizientere Algorithmen zu entwickeln. Ein anderer französischer Mathematiker Pierre de Fermat hat eine Gleichung zur Lösung des Primalitätsproblems gefunden, die für alle Primzahlen wahr ist, auf seine Gleichung bauen viele Primzahltests auf. \newline\newline
+Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Algorithmus ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
 In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Orginalpaper behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach kommt die Analyse der Korrektheit, da wird die Korrektheit zuerst mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt, wo gezeigt wird, dass wenn der Algorithmus PRIME liefert, ist die Zahl auch eine Primzahl. Aber auch wenn die Eingabe eine Primzahl ist, liefert der Algorithmus PRIME. Dazu wird seine Korrektheit auf einem Rechner implementiert und getestet. Der Algorithmus ist dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch zuerst mathematisch bewiesen. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell bewiesen.  
@@ -238,15 +239,18 @@ Seien $r,n \in \mathbb{N}$ mit $(n,r) = 1$, dann ist die \textbf{Ordnung} von n 
 
 
 \begin{definition}\label{Df_5}
-Sei $n \in \mathbb{N}$, die Primzahlzerlegung von n ist die Darstellung der Zahl als Produkt ihrer Primfaktoren \newline
-$n = p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{M}^{e_{M}}$. Wobei $e_{k}$ die Vielfachheit der Primzahl $p_{k}$ ist.
+Sei $n \in \mathbb{N}$, die \textbf{Primzahlzerlegung} von $n$ ist die Darstellung der Zahl als Produkt ihrer Primfaktoren \newline
+\begin{equation}
+    n = p_{1}^{e_{1}}p_{2}^{e_{2}}...p_{M}^{e_{M}}
+\end{equation}
+Wobei $e_{k}$ die Vielfachheit der Primzahl $p_{k}$ ist.
 \end{definition}
 
 \smallskip
 
-% definiere U_n
+
 \begin{definition}\label{Df_6}
-Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit $\phi(n)$ bezeichnet, ist die Anzahl der Zahlen k,$1 \leq k \leq n$, sodass $(k,n) = 1$
+Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit $\phi(n)$ bezeichnet, ist die Anzahl der Zahlen $k, \, 1 \leq k \leq n$, sodass $(k,n) = 1$
 \end{definition}
 
 \smallskip
@@ -312,16 +316,36 @@ Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k
 % Algerba
 
 \subsection{Algebra}
-Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.
-\begin{flushleft}
-
-\smallskip
+Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.\newline
 
 \begin{definition}
 Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
 \end{definition}
 
+\smallskip
+
+\begin{definition}
+Sei $I$ eine Teilmenge des Rings $(R,+,\cdot)$. $I$ heißt \textbf{Ideal}, wenn gilt:
+\begin{enumerate}
+    \item $0 \in I$.
+    \item $\forall a,b \in I$ ist $a + b \in I$.
+    \item $\forall a \in I$ und $r \in R$ ist $r \cdot a \in I$.
+    \item $\forall a \in I$ und $r \in R$ ist $a \cdot r \in I$.
+\end{enumerate}
+\end{definition}
+
 \smallskip 
+
+\begin{definition}
+ist $(R, +, \cdot)$ ein Ring und $I$ ein Ideal von R, dann bildet die Menge $R/I = \{ a + I \mid a \in R\}$ der Äquivalenzklassen modulo $I$ mit folgenden Verknüpfungen einen Ring:
+\begin{itemize}
+    \item $(a + I) + (b + I) = (a + b) + I$.
+    \item $(a + I) \cdot (b + I) = (a \cdot b ) + I$.\newline
+\end{itemize}
+Diesen Ring nennt man den \textbf{Quotientenring}. 
+\end{definition}
+
+\smallskip
 
 \begin{theorem}\label{th_25}
 Sei n eine Primzahl, dann gilt ${n \choose i} = 0 $(mod n).
@@ -341,8 +365,8 @@ ${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
 \end{theorem}
 
 \begin{proof}
-Induktion: Sei n = 2, offensichtlich gilt ${5 \choose 2} > 2^3$. Sei nun das obere Theorem für ein beliebiges $k > 2 $, mit $ k \in \mathbb{N}$ erfüllt.\newline\newline
-für n = k + 1 ist das folgende zu zeigen: 
+Induktion: Sei n = 2, offensichtlich gilt ${5 \choose 2} > 2^3$. Sei nun das obere Theorem für ein beliebiges $k > 2 $ wahr.\newline\newline
+für $n = k + 1$ ist das folgende zu zeigen: 
 
 \begin{equation}\label{ind_1}
     \frac{(2k + 3)!}{(k + 2)!\cdot(k + 1)!} > 2^{k+2}.
@@ -360,10 +384,7 @@ Der erste Teil der . Multiplikation auf der linken ist nach der Induktionshypoth
 \begin{equation}\label{ind_eq}
 \frac{(2k + 2) \cdot (2k + 3)}{(k + 2) \cdot (k + 1)} = 2 \cdot \underbrace{\frac{(2k + 3 )}{k + 2}}_{ > 1} > 2
 \end{equation}
-
-Es ist leicht zu sehen, dass die obere Ungleichung (\ref{ind_eq}) gilt. Weil die 2 auf der linken Seite der Ungleichung mit $\frac{2k + 3}{k + 1} > 1$ multipliziert wird.
-
-
+Somit ist die Ungleichung für $n = k + 1$ wahr.
 \end{proof}
 
 \end{flushleft}
@@ -379,13 +400,13 @@ Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \
 \smallskip
 
 \begin{theorem}\label{funny_id}
-Seien $a,b,n \in \mathbb{N}$ Dann gilt\newline\newline \begin{equation}
+Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{equation}
     a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{n -1 - k} b^k.
 \end{equation}
 \end{theorem}
 
-\end{flushleft}
 
+\smallskip
 
 % Polynome 
 \subsection{Zyklotomische Polynome}
@@ -511,20 +532,24 @@ Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
     {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
 \end{equation}
 \newline\newline
-Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod n).
+Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar. Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen, um die Anzahl an Koeffizienten zu reduzieren, dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner ist als bei (\ref{eq:1}), da der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten hat. Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel Jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c$ durch $c$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^k mod \, r$ ersetzen, also wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist, da der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten hat.\newline Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
 \end{equation}
 
 erfüllt ist.\newline
 
-Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch $log n$ beschränkt, das heißt der Algorithmus muss nur $log n$ a's testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
+Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch ein Polynom in $log n$ beschränkt, das heißt der Algorithmus muss nur $log n$ a testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
 
 \end{flushleft}
 \subsection{Der Algorithmus}\label{algo}
+\textbf{Notation:}\newline
+\textbf{Schritt 2: }$o_r(n)$ bezeichnet die Ordnung der
+Zahl(Def. \ref{Df_4}).\newline \textbf{Schritt 3:}(a,b) ist der größte gemeinsame Teiler (Def. \ref{Df_1})
+\newline \textbf{Schritt 5:}$\phi(n)$ ist die eulersche Phi-Funktion(Def. \ref{Df_6})  
 %to do: schreibe den AKS Algorithmus
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -534,7 +559,7 @@ Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen 
 % STEP 1
 \item \textbf{if} $n = a^b, a \in \mathbb{N}, b \geq 1$ , \textbf{return} COMPOSITE.
 %STEP 2
-\item  finde das kleinste r, sodass $o_{r}(n) > log^2 n $.
+\item  finde das kleinste $r$, sodass $o_{r}(n) > log^2 n $.
 % STEP 3
 \item \textbf{if} $1 < (a,n) < n, a \geq n $, \textbf{return} COMPOSITE.
 %STEP 4
@@ -550,6 +575,30 @@ Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen 
 \caption{AKS-Primzahltest}
 \end{algorithm}
 
+Agrawal, Kayal und Saxena haben drei Kriterien gefunden, wenn sie für eine Zahl erfüllt sind, dann ist diese Zahl eine Primzahl. 
+
+\begin{prop}\label{aks-prop}
+Seien $n,r \geq 2$  natürliche Zahlen, mit $ r \leq n$ und $o_{r}(n) > log^2 n$. $n$ ist genau dann prim, wenn:
+\begin{enumerate}
+    \item $n \neq a^b, \, für \,  b,a \in \mathbb{N}$.
+    \item $n$ keinen Primfaktor $p \leq r$ hat.
+    \item $(X + a)^n = X^n + a (mod \, n, \, X^r - 1)$ für alle $ a, \, 1 \leq a \leq \sqrt{r} log n$
+\end{enumerate}
+\end{prop}
+
+Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
+
+\textbf{Schritt 1: }im ersten Schritt sucht der Algorithmus zwei Zahlen $a,b \in \mathbb{N}, \, b > 1$, sodass $n = a^b$. Wenn solche Zahlen existieren, gibt er COMPOSITE zurück.  
+
+\textbf{Schritt 2: }Hier probiert der Algorithmus sukzessive Werte von $r$ aus, bis $n^k \neq 1 (mod \, r), \, \forall k \leq log^2 n$.
+
+\textbf{Schritt 3: } in diesem Schritt wird überprüft, ob $n$ gemeinsame Faktoren mit $a \leq r$ hat. 
+
+\textbf{Schritt 4: } wenn keine Primfaktoren bei Schritt 3 gefunden worden sind, gibt der Algorithmus bei diesem Schritt PRIME zurück. Da $n \leq r$ und $(k,n) = 1, \, \forall k \leq r $(sonst hätte er beim 3. Schritt schon COMPOSITE zurückgegeben).
+
+\textbf{Schritt 5: } hier wird die dritte Bedingung aus \ref{aks-prop} überprüft.
+
+\textbf{Schritt 6: } wenn kein $a$ in Schritt 5 gefunden wurde, dann muss die Zahl prim sein. 
 \subsection{Korrektheitsbeweis}
 
 \begin{theorem}
@@ -633,7 +682,7 @@ Aus (\ref{d2n}) und (\ref{d2n1}) folgt $d_{n} \mid d_{n+1}$\newline\newline Sowi
     n(2n + 1) {2n \choose n} \mid d_{2n + 1}
 \end{equation}
 \newline\newline
-Zeige jetzt,dass $d_{2n+1} $eine obere Schranke von $2^{2n + 1}$ ist.\newline\newline  
+Es bleibt zu zeigen, dass $d_{2n+1} $eine obere Schranke von $2^{2n + 1}$ ist.\newline\newline  
 $\Rightarrow d_{2n + 1} \underbrace{\geq}_{(\ref{helps})} n (2n + 1) {2n \choose n} \geq n \cdot 4^n \geq 2 \cdot 2^{2n} = 2^{2n + 2}$ für $n \geq 2$.\newline\newline
 Für $n \geq 4$ ist $d_{2n + 2} \geq d_{2n + 1} \geq 2^{2n + n }$, wenn diese Aussage für $n \geq 4 $ gilt, dann gilt sie auch für $n \geq 7$.\newline\newline Generell gilt: $d_{m} = LCM_{1 \leq m \leq n} \{m\} = LCM(m) \geq  2^m $.
 \end{proof}
@@ -673,9 +722,9 @@ Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein ge
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$ $r, 1 \leq r_i \leq B$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$. Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
+Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$.\newline\newline Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
 $\Rightarrow a \mid n^{log B}$.\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem $r_{m}$ war das kleinste Element aus $R$, das $N_{B}$ teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem war $r_{m}$ das kleinste Element aus $R$, das $N_{B}$ teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
 
 Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r_{m}}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r_{m}$) wahr ist. daher gilt auch:\newline\newline
 \centerline{$n^k - 1 = 0 $(mod  $r_{m}$) $\Rightarrow r_{m} \mid n^k - 1$.}
@@ -695,7 +744,7 @@ $\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich ist $n = \prod_{i = 1} 
 
 \smallskip
 
-Nach Lemma (\ref{ord_prime_l}) muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(also, für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $l = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
+Nach Lemma (\ref{ord_prime_l}) muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über die Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(also, für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $l = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
 
 Der 5. Schritt des Algorithmus überprüft $l$ Gleichungen. Wir wollen nun die Ausgabe PRIME untersuchen, also nach Voraussetzung ist die Ausgabe PRIME . Das heißt, für alle Gleichungen $l$ gilt:\newline\newline
 \centerline{$(X + a)^n = X^n + a $ (mod $X^r - 1, n$)}.
@@ -770,7 +819,7 @@ Aus Lemma \ref{intros_num} und Lemma \ref{intros_pol} folgt, dass jedes Element 
 
 Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den Beweis von Bedeutung sind.\newline\newline
 
-Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$. Da $gcd(n,r) = gcd(p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
+Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
 
 Um die zweite Gruppe zu definieren, sind ein paar Eigenschaften von zyklotomischen Polynomen über endlichen Körpern erforderlich.
 
@@ -781,7 +830,9 @@ Um die zweite Gruppe zu definieren, sind ein paar Eigenschaften von zyklotomisch
     
 \end{proof}
 
+\section{Laufzeitanalyse}
 
+\section{Zusammenfassung}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
