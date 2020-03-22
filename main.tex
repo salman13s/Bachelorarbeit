@@ -325,6 +325,15 @@ Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polyn
 \smallskip
 
 \begin{definition}
+Sei $f = (a_0, a_1,...a_n) \in R[X], \, f \neq 0 $ ein Polynom, dann heißt
+\begin{align*}
+    deg \, f = max \{ i  \mid a_i \neq 0 \}
+\end{align*}
+\end{definition}
+
+\smallskip
+
+\begin{definition}
 Sei $I$ eine Teilmenge des Rings $(R,+,\cdot)$. $I$ heißt \textbf{Ideal}, wenn gilt:
 \begin{enumerate}
     \item $0 \in I$.
@@ -346,6 +355,14 @@ Diesen Ring nennt man den \textbf{Quotientenring}.
 \end{definition}
 
 \smallskip
+
+\begin{theorem}\label{number_of_roots}
+Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. Ferner seien $a_1, a_2,...,a_n \in R$ die Nullstellen von $f$ mit $a_i - a_j \in R^*, \, \forall i,j, \, 1 \leq i,j, \leq n$. Dann ist $deg \, f \geq n$.
+\end{theorem}
+
+\begin{proof}
+Beweis durch Widerspruch, angenommen $deg \, f = n - 1$ für ein beliebiges $n$. Sei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0$ und daher $b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
+\end{proof}
 
 \begin{theorem}\label{th_25}
 Sei n eine Primzahl, dann gilt ${n \choose i} = 0 $(mod n).
@@ -485,10 +502,15 @@ Die \textbf{n-te primitive Einheitswurzel} ist jede Einheitswurzel $\zeta$, für
 
 \smallskip
 
-\begin{definition}
+\begin{definition}\label{def_cyc_poly}
 \textbf{Zyklotomisches Polynom:} das n-te zyklotomische Polynom $\Phi_{n}$ ist durch:\newline
 \begin{equation}
-    \Phi_{n}(x) = \prod_{\zeta \in P(n)} (x -\zeta).
+    \begin{split}
+        \begin{aligned}
+            \Phi_{n}(x) &= \prod_{\zeta \in P(n)} (x -\zeta) \\
+            &= \prod _{\stackrel {1\leq k\leq n}{(k,n)=1}}\left(x- \zeta^k\right).
+        \end{aligned}
+    \end{split}
 \end{equation}
 
 Dabei ist $P(n)$ die Menge aller primitiven n-ten Einheitswurzeln aus der Definition (\ref{prim_ein}). 
@@ -496,7 +518,7 @@ Dabei ist $P(n)$ die Menge aller primitiven n-ten Einheitswurzeln aus der Defini
 
 \smallskip
 
-\begin{theorem}
+\begin{theorem}\label{impor_cyc_lemma}
 Für jede natürliche Zahl n . gilt:\newline
 \begin{equation}
     x^n - 1 = \prod_{d \mid n} \Phi_{d}(n).
@@ -506,6 +528,23 @@ Für den Beweis, siehe (Fields and Cyclotomic Polynomials)
 \end{theorem}
 
 \smallskip
+
+\begin{theorem}\label{num_of_prim_uni}
+Für alle $n \geq 1$ existieren genau $\phi(n)$ n-te primitive Einheitswurzeln. 
+\end{theorem}
+
+\smallskip
+
+\begin{definition}\label{frob_auto}
+Sei $p$ eine Primzahl und $\mathbb{K}_{p}$ der dazugehörigen Restklassenkörper. Dann heißt der Automorphismus:
+\begin{equation}
+   \begin{aligned}
+        \psi : &\mathbb{K}_{p} \to \mathbb{K}_{p}, \\
+    &\alpha \to \alpha^p, \, \forall \alpha \in \mathbb{K}_{p}
+   \end{aligned}
+\end{equation}
+\textbf{Frobenius-Automorphismus}.
+\end{definition}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AKS ALGORITHMUS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -546,10 +585,13 @@ Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen 
 
 \end{flushleft}
 \subsection{Der Algorithmus}\label{algo}
-\textbf{Notation:}\newline
-\textbf{Schritt 2: }$o_r(n)$ bezeichnet die Ordnung der
-Zahl(Def. \ref{Df_4}).\newline \textbf{Schritt 3:}(a,b) ist der größte gemeinsame Teiler (Def. \ref{Df_1})
-\newline \textbf{Schritt 5:}$\phi(n)$ ist die eulersche Phi-Funktion(Def. \ref{Df_6})  
+\textbf{Notation:}
+\begin{itemize}
+    \item $o_r(n)$ bezeichnet die Ordnung der
+Zahl(Def. \ref{Df_4}).
+    \item (a,b) ist der größte gemeinsame Teiler (Def. \ref{Df_1}).
+\item $\phi(n)$ ist die eulersche Phi-Funktion(Def. \ref{Df_6})  
+\end{itemize}
 %to do: schreibe den AKS Algorithmus
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -581,24 +623,26 @@ Agrawal, Kayal und Saxena haben drei Kriterien gefunden, wenn sie für eine Zahl
 Seien $n,r \geq 2$  natürliche Zahlen, mit $ r \leq n$ und $o_{r}(n) > log^2 n$. $n$ ist genau dann prim, wenn:
 \begin{enumerate}
     \item $n \neq a^b, \, für \,  b,a \in \mathbb{N}$.
+    
     \item $n$ keinen Primfaktor $p \leq r$ hat.
-    \item $(X + a)^n = X^n + a (mod \, n, \, X^r - 1)$ für alle $ a, \, 1 \leq a \leq \sqrt{r} log n$
+    
+    \item $(X + a)^n = X^n + a (mod \, n, \, X^r - 1)$ für alle $ a, \, 1 \leq a \leq \sqrt{r} log n$.
 \end{enumerate}
 \end{prop}
 
 Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
 
-\textbf{Schritt 1: }im ersten Schritt sucht der Algorithmus zwei Zahlen $a,b \in \mathbb{N}, \, b > 1$, sodass $n = a^b$. Wenn solche Zahlen existieren, gibt er COMPOSITE zurück.  
+\textbf{Schritt 1: }Im ersten Schritt sucht der Algorithmus zwei Zahlen $a,b \in \mathbb{N}, \, b > 1$, sodass $n = a^b$. Wenn solche Zahlen existieren, gibt er COMPOSITE zurück.  
 
 \textbf{Schritt 2: }Hier probiert der Algorithmus sukzessive Werte von $r$ aus, bis $n^k \neq 1 (mod \, r), \, \forall k \leq log^2 n$.
 
-\textbf{Schritt 3: } in diesem Schritt wird überprüft, ob $n$ gemeinsame Faktoren mit $a \leq r$ hat. 
+\textbf{Schritt 3: } In diesem Schritt wird überprüft, ob $n$ gemeinsame Faktoren mit $a \leq r$ hat. 
 
-\textbf{Schritt 4: } wenn keine Primfaktoren bei Schritt 3 gefunden worden sind, gibt der Algorithmus bei diesem Schritt PRIME zurück. Da $n \leq r$ und $(k,n) = 1, \, \forall k \leq r $(sonst hätte er beim 3. Schritt schon COMPOSITE zurückgegeben).
+\textbf{Schritt 4: } Wenn keine Primfaktoren bei Schritt 3 gefunden worden sind, gibt der Algorithmus bei diesem Schritt PRIME zurück. Da $n \leq r$ und $(k,n) = 1, \, \forall k \leq r $(sonst hätte er beim 3. Schritt schon COMPOSITE zurückgegeben).
 
-\textbf{Schritt 5: } hier wird die dritte Bedingung aus \ref{aks-prop} überprüft.
+\textbf{Schritt 5: } Hier wird die dritte Bedingung aus \ref{aks-prop} überprüft.
 
-\textbf{Schritt 6: } wenn kein $a$ in Schritt 5 gefunden wurde, dann muss die Zahl prim sein. 
+\textbf{Schritt 6: } Wenn kein $a$ in Schritt 5 gefunden wurde, dann muss die Zahl prim sein. 
 \subsection{Korrektheitsbeweis}
 
 \begin{theorem}
@@ -651,7 +695,7 @@ Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, betrachte das folgende Integral für
 
 Aus (\ref{intg}) ist es leicht zu sehen, $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$, für $1 \leq m \leq n$.
 
-Durch Induktion nach $n - m$ und partielle Integration lässt sich zeigen, dass für $n \in \mathbb{N}$ und m, mit $1 \leq m \leq n$:
+Durch Induktion nach $n - m$ und partielle Integration lässt sich zeigen, dass für $n \in \mathbb{N}$ und $m, \, 1 \leq m \leq n$:
 \begin{equation}\label{I_mn}
     I_{n,m} = \frac{1}{m \cdot {n \choose m}}
 \end{equation}
@@ -699,7 +743,7 @@ Der Beweis lässt sich in 3 Schritten zerlegen; zeigen, dass ein $r \leq B$ exis
 Sei $n \geq 1$.\newline\newline Für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
 Ab jetzt wird angenommen, dass $n > 2$.\newline\newline
-\textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline\newline
+\textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline
 
 Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $LCM(B) \geq 2^B$. Als erstes ist zu zeigen: es existiert ein $r \leq B$, sodass
 \begin{equation}\label{prod_cor}
@@ -819,15 +863,97 @@ Aus Lemma \ref{intros_num} und Lemma \ref{intros_pol} folgt, dass jedes Element 
 
 Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den Beweis von Bedeutung sind.\newline\newline
 
-Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
+Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$, das heißt $G = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
 
 Um die zweite Gruppe zu definieren, sind ein paar Eigenschaften von zyklotomischen Polynomen über endlichen Körpern erforderlich.
 
-\begin{lemma}[\textbf{Irreduzible Teiler zyklotomischer Polynome}] Sei $\mathbb{K}_{p}$ ein Körper und $Q_{r}(X)$ das r-te zyklotomische Polynom über $\mathbb{K}_{p}$. Dann existiert ein irreduzibler Teiler $h(X)$ von $X^r - 1$ über $\mathbb{K}_{p}$ vom Grad $o_{r}(p).$
+\begin{lemma}\label{cyc_ov_fields}
+\textbf{Irreduzible Teiler zyklotomischer Polynome}
+Sei $\mathbb{K}_{p}$ ein Körper und $\Phi_{r}(X)$ das r-te zyklotomische Polynom über $\mathbb{K}_{p}$. Dann existiert ein irreduzibler Teiler $h(X)$ von $X^r - 1$ über $\mathbb{K}_{p}$ vom Grad $o_{r}(p).$
 \end{lemma}
 
 \begin{proof}
+    Sei $p$ eine Primzahl und $\mathbb{K}_{p}$ der dazugehörige Restklassenkörper. Zudem seien $r$ und $p$ teilerfremd. Nach Def. \ref{def_cyc_poly} gilt: 
+    \begin{equation}\label{rth_cy}
+        \Phi _{r}(X)=\prod _{\stackrel {1\leq k\leq n}{(k,n)=1}}\left(X- \zeta^k\right).
+    \end{equation}
     
+Nach Lemma \ref{impor_cyc_lemma} gilt $\Phi_{r}(X) \mid  X^{r} - 1$. Sei $\zeta$ eine beliebige Einheitswurzel von $\Phi_r(X)$  über $\mathbb{K}_p$. $h(X) = \prod_{k = 1}^{q} (X - \zeta^{p^k})$ ist genau dann das minimale Polynom von $\zeta$ über $\mathbb{K}_p$, wenn $q$ die kleinste positive natürliche Zahl, sodass $\zeta^{p^q} = 1$ beziehungsweise $\zeta^{p^q mod \, r} = 1$(Da $\zeta$ eine primitive Einheitswurzel von $r$ ist), das ist äquivalent zu $q = o_r(p)$, es ist außerdem offensichtlich, dass diese Relation nur von $r,p$ abhängig ist, also unabhängig von der Wahl von $\zeta$. Das Minimalpolynom $h(X)$ teilt jedes Polynom mit den Nullstellen $\zeta$. Daher ist $h(X)$ irreduzibl über $\mathbb{K}_p$ und teilt $\Phi_{r}(X) \Rightarrow h(X) \mid X^r - 1$ , folglich zerfällt $\Phi_r(X)$ in Polynome über $\mathbb{K}_p$ jeweils vom Grad $o_r(p)$. Das bedeutet $\Phi_{r}(X)$ zerfällt in $\frac{deg(\Phi_{r}(X))}{o_r(p)} = \frac{\phi(p)}{o_r(p)}$ irreduzible Polynome vom Grad $o_r(p)$ über $\mathbb{K}_p$. Das heißt es existiert ein über $\mathbb{K}_p$ irreduzibler Teiler von $X^r - 1$ vom Grad $o_r(p)$.              
+% $\mathcal{G}$
+\end{proof}
+
+Zur Definition der zweiten Gruppe sei nun $h(X)$ einer dieser Teiler aus Lemma \ref{cyc_ov_fields}. Die zweite Gruppe $\mathcal{G}$ sei die multiplikative Gruppe aller Restklassen von Polynomen in $P$ modulo $h(X)$ und $p$, also $\mathcal{G} = \{ \prod_{a = 0}^{l} (X + a)^{e_{a}} (mod \, h(X), p) \mid e_{a} \geq 0 \}$. $\mathcal{G}$ ist eine Untergruppe von $\mathbb{K} = \mathbb{K}_p[X] / (h(X))$ und wird von $X,X+1,X+2, ..., X + l $ im Körper $\mathbb{K}$ erzeugt.\newline
+
+Wie benötigen nun eine untere Schranke für $\mathcal{G}$.
+
+\begin{lemma}\label{lemma47}
+$|\mathcal{G}| > {t + l \choose t - 1}$
+\end{lemma}
+
+\begin{proof}
+Zunächst sei $h(X)$ ein Faktor des r-ten zyklotomischen Polynoms $\Phi_r (X)$ und somit auch von $X^r - 1$. Das heißt X ist eine primitive r-te Einheitswurzel in $\mathbb{K}$. Ferner Seien $f(X),g(X)$ zwei verschiedene Polynome aus $P$ vom Grad $ < t$. Angenommen $f(X) = g(X)$ im Körper $\mathbb{K}$. Weiterhin sei $m \in I$ beliebig und $[f(X)]^m = [g(X)]^m$ in $\mathbb{K}$. $m$ ist introspektiv bezüglich $f, g$ daher gilt:\newline
+\centerline{$f(X^m) = g(X^m) (mod \, X^r - 1,p)$.} Da $h(X) \mid X^r - 1$ gilt auch\newline
+\centerline{$f(X^m) = g(X^m) (mod \, h(X),p)$.}\newline
+
+
+
+folglich gilt $f(X^m) = g(X^m)$ in $\mathbb{K}$. Daraus folgt, dass $X^m$ eine Wurzel des Polynoms $Q(Y) = f(Y) - g(Y), \, \forall m \in I$ ist. Da $X$ eine primitive r-te Einheitswurzel von $\Phi_r(X)$ in $\mathbb{K}$ und $(m,r) = 1, \, \forall m \in G$, folgt auch, dass $X^m$ eine r-te primitive Einheitswurzel in $\mathbb{K}$ ist.
+
+Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach der Wahl von $f,g$ ist $deg \, Q < t$. Das ist ein Widerspruch zu Theorem \ref{number_of_roots} un folglich gilt $f(X) \neq g(X)$ in $\mathbb{K}$.
+
+Es gilt auch, dass $i \neq j  \in \mathbb{K}_p, \forall \, 1 \leq i \neq j \leq l = \lfloor \sqrt{\phi(r)} log n \rfloor$. Da $o_r(n) > log^2 n$, gilt $r > log^2 n$ und folglich gilt auch:\newline\newline
+\centerline{$l = \lfloor \sqrt{\phi(r)} log n \rfloor < \sqrt{r} log n < r < p$}
+
+Daher sind $X, X + 1, ..., X + l$ verschieden in $\mathbb{K}$. Außerdem gilt $deg \, h > 1$ und $X + a \neq 0 \, in \mathbb{K}, \, \forall a, \, 0 \leq a \leq l $. Das bedeutet es existieren $l + 1$ verschiedene Polynome vom Grad 1 (Da $deg \, X + a = 1$). Gesucht ist gerade die Anzahl von Polynomen mit Grad $ < t $ in $\mathcal{G}$. Das kann man durch Multiplikation bis $t - 1$ nicht unbedingt eindeutige Elemente in $\{ X, X + 1, ..., X+ l\} \subseteq P$ erreichen, also es existieren insgesamt ${t - 1 + l +1 \choose t - 1} = {t + l \choose t - 1}$ eindeutige Polynome $f \in P$ vom Grad $ < t$
+\end{proof}
+
+Wenn $n$ keine Potenz von $p$ ist, erhält man auch eine obere Grenze für $|\mathcal{G}|$.
+
+\begin{lemma}[\textbf{Obere Grenze für $|\mathcal{G}|$}]
+Wenn $n$ keine Potenz von $p$, dann gilt:
+\begin{equation}
+    |\mathcal{G}| \leq  n^{\sqrt{t}}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Angenommen $n$ ist keine Potenz von $p$. Dann ist $\frac{n}{p}$ durch $q \neq p$ teilbar. Wir betrachten folgende Teilmenge von $I$:
+\begin{equation}
+    \widetilde{I} = \{ (\frac{n}{p})^i p^j \mid 0 \leq i,j \leq \sqrt{t}\} \subseteq I.
+\end{equation}
+Es gilt $|\widetilde{I}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |G|$, da es $ \lfloor \sqrt{t} \rfloor + 1$ für jeweils $i$ und $j$ gibt. Deshalb müssen mindestens zwei Elemente $m_1,m_2 \in \widetilde{I}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A gilt $m_1 > m_2 $ Folglich gilt auch:\newline\newline
+\centerline{$X^{m_1} = X^{m_2} \, (mod \, X^r - 1)$}.
+für alle Polynome $ f \in P$. Das heißt es gilt:\newline
+\begin{equation}\label{m1_m2}
+    \begin{aligned}
+         f(X)^{m_1} &= f(X^{m_1}) \, (mod \, X^r - 1, p) \\
+        &= f(X^{m_2}) \, (mod \, X^r - 1,p) \\
+        &= f(X)^{m_2} \, (mod \, X^r - 1,p)
+    \end{aligned}
+\end{equation}
+Aus (\ref{m1_m2}) folgt $[f(X)]^{m_1} = [f(X)]^{m_2}$ in $\mathbb{K}$. Demnach ist $f(X) \in  \mathcal{G}$ eine Wurzel des Polynoms $Q^{'}(Y) = Y^{m_1} - Y^{m_2}$ im Körper $\mathbb{K}$. Da $f(X)$ beliebig ist, gibt es $|\mathcal{G}|$ verschiedene Wurzeln von $Q^{'}(Y)$ im Körper $\mathbb{K}$. Außerdem gilt auch:
+\begin{equation}\label{degQ}
+    deg \, Q^{'}(Y) = m_1 \leq (\frac{n}{p} \cdot p)^{\lfloor \sqrt{t} \rfloor} \leq n^{\sqrt{t}}. 
+\end{equation}
+Nach (\ref{number_of_roots}) gilt $|\mathcal{G}| \leq deg \, Q^{'}(Y)$, und daher gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$
+\end{proof}
+
+Nun haben wir alle nötigen Lemmata für die Rückrichtung des Beweises
+
+\begin{theorem}
+Ist die Ausgabe PRIME, dann ist $n$ eine Primzahl 
+\end{theorem}
+
+\begin{proof}
+Nach Voraussetzung ist die Ausgabe PRIME. Nach Lemma \ref{lemma47} gilt für $t = |G|$, und $l = \lfloor \sqrt{\phi(r)} log n \rfloor$ das folgende:\newline
+\begin{align*}
+|\mathcal{G}| & \geq {t + l \choose t - 1} \\
+\\
+& \geq {l + 1 + \lfloor \sqrt{t} \, log \, n \rfloor \choose \lfloor \sqrt{t} log \, n \rfloor} && (da \: t = \sqrt{t} \,
+\sqrt{t} \geq \sqrt{t} \,  log \, n) && \\
+\\
+& \geq {2 \lfloor \sqrt{t} \, log \,  n \rfloor + 1 \choose \lfloor \sqrt{t} log \, n \rfloor} && (da \: l = \lfloor \sqrt{\phi(r)} log \, n \rfloor \geq \lfloor \sqrt{t} \, log \, n \rfloor)
+\end{align*}
 \end{proof}
 
 \section{Laufzeitanalyse}
