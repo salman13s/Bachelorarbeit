@@ -1,4 +1,4 @@
-# Bachelorarbeit
+# Bachelorarbeit(main.pdf)
 Bachelorarbeit zum Thema AKS-Primzahltest
 
 # thesis 
