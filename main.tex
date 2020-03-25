@@ -36,6 +36,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fakt}
 
 \newtheorem{prop}{Proposition}[section]
 
@@ -192,8 +193,8 @@ Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels
 Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert.    
 
 \subsection{Überblick}
-Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die nach ihm sogenannten Mersenne-Zahlen entwickelt, 51 der bekannten Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat eine Gleichung zur Lösung des Primalitätsproblems gefunden, die für alle Primzahlen wahr ist, auf seine Gleichung bauen viele Primzahltests auf. \newline\newline
-Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Algorithmus ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die nach ihm sogenannten Mersenne-Zahlen entwickelt, 51 der bekannten Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Auf seinen Satz bauen viele Primzahltests(einschließlich des AKS-Primzahltests) auf. \newline\newline
+Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
 In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Orginalpaper behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach kommt die Analyse der Korrektheit, da wird die Korrektheit zuerst mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt, wo gezeigt wird, dass wenn der Algorithmus PRIME liefert, ist die Zahl auch eine Primzahl. Aber auch wenn die Eingabe eine Primzahl ist, liefert der Algorithmus PRIME. Dazu wird seine Korrektheit auf einem Rechner implementiert und getestet. Der Algorithmus ist dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch zuerst mathematisch bewiesen. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell bewiesen.  
@@ -220,7 +221,7 @@ Zwei Zahlen $a,b \in \mathbb{N}$ heißen genau dann \textbf{Teilerfremd}, wenn $
 \smallskip
 
 \begin{definition}
-Seien $n, m$ zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von $n$, als auch von $m$ \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{LCM} bezeichnet.
+Seien $n, m$ zwei natürliche Zahlen, dann heißt die kleinste positive natürliche Zahl, die sowohl ein Vielfaches von $n$, als auch von $m$ \textbf{kleinstes gemeinsames Vielfaches} beider zahlen. Hier wird das kleinste gemeinsame Vielfaches mit \textbf{kgV} bezeichnet.
 \end{definition}
 
 \smallskip 
@@ -255,15 +256,7 @@ Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit
 
 \smallskip
 
-\begin{theorem}[\textbf{Gaußsche Summeformel}]\label{gauss}
-Sei n eine natürlich Zahl, dann gilt:
-\begin{equation}
-    \sum_{i = 1}^{n} i = \frac{n (n + 1)}{2} = \frac{n^2 + n}{2} 
-\end{equation}
-Der Beweis ist durch Induktion trivial. 
-\end{theorem}
 
-\smallskip
 % Theoreme
 \begin{theorem}[\textbf{Satz von Euler}]\label{Th_1}
 Seien $a,n \in \mathbb{N}$ teilerfremd, \newline dann gilt $a^{\phi(n)} = 1 $(mod n).
@@ -286,7 +279,7 @@ Seien $R =\{ a \in \mathbb{N} \mid (a,n) = 1 \} =  \{a_{1}, a_{2},...,a_{\phi(n)
 \begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
 Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \in $R:\newline\newline
  \begin{equation}
-     (a + b)^n  = \sum_{k=0}^n {n \choose k} a^k b^{n-k}
+     (a + b)^n  = \sum_{k=0}^n {n \choose k} a^k b^{n-k}.
  \end{equation}
 \end{theorem}
 
@@ -331,8 +324,18 @@ Also es gilt:
 \begin{align*}
 (a + 1)^p - (a + 1) = \big{[} a^p + 1 \big{]} - (a + 1) = a^p - a \, mod \, p.
 \end{align*}
-und das ist nach der IH durch p teilbar.  
+und das ist nach der IH durch p teilbar.\newline  
 \end{proof}
+
+\smallskip
+
+\begin{theorem}[\textbf{Gaußsche Summeformel}]\label{gauss}
+Sei n eine natürlich Zahl, dann gilt:
+\begin{equation}
+    \sum_{i = 1}^{n} i = \frac{n (n + 1)}{2} = \frac{n^2 + n}{2} 
+\end{equation}
+Der Beweis ist durch Induktion trivial. 
+\end{theorem}
 
 
 
@@ -390,7 +393,7 @@ Beweis durch Widerspruch, angenommen $deg \, f = n - 1$ für ein beliebiges $n$.
 \smallskip
 
 \begin{flushleft}
-\begin{theorem}
+\begin{theorem}\label{useful_theorem_for_proof}
 ${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
 \end{theorem}
 
@@ -560,8 +563,29 @@ Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
 \begin{equation}
     O^{\sim}(log^k n) = O(log^k n) \cdot poly(log log^k n) = O(log^k n) \cdot poly(log( k \cdot log n)) = O(log^{k+\epsilon}n)
 \end{equation}
-Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann läuft er in Polynomialzeit von $log n$.
+Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann läuft er in Polynomialzeit von $log \, n$.
 \end{definition}
+
+\begin{definition}
+Für eine natürliche Zahl $n \geq 1$, ist $\lVert n \rVert= \lceil log(n + 1) \rceil$, wobei $log \, n = log_{2} n$
+\end{definition}
+\begin{fact}\label{fact_1}
+Seien $n,m \in \mathbb{N}$:\newline
+\begin{enumerate}
+    \item Addition und Subtraktion von $n$ und $m$ können in $O(\lVert n \rVert + \lVert m \rVert) = O(log \, n + log \, m)$ Bit-Operationen berechnet werden.\newline
+    \item Multiplikation $ n \cdot m$ kann in $O(\lVert n \rVert \cdot \lVert m \rVert) = O(log \, n \cdot log \, m)$ Bit-Operationen berechnet werden.\newline
+    \item Modulo-Berechnung von $n$ mod $m$ kann in $O(\lVert n \rVert - \lVert m \rVert + 1)$ Bit-Operationen berechnet werden.\newline\newline
+\end{enumerate}
+\end{fact}
+
+\begin{fact}\label{fact_2}
+Seien $n,m \in \mathbb{N}, \, \lVert n \rVert = \lVert m \rVert =k$
+\begin{enumerate}
+    \item Multiplikation kann in $O(k (log \, k)(log \, log \, k)) = O^{\sim}(k)$ Bit-Operationen berechnet werden.\newline
+    \item $n$ mod $m$ kann in $O(k (log \, k)(log \, log \, k)) = O^{\sim}(k)$ Bit-Operationen berechnet
+\end{enumerate}
+\end{fact}
+
 
 
 
@@ -654,7 +678,7 @@ Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
 
 \textbf{Schritt 2: }Hier probiert der Algorithmus sukzessive Werte von $r$ aus, bis $n^k \neq 1 (mod \, r), \, \forall k \leq log^2 n$.
 
-\textbf{Schritt 3: } In diesem Schritt wird überprüft, ob $n$ gemeinsame Faktoren mit $a \leq r$ hat. 
+\textbf{Schritt 3: } In diesem Schritt wird überprüft, ob $n$ und $a, \, a \leq r$ gemeinsame Faktoren haben. 
 
 \textbf{Schritt 4: } Wenn keine Primfaktoren bei Schritt 3 gefunden worden sind, gibt der Algorithmus bei diesem Schritt PRIME zurück. Da $n \leq r$ und $(k,n) = 1, \, \forall k \leq r $(sonst hätte er beim 3. Schritt schon COMPOSITE zurückgegeben).
 
@@ -664,11 +688,11 @@ Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
 \subsection{Korrektheitsbeweis}
 
 \begin{theorem}
-Der Algorithmus gibt genau dann PRIME zurück, wenn $n$ eine Primzahl ist.
+\textbf{Hauptsatz der Korrektheit}\newline Der Algorithmus gibt genau dann PRIME zurück, wenn $n$ eine Primzahl ist.
 \end{theorem}
 Dieses Ergebnis wird durch eine Reihe von Lemmata festgestellt. Der Korrektheitsbeweis lässt sich in zwei Teilen zerlegen, der erste Teil befasst sich mit der Hinrichtung des Beweises. Also, dass der Algorithmus PRIME liefert, wenn die Eingabe eine Primzahl ist. Dies ist aber trivial und braucht keine Lemmata. Für den zweiten Teil(Rückrichtung) sind jedoch mehrere Lemmata und Sätze nötig. Diese werden in diesem Kapitel in der Reihenfolge, wie sie im Originalartikel vorkamen, dargestellt und bewiesen. Zudem wird vor jedem Lemma kurz erläutert, warum dieses Lemma für den Algorithmus von Bedeutung ist.
 \textbf{Erster Teil des Beweises($\Rightarrow$)}
-\begin{theorem}
+\begin{theorem}\label{hin_rich}
 Wenn $n$ eine Primzahl ist, dann gibt der Algorithmus PRIME zurück.
 \end{theorem}
 
@@ -686,12 +710,12 @@ Für diesen Teil ist eine Vorarbeit nötig. Wir brauchen zunächst eine untere S
 \begin{lemma}\label{lemma_1}
 Für $m \geq 7$:\newline
 \begin{equation}
-    LCM(m) \geq 2^m.  
+    kgV(m) \geq 2^m.  
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, zuerst wird  gezeigt, dass $m {n \choose m} \mid d_n$.\newline 
+Sei $d_{n} = kgV{1 \leq m \leq n}{\{m\}}$, zuerst wird  gezeigt, dass $m {n \choose m} \mid d_n$.\newline 
 Wir betrachten das folgende Integral für $n \geq 1$:\newline
 \begin{equation}\label{intg}
     \begin{split}
@@ -720,7 +744,7 @@ $n - m = 0 \iff n = m $:
 \end{align*}
 
 \textbf{IH:}
-Nun wird Angenommen, dass ein $n - m \in \mathbb{N}, \, 1 \leq m < n$ existiert, sodass die Aussage (\ref{I_mn}) wahr ist.\newline\newline
+Nun wird Angenommen, dass (\ref{I_mn}) für $ 1 \leq m < n$ wahr ist.\newline\newline
 
 \textbf{IS: }
 
@@ -741,7 +765,7 @@ Somit ist die Aussage(\ref{I_mn}) wahr.\newline
 
 Demzufolge gilt: 
 \begin{equation}
-    m \cdot {n \choose m} \mid d_{n}
+    \frac{d_{n}}{m \cdot {n \choose m}} \in \mathbb{N} \Rightarrow  m \cdot {n \choose m} \mid d_{n}
 \end{equation}
 $\forall m $ mit $1 \leq m \leq n $.\newline
 
@@ -761,55 +785,72 @@ Beziehungsweise
 \end{align*}
 \smallskip
 
-Es gilt auch $4^n = (1 + 1)^2n \underbrace{=}_{(\ref{Th_3})} \sum_{k = 0}^{n} {2n \choose k}$, dabei ist ${2n \choose n}$ der größte Binomialkoeffizient der Summe $\sum_{k = 0}^{n} {2n \choose k}$ und dies ist größer als der Mittlere Wert $4^n /(2n + 1)$, also es gilt:\newline\newline
-\begin{equation}\label{estim_4n_bin}
-    {2n \choose n} > \frac{4^n}{2n + 1} > 2^n, \,  n \geq 3.
-\end{equation}
-
-Aus der Tatsache, dass $m{n \choose m} \mid d_n, \, 1 \leq m \leq n$ und aus (\ref{estim_4n_bin}) folgt:
+Da $n $ und $2n + 1$ teilerfremd sind gilt auch:
 \begin{align*}
-    d_{2n} \geq n {2n \choose n} > n \cdot 2^n, \, n \geq 3.
+    n(2n + 1) {2n \choose n} \mid d_{2n + 1}
 \end{align*}
 
-da $(n, 2n +1) = 1 $, folgt aus (\ref{d2n}) und(\ref{d2n1}), dass:\newline\newline 
-\begin{equation}\label{helps}
-    n(2n + 1) {2n \choose n} \mid d_{2n + 1}.\newline\newline
+Daraus folgt:
+\begin{align*}
+    n (2n + 1){2n \choose n} \leq d_{2n + 1} \leq d_{2n + 2}
+\end{align*}
+
+Nun zeigen wir nun durch vollständige Induktion, dass 
+\begin{equation}\label{auss}
+    n \cdot (2n + 1) {2n \choose n} \geq 2^{2n + 2}, \, \forall n \geq 3
 \end{equation}
 gilt.\newline\newline
-
-Sowie 
-\begin{equation}
-    d_{2n + 1} \geq  n(2n + 1) {2n \choose n} \underbrace{>}_{(\ref{estim_4n_bin})} n\cdot 4^n.
-\end{equation}
-
-Daraus erhalten wir:
+\textbf{IA:} $n = 3$
 \begin{align*}
-d_{2n + 2} \geq d_{2n + 1} > n \cdot 4^n \geq 4 \cdot 2^{2n} = 2^{2n + 2}
+    3 \cdot (2 \cdot 3 + 1) { 6 \choose 3} = 420 > 256 = 2^{2 \cdot 3 + 2}.
 \end{align*}
-folglich gilt $d_N > 2^N$ für alle $N \geq 9$.
+\\
+\\
+\textbf{IH:} Für ein beliebiges $n \geq 3$ sei (\ref{auss}) wahr.\newline\newline
+
+\textbf{IS:}
+\begin{align*}
+    (n + 1&) \cdot (2n + 3) \cdot {2n + 2 \choose n + 1} =(n + 1) \cdot (2n + 3) \cdot {2n \choose n} \cdot \frac{2 \cdot (2n + 1)}{(n + 1)} \\
+    \\
+    &\geq 2 \cdot (n + 1) \cdot (2n + 3) {2n \choose n} \cdot \frac{2n}{(n + 1)} = 2 \cdot 2n \cdot (2n + 3) \cdot {2n \choose n} \\
+    \\ 
+    &= 4 \cdot n \cdot (2n + 3) \cdot {2n \choose n} \underbrace{\geq}_{IH} 4 \cdot 2^{2n + 2} = 2^2 \cdot 2^{2n + 2}\\
+    \\
+    &= 2^{2n + 4} = 2^{2 \cdot (n + 1) + 2} 
+\end{align*}
+
+Somit gilt die Aussage für alle $n \geq 3$.\newline\newline 
+
+Daraus folgt $d_{2n + 2} \geq d_{2n + 1} \geq  n \cdot (2n + 1) {2n \choose n} \geq 2^{2n + 2}, \, \forall n \geq 3$.\newline\newline
+
+Folglich gilt auch $\forall N \in \mathbb{N}, \, N \geq 7$:
+\begin{align*}
+    d_{N} \geq 2^{N}
+\end{align*}
 \end{proof}
 
 \textbf{Abschätzung von r}.\newline\newline
-Das zweite Lemma befasst sich mit der Abschätzung von $r$, das vorher bei der Grundidee erwähnt wurde. Dabei wird gezeigt, dass $r$ eine logarithmische obere Schranke hat, und das ermöglicht die Polynomiallaufzeit.  
+Das zweite Lemma befasst sich mit der Abschätzung von $r$. Zuerst wird gezeigt, dass $r$ in Schritt 2 des Algorithmus polynomial von $log \, n$ abhängig ist und das ermöglicht die Polynomiallaufzeit des Algorithmus.  
 
 \begin{lemma}
 Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) > log^2 n$.
 \end{lemma}
 
 \begin{proof}
-Der Beweis lässt sich in 3 Schritten zerlegen; zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt, als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen. 
+Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen. 
 Sei $n \geq 1$.\newline\newline Für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
 Ab jetzt wird angenommen, dass $n > 2$.\newline\newline
 \textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline
 
-Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $LCM(B) \geq 2^B$. Als erstes ist zu zeigen: es existiert ein $r \leq B$, sodass
+Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $kgV(B) \geq 2^B$. Zunächst wird gezeigt, dass   ein $r \leq B$ existiert, sodass
 \begin{equation}\label{prod_cor}
      N_{B} = n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} (n^i - 1)
 \end{equation}
 $r$ dieses Produkt nicht teilt. Dies kann durch Widerspruch bewiesen werden.
 
-Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher muss $N_{B} \geq LCM(B)$ gelten. Jedoch hat $N_{B}$ eine obere Schranke, betrachte das folgende:
+Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher gilt $N_{B} \geq kgV(B)$.\newline
+Wir betrachten $N_{B}$:
 \begin{equation}\label{long_p}
     \begin{split}
         \begin{aligned}
@@ -824,14 +865,14 @@ Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein ge
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $LCM(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$.\newline\newline Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(bei der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline
-$\Rightarrow a \mid n^{log B}$.\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem war $r_{m}$ das kleinste Element aus $R$, das $N_{B}$ teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
+Aus (\ref{long_p}) folgt: $kgV(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$.\newline\newline Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(in der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline\newline
+$\Rightarrow a \mid n^{log B}$.\newline\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem war $r_{m}$ das kleinste Element aus $R$, das $N_{B}$ nicht teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
 
 Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r_{m}}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r_{m}$) wahr ist. daher gilt auch:\newline\newline
 \centerline{$n^k - 1 = 0 $(mod  $r_{m}$) $\Rightarrow r_{m} \mid n^k - 1$.}
 
-Aber wenn das gelten würde, würde $r_{m}$ $N_{B}$ teilen (z.B. $ r_{m} \mid n^{log^2 n} -1$) und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
+Aber wenn das gelten würde, würde $r_{m}$ das Produkt $N_{B}$ teilen und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
 \end{proof}
 
 \smallskip
@@ -969,7 +1010,8 @@ Daher sind $X, X + 1, ..., X + l$ verschieden in $\mathbb{K}$. Außerdem gilt $d
 
 Wenn $n$ keine Potenz von $p$ ist, erhält man auch eine obere Grenze für $|\mathcal{G}|$.
 
-\begin{lemma}[\textbf{Obere Grenze für $|\mathcal{G}|$}]
+\begin{lemma}\label{closing_lemma}
+\textbf{Obere Schranke für $|\mathcal{G}|$}.\newline
 Wenn $n$ keine Potenz von $p$, dann gilt:
 \begin{equation}
     |\mathcal{G}| \leq  n^{\sqrt{t}}
@@ -995,12 +1037,12 @@ Aus (\ref{m1_m2}) folgt $[f(X)]^{m_1} = [f(X)]^{m_2}$ in $\mathbb{K}$. Demnach i
 \begin{equation}\label{degQ}
     deg \, Q^{'}(Y) = m_1 \leq (\frac{n}{p} \cdot p)^{\lfloor \sqrt{t} \rfloor} \leq n^{\sqrt{t}}. 
 \end{equation}
-Nach (\ref{number_of_roots}) gilt $|\mathcal{G}| \leq deg \, Q^{'}(Y)$, und folglich gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$
+Nach (\ref{number_of_roots}) gilt $|\mathcal{G}| \leq deg \, Q^{'}(Y)$, und folglich gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$.\newline\newline
 \end{proof}
 
 Nun haben wir alle nötigen Lemmata für die Rückrichtung des Beweises
 
-\begin{theorem}
+\begin{theorem}\label{rueck_rich}
 Ist die Ausgabe PRIME, dann ist $n$ eine Primzahl 
 \end{theorem}
 
@@ -1009,14 +1051,31 @@ Nach Voraussetzung ist die Ausgabe PRIME. Nach Lemma \ref{lemma47} gilt für $t 
 \begin{align*}
 |\mathcal{G}| & \geq {t + l \choose t - 1} \\
 \\
-& \geq {l + 1 + \lfloor \sqrt{t} \, log \, n \rfloor \choose \lfloor \sqrt{t} log \, n \rfloor} && (da \: t = \sqrt{t} \,
+& \geq {l + 1 + \lfloor \sqrt{t} \, log \, n \rfloor \choose \lfloor \sqrt{t} log \, n \rfloor} && ( \: t = \sqrt{t} \,
 \sqrt{t} \geq \sqrt{t} \,  log \, n) && \\
 \\
-& \geq {2 \lfloor \sqrt{t} \, log \,  n \rfloor + 1 \choose \lfloor \sqrt{t} log \, n \rfloor} && (da \: l = \lfloor \sqrt{\phi(r)} log \, n \rfloor \geq \lfloor \sqrt{t} \, log \, n \rfloor)
+& \geq {2 \lfloor \sqrt{t} \, log \,  n \rfloor + 1 \choose \lfloor \sqrt{t} log \, n \rfloor} && ( \: l = \lfloor \sqrt{\phi(r)} log \, n \rfloor \geq \lfloor \sqrt{t} \, log \, n \rfloor)\\
+\\
+&\geq 2^{\lfloor \sqrt{t} \, log \, n \rfloor + 1} &&(\,  Theorem \,  \ref{useful_theorem_for_proof} \, )\\
+\\
+&\geq n^{\sqrt{t}}.
 \end{align*}
+Gemäß Lemma \ref{closing_lemma} gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$, falls $n$ keine Potenz von $p$ ist, daraus kann man folgern, dass $n = p^k$, für ein $k \geq 1$. Aber die Ausgabe ist nach Voraussetzung PRIME, folglich gilt $ k= 1 \Rightarrow n = p$. Somit ist $n$ eine Primzahl.
 \end{proof}
 
+Aus Theorem \ref{hin_rich} und Theorem \ref{rueck_rich} folgt der Hauptsatz der Korrektheit. 
 \section{Laufzeitanalyse}
+Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fact_2}) aus dem Zweiten Kapitel verwendet. Das heißt, Multiplikation, und Modulorechnung von zwei Zahlen jeweils mit $\lVert m \rVert$ Bits können in $O^{\sim}(\lVert m \rVert)$ Schritten durchgeführt werden. Nach dem gleichen Prinzip können diese Operationen auf zwei Polynome übertragen werden, für Polynome vom Grad $d$ und eine maximale Bitlänge von $\lVert m \rVert$ können Multiplikationen und Modulorechnungen in $O^{\sim}(d \cdot m)$ Schritten durchgeführt werden.
+
+\begin{theorem}
+Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(log^{21/2}n)$. 
+\end{theorem}
+
+% \begin{proof}
+% Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Im ersten Schritt wird überprüft, ob eine eine Potenz von einer anderen Zahl ist, dies kann durch den folgenden effizienten Algorithmus berechnet:
+
+
+% \end{proof}
 
 \section{Zusammenfassung}
 
@@ -1037,6 +1096,44 @@ Nach Voraussetzung ist die Ausgabe PRIME. Nach Lemma \ref{lemma47} gilt für $t 
 \clearpage
 \appendix
 \section{Anhang A}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwIn{$n \in \mathbb{N}, n \geq 2$.}
+\begin{enumerate}
+\item $a, \, b, \, c, \, m$
+
+\item $ b = 2$.
+
+\item \textbf{while} $2^b \leq n$ \textbf{repeat}
+
+\item $\: \: \: \: $ $a = 1, \, c = n $
+
+\item $\: \: \: \: $ \textbf{while} $c - a \geq 2$ \textbf{repeat}
+
+\item $\: \: \: \: \: \: \: \: \:$ $ m = \lfloor (a + c)/2 \rfloor$
+
+\item $\: \: \: \: \: \: \: \: \:$ $ p = min\{m^b,n+1\}$
+
+\item $\: \: \: \: \: \: \: \: \:$ \textbf{if} $ p = n$ \textbf{return} True.
+
+\item $\: \: \: \: \: \: \: \: \:$ \textbf{if} $p < n$
+
+\item $\: \: \: \: \: \: \: \: \: \: \: \: \: \:$  $ a = m$
+
+\item $\: \: \: \: \: \: \: \: \:$ \textbf{else}
+
+\item $\: \: \: \: \: \: \: \: \: \: \: \: \: \:$  $c = m$
+
+\item $\: \: \: \: $ $b = b + 1$
+
+\item \textbf{return} False
+
+
+\end{enumerate}
+ 
+\caption{Potenz-Prüfung}
+\end{algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Eidesstattliche Erklärung
