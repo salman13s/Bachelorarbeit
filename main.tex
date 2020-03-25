@@ -192,7 +192,7 @@ Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels
 Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert.    
 
 \subsection{Überblick}
-Eine natürliche Zahl $n \geq 2$ ist eine Primzahl, wenn keine der Zahlen $r \in (1,n)$ $n$ teilt, also $\forall r \in (1,n), r \nmid n$. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung aller Primzahlen von 1 bis zu einer gegebenen Zahl $n $ vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da wir uns nur dafür interessieren, ob die Zahl $n$ prim ist oder nicht. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die sogenannten Mersenne-Zahlen entwickelt, 51 der Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Der Algorithmus von Eratosthenes braucht länger als das Alter der Sonne, um zu entscheiden ob die obere Mersenne-Zahl eine Primzahl ist oder nicht. Deswegen ist es sinnvoll effizientere Algorithmen zu entwickeln. Ein anderer französischer Mathematiker Pierre de Fermat hat eine Gleichung zur Lösung des Primalitätsproblems gefunden, die für alle Primzahlen wahr ist, auf seine Gleichung bauen viele Primzahltests auf. \newline\newline
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die nach ihm sogenannten Mersenne-Zahlen entwickelt, 51 der bekannten Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat eine Gleichung zur Lösung des Primalitätsproblems gefunden, die für alle Primzahlen wahr ist, auf seine Gleichung bauen viele Primzahltests auf. \newline\newline
 Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Algorithmus ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
@@ -202,7 +202,7 @@ Um die Korrektheit zu demonstrieren, soll der Algorithmus in Python implementier
 
 
 \section{Definitionen und Grundlagen}
-In diesem Kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Theorie der zkyklotomischen Polynome, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
+In diesem Kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Komplexitätstheorie, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
 % Definitionen der Zhalentheorie 
 % Definitonen
 \subsection{Zahlentheorie}
@@ -232,7 +232,7 @@ Seien $a, b, n \in \mathbb{N}$. a ist genau dann \textbf{kongruent} zu $b$ modul
 \smallskip 
 
 \begin{definition}\label{Df_4}
-Seien $r,n \in \mathbb{N}$ mit $(n,r) = 1$, dann ist die \textbf{Ordnung} von n modulo r das kleinste k, sodass $n^k = 1 (mod $ r). Die Ordnung wird mit $o_{r}(n)$ bezeichnet.
+Seien $r,n \in \mathbb{N}$ mit $(n,r) = 1$, dann ist die \textbf{Ordnung} von $n$ modulo $r$ das kleinste $k$, sodass $n^k = 1 (mod $ r). Die Ordnung wird mit $o_{r}(n)$ bezeichnet.
 \end{definition}
 
 \smallskip
@@ -260,6 +260,7 @@ Sei n eine natürlich Zahl, dann gilt:
 \begin{equation}
     \sum_{i = 1}^{n} i = \frac{n (n + 1)}{2} = \frac{n^2 + n}{2} 
 \end{equation}
+Der Beweis ist durch Induktion trivial. 
 \end{theorem}
 
 \smallskip
@@ -282,41 +283,63 @@ Seien $R =\{ a \in \mathbb{N} \mid (a,n) = 1 \} =  \{a_{1}, a_{2},...,a_{\phi(n)
 
 \smallskip
 
-\begin{theorem}[\textbf{Kleiner fermatscher Satz}]\label{Th_2}
-Sei $a \in \mathbb{N}$ und p eine Primzahl dann gilt:\newline
-\begin{enumerate}
-    \item a und p sind genau dann Teilerfremd, wenn $a^{p-1} = 1 $ (mod p) gilt.
-    \newline
-    \item $\forall a $ gilt  $a^p = a$ (mod p)
-\end{enumerate}
+\begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
+Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \in $R:\newline\newline
+ \begin{equation}
+     (a + b)^n  = \sum_{k=0}^n {n \choose k} a^k b^{n-k}
+ \end{equation}
 \end{theorem}
 
-%Theoretische Informatik 
+\smallskip
 
-\subsection{Komplexitätstheorie}
+\begin{theorem}\label{th_25}
+Sei n eine Primzahl, dann gilt ${n \choose i} = 0 $(mod n).
+\end{theorem}
 
-Hier handelt es sich darum, die relevanten Begriffe und aus dem Gebiet der Komplexitätstheorie, eindeutig zu definieren. Grundlagen der Komplexitätstheorie, wie Turingmaschinen, Polynomiallaufzeit, und Entscheidungsprobleme werden in dieser Arbeit nicht definiert, jedoch sind sie eine Voraussetzung, um die hier behandelten Themen zu verstehen.   
-
-\begin{definition}
-In der Komplexitätstheorie ist \textbf{P} die Komplexitätsklasse, die alle Entscheidungsprobleme enthält, die in Polynomialzeit für deterministische Turingmaschinen lösbar sind. 
-\end{definition}
-
-\begin{definition}
-Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
-\begin{equation}
-    f(n) = O(t(n) \cdot poly(log t(n)))
+\begin{proof}
+\begin{equation}\label{modb}
+    {n \choose i} = \frac{(n - i - 1) \cdot \cdot \cdot (n - 1) \cdot n }{i!}
 \end{equation}
-\textbf{Beobachtung:}
-\begin{equation}
-    O^{\sim}(log^k n) = O(log^k n) \cdot poly(log log^k n) = O(log^k n) \cdot poly(log( k \cdot log n)) = O(log^{k+\epsilon}n)
-\end{equation}
-Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann läuft er in Polynomialzeit von $log n$.
-\end{definition}
+Da $n$ im Zähler steht und n eine Primzahl ist(nicht durch Zahlen im Nenner teilbar), muss die obere Gleichung (\ref{modb}) durch n teilbar sein. 
+\end{proof}
+
+\smallskip
+
+\begin{theorem}[\textbf{Kleiner Satz von Fermat}]\label{Th_2}
+Für eine Primzahl $p$ und ein beliebiges $a \in \mathbb{Z}$ gilt:
+\begin{align*}
+    a^p = a \, mod \, p
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+Die Aussage kann per Induktion über $a \in \mathbb{Z}_{+}$ gezeigt werden.\newline\newline
+IA: $a = 0  \Rightarrow 0^p = 0 \, mod \, p$.\newline\newline
+
+IH: Nun sei die Aussage für ein beliebiges $a \in \mathbb{Z}_{+}$ wahr.\newline\newline
+
+IS: für a + 1 gilt nach dem binomischen Lehrsatz:
+\begin{align*}
+    (a + 1)^p - (a + 1) = \big{[}a^p + {p \choose 1}a^{p - 1} + ... +{p \choose p - 1} a + 1\big{]} - (a + 1).
+\end{align*}
+Für die Koeffizienten gilt: 
+\begin{align*}
+    {p \choose k} = \frac{p \cdot (p - 1) \cdot \cdot \cdot (p - k + 1)}{1 \cdot 2 \cdot \cdot \cdot k}
+\end{align*}
+$\forall k, \,  1 \leq k \leq p - 1$, somit sind alle Koeffizienten(bis auf das erste und das letzte) durch p teilbar.\newline\newline
+Also es gilt:
+\begin{align*}
+(a + 1)^p - (a + 1) = \big{[} a^p + 1 \big{]} - (a + 1) = a^p - a \, mod \, p.
+\end{align*}
+und das ist nach der IH durch p teilbar.  
+\end{proof}
+
+
 
 % Algerba
 
 \subsection{Algebra}
-Es wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.\newline
+\textbf{Bemerkung:} In diesem Kapitel wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.\newline
 
 \begin{definition}
 Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
@@ -357,25 +380,15 @@ Diesen Ring nennt man den \textbf{Quotientenring}.
 \smallskip
 
 \begin{theorem}\label{number_of_roots}
-Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. Ferner seien $a_1, a_2,...,a_n \in R$ die Nullstellen von $f$ mit $a_i - a_j \in R^*, \, \forall i,j, \, 1 \leq i,j, \leq n$. Dann ist $deg \, f \geq n$.
+Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. Ferner seien $a_1, a_2,...,a_n \in R$ die Nullstellen/Wurzeln von $f$ mit $a_i - a_j \in R^*, \, \forall i,j, \, 1 \leq i,j, \leq n$. Dann ist $deg \, f \geq n$.
 \end{theorem}
 
 \begin{proof}
-Beweis durch Widerspruch, angenommen $deg \, f = n - 1$ für ein beliebiges $n$. Sei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0$ und daher $b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
-\end{proof}
-
-\begin{theorem}\label{th_25}
-Sei n eine Primzahl, dann gilt ${n \choose i} = 0 $(mod n).
-\end{theorem}
-
-\begin{proof}
-\begin{equation}\label{modb}
-    {n \choose i} = \frac{(n - i - 1) \cdot \cdot \cdot (n - 1) \cdot n }{i!}
-\end{equation}
-Da $n$ im Zähler steht und n eine Primzahl ist(nicht durch Zahlen im Nenner teilbar), muss die obere Gleichung (\ref{modb}) durch n teilbar sein. 
+Beweis durch Widerspruch, angenommen $deg \, f = n - 1$ für ein beliebiges $n$. Sei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. \newline\newline Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0 \Rightarrow  b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
 \end{proof}
 
 \smallskip
+
 \begin{flushleft}
 \begin{theorem}
 ${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
@@ -405,14 +418,6 @@ Somit ist die Ungleichung für $n = k + 1$ wahr.
 \end{proof}
 
 \end{flushleft}
-\smallskip 
-
-\begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
-Seien R ein kommutativer Ring und n eine natürliche Zahl, dann gilt für $a,b \in $R:\newline\newline
- \begin{equation}
-     (a + b)^n  = \sum_{k=0}^n {n \choose k} a^k b^{n-k}
- \end{equation}
-\end{theorem}
 
 \smallskip
 
@@ -429,7 +434,7 @@ Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{equation}
 \subsection{Zyklotomische Polynome}
 
 \begin{definition}
-Sei n eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
+Sei $n$ eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
 \begin{equation}
     \zeta^n = 1.
 \end{equation}
@@ -438,13 +443,55 @@ Z.B. 1 und -1 sind die quadratischen Einheitswurzeln, und 1, -1, i, -i, sind die
 
 \smallskip
 
-\begin{definition}
+\begin{theorem}
 Für jede natürliche Zahl $n$, gibt es $n$ viele Einheitswurzeln, die durch:\newline
 \begin{equation}
     e^{2k\pi i/n} = cos(\frac{2k \pi }{n}) + i sin(\frac{2k \pi}{n})
 \end{equation}
 definiert sind, mit $1 \leq k \leq n$.
+\end{theorem}
+
+\smallskip
+
+
+\smallskip
+
+\begin{definition}\label{prim_ein}
+Die \textbf{n-te primitive Einheitswurzel} ist jede Einheitswurzel $\zeta$, für die $ord_{\mathbb{C}}(\zeta) = n $ gilt. Die Menge aller primitiven n-ten Einheitswurzeln wird mit \textbf{P(n)} bezeichnet. 
 \end{definition}
+
+\smallskip
+
+\begin{definition}\label{def_cyc_poly}
+\textbf{Zyklotomisches Polynom:} das n-te zyklotomische Polynom $\Phi_{n}$ ist durch:\newline
+\begin{equation}
+    \begin{split}
+        \begin{aligned}
+            \Phi_{n}(x) &= \prod_{\zeta \in P(n)} (x -\zeta) \\
+            &= \prod _{\stackrel {1\leq k\leq n}{(k,n)=1}}\left(x- \zeta^k\right).
+        \end{aligned}
+    \end{split}
+\end{equation}
+
+definiert. Dabei ist $P(n)$ die Menge aller primitiven n-ten Einheitswurzeln aus der Definition (\ref{prim_ein}). 
+\end{definition}
+
+\smallskip
+
+\begin{theorem}\label{impor_cyc_lemma}
+Für jede natürliche Zahl n . gilt:\newline
+\begin{equation}
+    x^n - 1 = \prod_{d \mid n} \Phi_{d}(n).
+\end{equation}
+%TO: cite the reference 
+Für den Beweis, siehe (Fields and Cyclotomic Polynomials) 
+\end{theorem}
+
+\smallskip
+
+\begin{theorem}\label{num_of_prim_uni}
+Für alle $n \geq 1$ existieren genau $\phi(n)$ n-te primitive Einheitswurzeln. 
+\end{theorem}
 
 \smallskip
 
@@ -496,61 +543,32 @@ Aus (\ref{gcd_1}) und Der Definition(\ref{ord_def}) folgt, dass $(m,k) = k$ und 
 
 \smallskip
 
-\begin{definition}\label{prim_ein}
-Die \textbf{n-te primitive Einheitswurzel} ist jede Einheitswurzel $\zeta$, für die $ord_{\mathbb{C}}(\zeta) = n $ gilt. Die Menge aller primitiven n-ten Einheitswurzeln wird mit \textbf{P(n)} bezeichnet. 
+\subsection{Komplexitätstheorie}
+
+Hier handelt es sich darum, die relevanten Begriffe aus dem Gebiet der Komplexitätstheorie, deutlich zu definieren. Grundlagen der Komplexitätstheorie, wie Turingmaschinen, Polynomiallaufzeit, und Entscheidungsprobleme werden in dieser Arbeit nicht definiert, jedoch sind sie eine Voraussetzung, um die hier behandelten Themen zu verstehen.   
+
+\begin{definition}
+In der Komplexitätstheorie ist \textbf{P} die Komplexitätsklasse, die alle Entscheidungsprobleme enthält, die in Polynomialzeit für deterministische Turingmaschinen lösbar sind. 
 \end{definition}
 
-\smallskip
-
-\begin{definition}\label{def_cyc_poly}
-\textbf{Zyklotomisches Polynom:} das n-te zyklotomische Polynom $\Phi_{n}$ ist durch:\newline
+\begin{definition}
+Eine Funktion $f(n)$ ist $ O^{\sim}(t(n))$, wenn
 \begin{equation}
-    \begin{split}
-        \begin{aligned}
-            \Phi_{n}(x) &= \prod_{\zeta \in P(n)} (x -\zeta) \\
-            &= \prod _{\stackrel {1\leq k\leq n}{(k,n)=1}}\left(x- \zeta^k\right).
-        \end{aligned}
-    \end{split}
+    f(n) = O(t(n) \cdot poly(log t(n)))
 \end{equation}
-
-Dabei ist $P(n)$ die Menge aller primitiven n-ten Einheitswurzeln aus der Definition (\ref{prim_ein}). 
+\textbf{Beobachtung:}
+\begin{equation}
+    O^{\sim}(log^k n) = O(log^k n) \cdot poly(log log^k n) = O(log^k n) \cdot poly(log( k \cdot log n)) = O(log^{k+\epsilon}n)
+\end{equation}
+Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann läuft er in Polynomialzeit von $log n$.
 \end{definition}
 
-\smallskip
-
-\begin{theorem}\label{impor_cyc_lemma}
-Für jede natürliche Zahl n . gilt:\newline
-\begin{equation}
-    x^n - 1 = \prod_{d \mid n} \Phi_{d}(n).
-\end{equation}
-%TO: cite the reference 
-Für den Beweis, siehe (Fields and Cyclotomic Polynomials) 
-\end{theorem}
-
-\smallskip
-
-\begin{theorem}\label{num_of_prim_uni}
-Für alle $n \geq 1$ existieren genau $\phi(n)$ n-te primitive Einheitswurzeln. 
-\end{theorem}
-
-\smallskip
-
-\begin{definition}\label{frob_auto}
-Sei $p$ eine Primzahl und $\mathbb{K}_{p}$ der dazugehörigen Restklassenkörper. Dann heißt der Automorphismus:
-\begin{equation}
-   \begin{aligned}
-        \psi : &\mathbb{K}_{p} \to \mathbb{K}_{p}, \\
-    &\alpha \to \alpha^p, \, \forall \alpha \in \mathbb{K}_{p}
-   \end{aligned}
-\end{equation}
-\textbf{Frobenius-Automorphismus}.
-\end{definition}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AKS ALGORITHMUS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der AKS-Primzahltest}
 \subsection{Grundidee des Algorithmus}
-Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz.
+Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz (\ref{Th_2}) für Polynome.
 \begin{flushleft}
 \begin{lemma}\label{hauptlemma}
 seien $a,n \in \mathbb{N}$ mit a < n und teilerfremd, dann ist n genau dann eine Primzahl, wenn \newline
@@ -562,10 +580,10 @@ Dabei ist X ein Polynom über dem Ring $\mathbb{Z}_{n}[X]$
 \begin{proof}
 Aus dem binomischen Lehrsatz(\ref{Th_3}) folgt, dass der Koeffizient von $X^i$ in dem Polynom ${n \choose i} a^{n-i}$ ist.\newline\newline
 $"\Rightarrow"$\newline
-Angenommen n ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten sind Null.\newline\smallskip Für i = 0 erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
+Angenommen $n$ ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten (bis auf den ersten und den letzten) sind Null.\newline\smallskip Für $i = 0$ erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
 $(X + a)^n = a^n + 0 + 0 + ... + 0 + X^n = a^n + X^n$(mod n).\newline\newline
 $"\Leftarrow"$\newline
-Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor q von n, mit der Vielfachheit k(Dabei ist zu beachten, dass Für 1 < q < n, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
+Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor $q$ von $n$, mit der Vielfachheit $k$(Dabei ist zu beachten, dass Für $1 < q < n$, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
 Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 \begin{equation}
     {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
@@ -574,7 +592,7 @@ Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich n als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c$ durch $c$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^k mod \, r$ ersetzen, also wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist, da der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten hat.\newline Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^k mod \, r$ ersetzen, das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten.\newline Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
 \end{equation}
@@ -648,14 +666,7 @@ Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
 \begin{theorem}
 Der Algorithmus gibt genau dann PRIME zurück, wenn $n$ eine Primzahl ist.
 \end{theorem}
-Der Korrektheitsbeweis lässt sich in zwei Teilen zerlegen, der erste Teil befasst sich mit der Hinrichtung des Beweises. Also, dass der Algorithmus PRIME liefert, wenn die Eingabe eine Primzahl ist. Dies ist aber trivial und braucht keine Lemmas. Für den zweiten Teil(Rückrichtung) sind jedoch mehrere Lemmas und Sätze nötig. Diese werden in diesem Kapitel in der Reihenfolge, wie sie im Orginalpaper vorkamen, dargestellt und bewiesen. Zudem wird vor jedem Lemma kurz erläutert, warum dieses Lemma für den Algorithmus von Bedeutung ist. Das erste Lemma ist eine Eigenschaft für das kleinste gemeinsame Vielfaches von $m$ Zahlen.
-
-Das zweite Lemma beschäftigt sich mit der Existenz und der oberen Schranke vom $r$, das in der Grundidee erwähnt wurde.
-
-Danach wird eine kurze Einführung zu introspektiven Zahlen und Polynomen dargestellt, dort wird der Begriff introspektiv definiert und genauer erklärt. Darüber hinaus werden Eigenschaften introspektiver Polynome und Zahlen bewiesen.
-
-Schließlich werden zwei sehr wichtige Mengen definiert.% do some more stuff here
-
+Dieses Ergebnis wird durch eine Reihe von Lemmata festgestellt. Der Korrektheitsbeweis lässt sich in zwei Teilen zerlegen, der erste Teil befasst sich mit der Hinrichtung des Beweises. Also, dass der Algorithmus PRIME liefert, wenn die Eingabe eine Primzahl ist. Dies ist aber trivial und braucht keine Lemmata. Für den zweiten Teil(Rückrichtung) sind jedoch mehrere Lemmata und Sätze nötig. Diese werden in diesem Kapitel in der Reihenfolge, wie sie im Originalartikel vorkamen, dargestellt und bewiesen. Zudem wird vor jedem Lemma kurz erläutert, warum dieses Lemma für den Algorithmus von Bedeutung ist.
 \textbf{Erster Teil des Beweises($\Rightarrow$)}
 \begin{theorem}
 Wenn $n$ eine Primzahl ist, dann gibt der Algorithmus PRIME zurück.
@@ -667,10 +678,9 @@ Wenn $n$ eine Primzahl ist, gibt der erste Schritt in (\ref{algo}) niemals COMPO
 
 \textbf{Zweiter Teil des Beweises($\Leftarrow$)}
 
-Hier wird die Rückrichtung bewiesen; also  wenn die Ausgabe PRIME ist, dann ist $n$ eine Primzahl.
-Wenn der Algorithmus bei Schritt 4 PRIME zurückgibt, dann muss $n$ eine Primzahl sein, da sonst der Algorithmus einen nicht trivialen Faktor von $n$ in Schritt 3 gefunden hätte. Das heißt, es bleibt nur der Fall bei Schritt 6. Der Algorithmus hat Zwei Hauptschritte, das sind Schritt 2 und Schritt 5. Bei Schritt 2 wird ein geeignetes $r$ gefunden und bei Schritt 5 wird verifiziert, ob die Gleichung (\ref{eq:2}) für mehrere a Werte gilt.    
+Hier wird die Rückrichtung behandelt; also  wenn die Ausgabe PRIME ist, dann ist $n$ eine Primzahl. Wir werden uns nur auf die Schritte konzentrieren, die PRIME zurückgeben. Dies sind die schritte 4 und 6.\newline\newline Wenn der Algorithmus bei Schritt 4 PRIME zurückgibt, dann muss $n$ eine Primzahl sein, da sonst der Algorithmus einen nicht trivialen Faktor von $n$ in Schritt 3 gefunden hätte. Das heißt, es bleibt nur der Fall bei Schritt 6. Der Algorithmus hat Zwei Hauptschritte, das sind Schritt 2 und Schritt 5. Bei Schritt 2 wird ein geeignetes $r$ gefunden und bei Schritt 5 wird verifiziert, ob die Gleichung (\ref{eq:2}) für mehrere a Werte gilt.    
 
-Für diesen Teil ist eine Vorarbeit nötig. Das erste wichtige Lemma ist die Abschätzung des kleinsten gemeinsamen Vielfaches.
+Für diesen Teil ist eine Vorarbeit nötig. Wir brauchen zunächst eine untere Schranke für das kleinste gemeinsame Vielfaches, diese Abschätzung ist bei dem Existienzbeweis für das geeignete $r$ von Bedeutung.
 
 
 \begin{lemma}\label{lemma_1}
@@ -681,7 +691,8 @@ Für $m \geq 7$:\newline
 \end{lemma}
 
 \begin{proof}
-Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, betrachte das folgende Integral für $n \geq 1$:\newline
+Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, zuerst wird  gezeigt, dass $m {n \choose m} \mid d_n$.\newline 
+Wir betrachten das folgende Integral für $n \geq 1$:\newline
 \begin{equation}\label{intg}
     \begin{split}
       \begin{aligned}
@@ -693,21 +704,46 @@ Sei $d_{n} = LCM_{1 \leq m \leq n}{\{m\}}$, betrachte das folgende Integral für
     \end{split}
 \end{equation}
 
-Aus (\ref{intg}) ist es leicht zu sehen, $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$, für $1 \leq m \leq n$.
+Aus (\ref{intg}) ist es leicht zu sehen, dass $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$.\newline\newline
 
-Durch Induktion nach $n - m$ und partielle Integration lässt sich zeigen, dass für $n \in \mathbb{N}$ und $m, \, 1 \leq m \leq n$:
+Wir wollen nun durch Induktion nach $n - m$ und partielle Integration zeigen, dass für $n,m \in \mathbb{N}, \, 1 \leq  m \leq n$
 \begin{equation}\label{I_mn}
-    I_{n,m} = \frac{1}{m \cdot {n \choose m}}
+    I_{n,m} = \int_{0}^{1} x^{m-1} (1-x)^{n - m} dx = \frac{1}{m \cdot {n \choose m}}
 \end{equation}
+immer gilt.\newline\newline
 
-gilt.\newline\newline
 
+\textbf{IA:}
+$n - m = 0 \iff n = m $:
+\begin{align*}
+    I_{n,m} =  \int_{0}^{1} x^{m - 1 } \cdot (1-x)^{n - m = 0} dx = \int_{0}^{1} x^{m - 1} dx = \Big[ \frac{x^m}{m}\Big]_0^1 = \frac{1}{m} = \frac{1}{m \cdot {m \choose m}}
+\end{align*}
 
-Da $m + r \mid d_{n} $ und (\ref{I_mn}) gelten, muss
+\textbf{IH:}
+Nun wird Angenommen, dass ein $n - m \in \mathbb{N}, \, 1 \leq m < n$ existiert, sodass die Aussage (\ref{I_mn}) wahr ist.\newline\newline
+
+\textbf{IS: }
+
+Partielle Integration:\newline\newline
+\begin{align*}
+    I_{n,m} = \int_{0}^{1} &\underbrace{x^{m - 1}}_{f^{'}} \cdot \underbrace{(1 - x)^{n - m}}_{g} dx =\Big[ \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(1 - x)^{n - m + 1}}_{g}\Big]_0^1 - \int_{0}^{1} \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(-1 )\cdot (n - m) \cdot (1 -x)^{m - n - 1}}_{g^{'}} dx \\
+    \\
+    &= 0 +  \int_{0}^{1} \frac{(n - m) \cdot x^{m}}{m} \cdot (1 - x)^{n - m - 1} dx \\
+    \\
+    &= \frac{(n - m )}{m} \cdot \int_{0}^{1} x^{(m + 1) - 1} \cdot (1-x)^{n - (m + 1)} dx \\
+    \\
+    &\underbrace{=}_{IH} \frac{(n - m )}{m} \cdot \frac{1}{(m + 1) \cdot {n \choose m + 1}} = \frac{(n - m)}{m} \cdot \frac{(n - (m + 1))! \cdot (m + 1)!}{(m + 1) \cdot n!} \\ 
+    \\ 
+    &= \frac{(n - m )! \cdot m!}{m \cdot n!} = \frac{1}{m \cdot {n \choose m}} 
+\end{align*}
+
+Somit ist die Aussage(\ref{I_mn}) wahr.\newline 
+
+Demzufolge gilt: 
 \begin{equation}
     m \cdot {n \choose m} \mid d_{n}
 \end{equation}
-$\forall m $ mit $1 \leq m \leq n $ auch gelten.\newline
+$\forall m $ mit $1 \leq m \leq n $.\newline
 
 Somit gilt auch: 
 \begin{equation}\label{d2n}
@@ -717,18 +753,40 @@ Somit gilt auch:
 Beziehungsweise 
 
 \begin{equation}\label{d2n1}
-    (2n + 1) {2n \choose n} = (n + 1) {2n + 1 \choose n + 1} \mid d_{2n + 1} 
+    (2n + 1) {2n \choose n} = (n + 1) {2n + 1 \choose n + 1} \mid d_{2n + 1}. 
 \end{equation}
 
+\begin{align*}
+\Rightarrow n {2n \choose n}\mid d_{2n}\mid d_{2n + 1}
+\end{align*}
 \smallskip
-Aus (\ref{d2n}) und (\ref{d2n1}) folgt $d_{n} \mid d_{n+1}$\newline\newline Sowie 
-\begin{equation}\label{helps}
-    n(2n + 1) {2n \choose n} \mid d_{2n + 1}
+
+Es gilt auch $4^n = (1 + 1)^2n \underbrace{=}_{(\ref{Th_3})} \sum_{k = 0}^{n} {2n \choose k}$, dabei ist ${2n \choose n}$ der größte Binomialkoeffizient der Summe $\sum_{k = 0}^{n} {2n \choose k}$ und dies ist größer als der Mittlere Wert $4^n /(2n + 1)$, also es gilt:\newline\newline
+\begin{equation}\label{estim_4n_bin}
+    {2n \choose n} > \frac{4^n}{2n + 1} > 2^n, \,  n \geq 3.
 \end{equation}
-\newline\newline
-Es bleibt zu zeigen, dass $d_{2n+1} $eine obere Schranke von $2^{2n + 1}$ ist.\newline\newline  
-$\Rightarrow d_{2n + 1} \underbrace{\geq}_{(\ref{helps})} n (2n + 1) {2n \choose n} \geq n \cdot 4^n \geq 2 \cdot 2^{2n} = 2^{2n + 2}$ für $n \geq 2$.\newline\newline
-Für $n \geq 4$ ist $d_{2n + 2} \geq d_{2n + 1} \geq 2^{2n + n }$, wenn diese Aussage für $n \geq 4 $ gilt, dann gilt sie auch für $n \geq 7$.\newline\newline Generell gilt: $d_{m} = LCM_{1 \leq m \leq n} \{m\} = LCM(m) \geq  2^m $.
+
+Aus der Tatsache, dass $m{n \choose m} \mid d_n, \, 1 \leq m \leq n$ und aus (\ref{estim_4n_bin}) folgt:
+\begin{align*}
+    d_{2n} \geq n {2n \choose n} > n \cdot 2^n, \, n \geq 3.
+\end{align*}
+
+da $(n, 2n +1) = 1 $, folgt aus (\ref{d2n}) und(\ref{d2n1}), dass:\newline\newline 
+\begin{equation}\label{helps}
+    n(2n + 1) {2n \choose n} \mid d_{2n + 1}.\newline\newline
+\end{equation}
+gilt.\newline\newline
+
+Sowie 
+\begin{equation}
+    d_{2n + 1} \geq  n(2n + 1) {2n \choose n} \underbrace{>}_{(\ref{estim_4n_bin})} n\cdot 4^n.
+\end{equation}
+
+Daraus erhalten wir:
+\begin{align*}
+d_{2n + 2} \geq d_{2n + 1} > n \cdot 4^n \geq 4 \cdot 2^{2n} = 2^{2n + 2}
+\end{align*}
+folglich gilt $d_N > 2^N$ für alle $N \geq 9$.
 \end{proof}
 
 \textbf{Abschätzung von r}.\newline\newline
@@ -776,7 +834,7 @@ Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das läs
 Aber wenn das gelten würde, würde $r_{m}$ $N_{B}$ teilen (z.B. $ r_{m} \mid n^{log^2 n} -1$) und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
 \end{proof}
 
-Bevor wir mit dem Beweis fortfahren, brauchen wir das folgende Lemma:
+\smallskip
 
 \begin{lemma}\label{ord_prime_l}
 wenn $o_{r}(n) > 1$, dann existiert ein Primfaktor $p$ von $n$, sodass $o_{r}(p) > 1$ gilt. 
@@ -819,7 +877,7 @@ Seien $f(X)$ ein Polynom in $\mathbb{Z}[X]$ und $m \in \mathbb{N}$ , $m$ ist \te
 gilt. 
 \end{definition}
 
-Für den Korrektheitsbeweis ist eine Eigenschaft introspektiver Zahlen beziehungsweise Polynome relevant. Dies ist die Multiplikativität von solchen Zahlen und Polynomen.\newline\newline
+Für den Korrektheitsbeweis ist eine Eigenschaft introspektiver Zahlen relevant. Dies ist die Multiplikativität von solchen Zahlen.\newline\newline
 
 \begin{lemma}\label{intros_num}
 Seien $m,m^{'}$ introspektive Zahlen bezüglich eines Polynoms $f(X)$ in $\mathbb{Z}[X]$. Dann ist $m \cdot m^{'}$ auch introspektiv bezüglich $f(X)$.
@@ -831,7 +889,7 @@ Da $m$ bezüglich $f(X)$ introspektiv ist, gilt:\newline\newline
 $m^{'}$ ist auch introspektiv bezüglich $f(X^{m})$, das heißt es gilt auch:\newline\newline
 \centerline{$[f(X^m)]^{m^{'}} = f(X^{m \cdot m^{'}})$( mod $X^{m\cdot r} - 1, p$).}\newline\newline
 
-Offensichtlich gilt $X^{m \cdot r } - 1 = (X^{r})^{m} - (1)^m \underbrace{=}_{(\ref{funny_id})} (X^{r} - 1) \sum_{k = 0}^{m-1} X^{r \cdot k}$.\newline\newline$\Rightarrow X^{r} - 1\mid X^{mr} - 1$. Somit gilt auch\newline\newline
+Es gilt auch $X^{m \cdot r } - 1 = (X^{r})^{m} - (1)^m \underbrace{=}_{(\ref{funny_id})} (X^{r} - 1) \sum_{k = 0}^{m-1} X^{r \cdot k}$.\newline\newline$\Rightarrow X^{r} - 1\mid X^{mr} - 1$. Somit gilt\newline\newline
 \centerline{$[f(X^m)]^{m^{'}} = f(X^{m \cdot m^{'}})$( mod $X^{r} - 1,p$).}\newline
 
 Daraus folgt:\newline\newline
@@ -842,16 +900,17 @@ Das heißt wenn eine Zahl $m$ bezüglich eines Polynoms $f(X)$ introspektiv ist,
 
 \smallskip
 
-\begin{lemma}
+\begin{lemma}\label{intros_pol}
 wenn $m$ bezüglich der Polynome $f(X)$ und $g(X)$ introspektiv ist. Dann ist $m$ auch bezüglich $f(X) \cdot g(X)$ introspektiv.  
 \end{lemma}
+\begin{proof}
+\begin{align*}
+    [f(X) \cdot g(X)]^{m} = [f(X)]^m \cdot [g(X)]^m \underbrace{=}_{(\ref{intros_num})} f(X^m) \cdot g(X^m)(mod \, X^r - 1, p).
+\end{align*}
 
-
-\begin{proof}\label{intros_pol}
-    \centerline{$[f(X) \cdot g(X)]^{m} = [f(X)]^m \cdot [g(X)]^m \underbrace{=}_{(\ref{intros_num})} f(X^m) \cdot g(X^m)$(mod $X^r - 1, p$).}
 \end{proof}
 
-Für den Beweis benötigen wir zwei Gruppen, wir definieren nun die folgenden Mengen:\newline\newline
+Wir definieren nun die folgenden Mengen:\newline\newline
 \begin{equation}\label{I_Set}
       I := \{ \frac{n^i}{p^i} \cdot p^j \mid i,j \geq 0\}.
 \end{equation}
@@ -865,7 +924,7 @@ Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den 
 
 Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$, das heißt $G = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
 
-Um die zweite Gruppe zu definieren, sind ein paar Eigenschaften von zyklotomischen Polynomen über endlichen Körpern erforderlich.
+Um die zweite Gruppe zu definieren, ist die folgende Eigenschaft von zyklotomischen Polynomen über endlichen Körpern erforderlich.
 
 \begin{lemma}\label{cyc_ov_fields}
 \textbf{Irreduzible Teiler zyklotomischer Polynome}
@@ -891,15 +950,16 @@ $|\mathcal{G}| > {t + l \choose t - 1}$
 \end{lemma}
 
 \begin{proof}
-Zunächst sei $h(X)$ ein Faktor des r-ten zyklotomischen Polynoms $\Phi_r (X)$ und somit auch von $X^r - 1$. Das heißt X ist eine primitive r-te Einheitswurzel in $\mathbb{K}$. Ferner Seien $f(X),g(X)$ zwei verschiedene Polynome aus $P$ vom Grad $ < t$. Angenommen $f(X) = g(X)$ im Körper $\mathbb{K}$. Weiterhin sei $m \in I$ beliebig und $[f(X)]^m = [g(X)]^m$ in $\mathbb{K}$. $m$ ist introspektiv bezüglich $f, g$ daher gilt:\newline
-\centerline{$f(X^m) = g(X^m) (mod \, X^r - 1,p)$.} Da $h(X) \mid X^r - 1$ gilt auch\newline
+Zunächst sei $h(X)$ ein Faktor des r-ten zyklotomischen Polynoms $\Phi_r (X)$ und somit auch von $X^r - 1$. Das heißt X ist eine primitive r-te Einheitswurzel in $\mathbb{K}$. Wir zeigen zuerst, dass alle $f(X),g(X), \, f(X) \neq g(X)$ aus $P$ vom Grad $ < t$ auf zwei verschiedene Elemente in $\mathcal{G}$ abgebildet werden.\newline\newline
+Angenommen $f(X) = g(X)$ im Körper $\mathbb{K}$. Weiterhin sei $m \in I$ beliebig und $[f(X)]^m = [g(X)]^m$ in $\mathbb{K}$. $m$ ist introspektiv bezüglich $f, g$ daher gilt:\newline\newline
+\centerline{$f(X^m) = g(X^m) (mod \, X^r - 1,p)$}.\newline\newline Da $h(X) \mid X^r - 1$ gilt auch\newline\newline
 \centerline{$f(X^m) = g(X^m) (mod \, h(X),p)$.}\newline
 
 
 
 folglich gilt $f(X^m) = g(X^m)$ in $\mathbb{K}$. Daraus folgt, dass $X^m$ eine Wurzel des Polynoms $Q(Y) = f(Y) - g(Y), \, \forall m \in I$ ist. Da $X$ eine primitive r-te Einheitswurzel von $\Phi_r(X)$ in $\mathbb{K}$ und $(m,r) = 1, \, \forall m \in G$, folgt auch, dass $X^m$ eine r-te primitive Einheitswurzel in $\mathbb{K}$ ist.
 
-Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach der Wahl von $f,g$ ist $deg \, Q < t$. Das ist ein Widerspruch zu Theorem \ref{number_of_roots} un folglich gilt $f(X) \neq g(X)$ in $\mathbb{K}$.
+Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach der Wahl von $f,g$ ist $deg \, Q < t$. Das ist ein Widerspruch zu Theorem \ref{number_of_roots} und folglich gilt $f(X) \neq g(X)$ in $\mathbb{K}$.
 
 Es gilt auch, dass $i \neq j  \in \mathbb{K}_p, \forall \, 1 \leq i \neq j \leq l = \lfloor \sqrt{\phi(r)} log n \rfloor$. Da $o_r(n) > log^2 n$, gilt $r > log^2 n$ und folglich gilt auch:\newline\newline
 \centerline{$l = \lfloor \sqrt{\phi(r)} log n \rfloor < \sqrt{r} log n < r < p$}
@@ -935,7 +995,7 @@ Aus (\ref{m1_m2}) folgt $[f(X)]^{m_1} = [f(X)]^{m_2}$ in $\mathbb{K}$. Demnach i
 \begin{equation}\label{degQ}
     deg \, Q^{'}(Y) = m_1 \leq (\frac{n}{p} \cdot p)^{\lfloor \sqrt{t} \rfloor} \leq n^{\sqrt{t}}. 
 \end{equation}
-Nach (\ref{number_of_roots}) gilt $|\mathcal{G}| \leq deg \, Q^{'}(Y)$, und daher gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$
+Nach (\ref{number_of_roots}) gilt $|\mathcal{G}| \leq deg \, Q^{'}(Y)$, und folglich gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$
 \end{proof}
 
 Nun haben wir alle nötigen Lemmata für die Rückrichtung des Beweises
