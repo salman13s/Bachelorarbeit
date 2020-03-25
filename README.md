@@ -1,12 +1,12 @@
-# Bachelorarbeit(main.pdf)
+## Bachelorarbeit(main.pdf)
 Bachelorarbeit zum Thema AKS-Primzahltest
 
-# thesis 
-1. the thesis contains a theoretical overview of the AKS-Algorithm(in German) 
+## thesis 
+1. the thesis contains a theoretical overview of the AKS-Algorithm and the proof of correctness(all in german)
 2. it also contains the runtime analysis of each step of the AKS-algorithm(including plots)
 
 
-# prerequisites
+## prerequisites
 1. Python
 2. matplotlib: [Download here](https://matplotlib.org/tutorials/index.html)
 3. Scipy: [Download here](https://www.scipy.org/)
