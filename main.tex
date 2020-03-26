@@ -1089,6 +1089,11 @@ Mit Hilfe einer Grafik lässt sich diese Aussage verdeutlichen:
 Im zweiten Schritt wird ein $r$ gesucht, sodass $o_{r}(n) > log^2 n$. Dies kann durch Ausprobieren von sukzessiven Werten von $r$ und dann zu testen, ob $n^k \neq 1 \,  mod \, r, \, \forall k \leq log^2 n$. Für jedes $r$ gibt es höchstens $O(log^2 n)$ mögliche Werte für $k$. Dies kann in $O^{\sim}(\lVert k \rVert \cdot \rVert r \lVert) = O^{\sim}(log^2 n \, log \, r)$ berechnet werden.\newline\newline
 Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit für den zweiten Schritt $O^{\sim}(log^7 n)$ ist. 
 
+\begin{figure}[h]
+\includegraphics[width=8cm]{plots/findR.png}
+\centering
+\caption{Laufzeit von zweitem Schritt}
+\end{figure}
 
 \section{Zusammenfassung}
 
