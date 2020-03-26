@@ -92,38 +92,40 @@ def aks(n):
 
 #### Time-Complexity_Analysis ############################################################
 
- # return the bit size of a non-negative integer
+#return the bit size of a non-negative integer
 def bit_length(n):
     bits = 0
     while n >> bits: bits += 1
     return bits
 
 #best test values so far 
-x=[i for i in range(0,1000,10)]
+x = [i  for i in range(2,200000,100)]
 y = []
-z = []
-
+bl = []
+n = 10  
 for a in x:
     start = time.process_time()
+    # check_pefect_powers(a)
     aks(a)
     end = time.process_time()
-    b = bit_length(a)
-    if b not in z:
-        z.append(b)
-        y.append(end - start)
+    t = end - start
+    l = bit_length(a)
+    if l not in bl:
+        y.append(t)
+        bl.append(bit_length(a))
 
 
 
 ############################### Plotting #################################################
 
 
-z = sorted(z)
 y = sorted(y)
-plt.plot(z,y)
-plt.xlabel("n")
-plt.ylabel("Time required")
-plt.show()
 
+plt.plot(bl,y)
+plt.xlabel("n")
+plt.ylabel("required time")
+plt.title("#Bits")
+plt.show()
 
 ##Tests##
 

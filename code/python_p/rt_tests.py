@@ -91,8 +91,8 @@ bl = []
 n = 10	
 for a in x:
 	start = time.process_time()
-	# check_pefect_powers(a)
-	smallest(a)
+	check_pefect_powers(a)
+	# smallest(a)
 	# naive_aks(a)
 	end = time.process_time()
 	t = end - start
@@ -104,9 +104,9 @@ for a in x:
 y = sorted(y)
 
 plt.plot(bl,y)
-plt.xlabel("n")
-plt.ylabel("time")
-plt.title("runtime")
+plt.xlabel("log(n)")
+plt.ylabel("required time")
+plt.title("check_perfect_powers")
 plt.show()
 
 
