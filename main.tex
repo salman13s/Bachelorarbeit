@@ -708,14 +708,14 @@ Für diesen Teil ist eine Vorarbeit nötig. Wir brauchen zunächst eine untere S
 
 
 \begin{lemma}\label{lemma_1}
-Für $m \geq 7$:\newline
+Für $n \geq 7$:\newline
 \begin{equation}
-    kgV(m) \geq 2^m.  
+    kgV(n) \geq 2^n.  
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Sei $d_{n} = kgV{1 \leq m \leq n}{\{m\}}$, zuerst wird  gezeigt, dass $m {n \choose m} \mid d_n$.\newline 
+Sei $d_{n} = kgV_{1 \leq m \leq n}{\{m\}}$, zuerst wird  gezeigt, dass $m {n \choose m} \mid d_n$.\newline 
 Wir betrachten das folgende Integral für $n \geq 1$:\newline
 \begin{equation}\label{intg}
     \begin{split}
@@ -823,9 +823,9 @@ Somit gilt die Aussage für alle $n \geq 3$.\newline\newline
 
 Daraus folgt $d_{2n + 2} \geq d_{2n + 1} \geq  n \cdot (2n + 1) {2n \choose n} \geq 2^{2n + 2}, \, \forall n \geq 3$.\newline\newline
 
-Folglich gilt auch $\forall N \in \mathbb{N}, \, N \geq 7$:
+Folglich gilt auch $\forall n \in \mathbb{N}, \, n \geq 7$:
 \begin{align*}
-    d_{N} \geq 2^{N}
+    d_{n} \geq 2^{n}
 \end{align*}
 \end{proof}
 
@@ -1071,11 +1071,17 @@ Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fa
 Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(log^{21/2}n)$. 
 \end{theorem}
 
-% \begin{proof}
-% Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Im ersten Schritt wird überprüft, ob eine eine Potenz von einer anderen Zahl ist, dies kann durch den folgenden effizienten Algorithmus berechnet:
+
+Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus(Potenz-Prüfung)im Anhang in Polynomialzeit berechnet werden. Zuerst wird die Laufzeit des Potenz-Prüfung Algorithmus analysiert.
+
+Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log^2 n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log^2 n$ wird für $a > 1$ geprüft, ob $a^b = n$ oder $a^b < n$. Die Potenzierung von einer Zahl mit der Bitlänge $\lVert n \lVert$ kann in $O(\lVert n \rVert^2) = O(log^2 n)$ Bit-Operationen berechnet werden.%cite the ref
+Danach wird eine binäre Suche durchgeführt, um ein $a$ zu finden, sodass $ n = a^b$. Die Laufzeit für eine binäre Suche ist $O(log \, n)$. Daraus folgt, dass die Laufzeit für die Potenz-Prüfung $O(log^3 n) = O(\lVert n \rVert^3)$ ist.
+
+\begin{figure}[h]
+\includegraphics[width=8cm]{Plot}
+\end{figure}
 
 
-% \end{proof}
 
 \section{Zusammenfassung}
 
