@@ -104,8 +104,8 @@ for a in x:
 y = sorted(y)
 
 plt.plot(bl,y)
-plt.xlabel("log(n)")
-plt.ylabel("required time")
+plt.xlabel("#Bits")
+plt.ylabel("time")
 plt.title("check_perfect_powers")
 plt.show()
 
