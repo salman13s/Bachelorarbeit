@@ -832,7 +832,7 @@ Folglich gilt auch $\forall n \in \mathbb{N}, \, n \geq 7$:
 \textbf{Abschätzung von r}.\newline\newline
 Das zweite Lemma befasst sich mit der Abschätzung von $r$. Zuerst wird gezeigt, dass $r$ in Schritt 2 des Algorithmus polynomial von $log \, n$ abhängig ist und das ermöglicht die Polynomiallaufzeit des Algorithmus.  
 
-\begin{lemma}
+\begin{lemma}\label{limit_of_r}
 Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) > log^2 n$.
 \end{lemma}
 
@@ -1072,15 +1072,22 @@ Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(log^{21/2}n)$.
 \end{theorem}
 
 
-Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus(Potenz-Prüfung)im Anhang in Polynomialzeit berechnet werden. Zuerst wird die Laufzeit des Potenz-Prüfung Algorithmus analysiert.
+Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus(Potenz-Prüfung)im Anhang in Polynomialzeit berechnet werden. Zuerst wird die Laufzeit des Potenz-Prüfung Algorithmus analysiert(erster Schritt des Algorithmus).
 
+\textbf{Schritt 1:}\newline
 Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log^2 n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log^2 n$ wird für $a > 1$ geprüft, ob $a^b = n$ oder $a^b < n$. Die Potenzierung von einer Zahl mit der Bitlänge $\lVert n \lVert$ kann in $O(\lVert n \rVert^2) = O(log^2 n)$ Bit-Operationen berechnet werden.%cite the ref
-Danach wird eine binäre Suche durchgeführt, um ein $a$ zu finden, sodass $ n = a^b$. Die Laufzeit für eine binäre Suche ist $O(log \, n)$. Daraus folgt, dass die Laufzeit für die Potenz-Prüfung $O(log^3 n) = O(\lVert n \rVert^3)$ ist.
+Danach wird eine binäre Suche durchgeführt, um ein $a$ zu finden, sodass $ n = a^b$. Die Laufzeit für eine binäre Suche ist $O(log \, n)$. Daraus folgt, dass die Laufzeit für die Potenz-Prüfung $O(log^3 n) = O(\lVert n \rVert^3)$ ist. Das heißt, dass der erste Schritt des AKS-Algorithmus in Polynomialzeit realisiert werden kann.\newline 
 
+Mit Hilfe einer Grafik lässt sich diese Aussage verdeutlichen:
 \begin{figure}[h]
 \includegraphics[width=8cm]{plots/pp.png}
+\centering
+\caption{Laufzeit des Potenz-Prüfung Algorithmus}
 \end{figure}
 
+\textbf{Schritt 2:}\newline
+Im zweiten Schritt wird ein $r$ gesucht, sodass $o_{r}(n) > log^2 n$. Dies kann durch Ausprobieren von sukzessiven Werten von $r$ und dann zu testen, ob $n^k \neq 1 \,  mod \, r, \, \forall k \leq log^2 n$. Für jedes $r$ gibt es höchstens $O(log^2 n)$ mögliche Werte für $k$. Dies kann in $O^{\sim}(\lVert k \rVert \cdot \rVert r \lVert) = O^{\sim}(log^2 n \, log \, r)$ berechnet werden.\newline\newline
+Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit für den zweiten Schritt $O^{\sim}(log^7 n)$ ist. 
 
 
 \section{Zusammenfassung}
