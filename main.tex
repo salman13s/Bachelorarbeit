@@ -30,6 +30,12 @@
 \usepackage{blindtext}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{comment}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
 \usepackage{enumitem}% http://ctan.org/pkg/enumitem
 
 % notendig für Definitionen und Theoreme
@@ -59,7 +65,7 @@
 \usepackage[style=authoryear,natbib=true,backend=biber,maxbibnames=20]{biblatex}
 \usepackage{csquotes}
 \bibliography{literatur}
-
+\addbibresource{literatur.bib}
 \setlength{\parindent}{0em} 
 \setlist[itemize]{noitemsep, topsep=0pt}
 \setlist[enumerate]{noitemsep, topsep=0pt}
@@ -190,20 +196,20 @@ Das zweite Kapitel enthält die Grundlagen und die Definitionen. Hier werden Ter
 
 Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus geführt.
 
-Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert.    
+Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert. Anschließend werden mehrere Grafiken zur Verdeutlichung der Polynomiallaufzeit dargestellt.     
 
 \subsection{Überblick}
-Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, dieser Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler versucht eine Formel für Primzahlen zu erfinden. Der französische Wissenschaftler Marin Mersenne hat eine Formel für die nach ihm sogenannten Mersenne-Zahlen entwickelt, 51 der bekannten Mersenne-Zahlen sind Primzahlen. Solche Zahlen heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Auf seinen Satz bauen viele Primzahltests(einschließlich des AKS-Primzahltests) auf. \newline\newline
-Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Problem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen zu gesucht. Der französische Wissenschaftler Marin Mersenne hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Auf seinen Satz bauen viele Primzahltests(einschließlich des AKS-Primzahltests) auf. \newline\newline
+Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
-In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Orginalpaper behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach kommt die Analyse der Korrektheit, da wird die Korrektheit zuerst mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt, wo gezeigt wird, dass wenn der Algorithmus PRIME liefert, ist die Zahl auch eine Primzahl. Aber auch wenn die Eingabe eine Primzahl ist, liefert der Algorithmus PRIME. Dazu wird seine Korrektheit auf einem Rechner implementiert und getestet. Der Algorithmus ist dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch zuerst mathematisch bewiesen. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell bewiesen.  
+In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Originalartikel behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und seine Laufzeit zu evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach wird die  Korrektheit des Algorithmus bewiesen, zuerst wird die Korrektheit mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt. Dazu wird der Algorithmus auf einem Rechner implementiert und getestet. Der Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht, hier wird auf ähnlicher Weise mathematisch bewiesen, dass der Algorithmus in Polynomialzeit läuft. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell verdeutlicht werden.  
 
 Um die Korrektheit zu demonstrieren, soll der Algorithmus in Python implementiert werden, dabei wird die Ausgabe des Algorithmus bei mehreren Zahlen(meistens große Zahlen) geprüft. Zudem soll auch die Laufzeit durch eine Grafik illustriert werden.  
 
 
 \section{Definitionen und Grundlagen}
-In diesem Kapitel werden die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Komplexitätstheorie, die für den AKS-Algorithmus relevant sind, definiert. In diesem Kapitel handelt es sich darum, einen formalen Literaturhinweis zu haben, um später die hier definierten Begriffe und Theoreme zu referenzieren.
+In diesem Kapitel handelt es sich darum, die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Komplexitätstheorie, die für den AKS-Algorithmus relevant sind, zu definiert.
 % Definitionen der Zhalentheorie 
 % Definitonen
 \subsection{Zahlentheorie}
@@ -259,18 +265,17 @@ Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit
 
 % Theoreme
 \begin{theorem}[\textbf{Satz von Euler}]\label{Th_1}
-Seien $a,n \in \mathbb{N}$ teilerfremd, \newline dann gilt $a^{\phi(n)} = 1 $(mod n).
+Seien $a,n \in \mathbb{N}$ teilerfremd, \newline dann gilt $a^{\phi(n)} = 1 \, (mod \, n) $.
 \end{theorem}
 
 \begin{proof}
     
-Seien $R =\{ a \in \mathbb{N} \mid (a,n) = 1 \} =  \{a_{1}, a_{2},...,a_{\phi(n)} \}$ und $c \in R, c \leq n$.\newline\newline Da $(c,n) = (a_{i},n) = 1$, gilt auch $(c \cdot a_{i}, n) = 1$ \newline\newline und damit ist auch $a_{i} = c \cdot a_{j}$(mod $n$) wahr für ein $a_{j} \in R \Rightarrow a_{i} = a_{j}$. Das heißt es gilt:\newline
-\begin{equation}
-     \prod_{k = 0}^{\phi(n)} c \cdot a_{k} =
-     c^{\phi(n)}\prod_{k = 0}^{\phi(n)} a_{k} = \prod_{k = 0}^{\phi(n)}  a_{k} (mod \, n )
-\end{equation}
-    
-     $\Rightarrow c^{\phi(n)} = 1$ (mod $n$).
+Seien $R =\{ r \in \mathbb{Z}_{n}^{*} \mid (r,n) = 1 \} =  \{r_{1}, r_{2},...,r_{\phi(n)} \}$, für ein $a \in \mathbb{Z}_{n}^{*}$ gilt $\{ar_{1},ar_{2},...,ar_{\phi(n)}\} = \mathbb{Z}_{n}^{*}$, dass heißt:\newline\newline
+\begin{align*}
+    r_{1}r_{2} \dots r_{\phi(n)} &= ar_{1}ar_{2} \dots ar_{\phi(n)} \, (mod \, n)\\
+    r_{1}r_{2} \dots r_{\phi(n)} &= a^{\phi(n)} r_{1}r_{2} \dots r_{\phi(n)} \, (mod \, n) \\
+    1 &= a^{\phi(n)} \, (mod \, n)
+\end{align*}
 
 \end{proof}
 
@@ -334,7 +339,12 @@ Sei n eine natürlich Zahl, dann gilt:
 \begin{equation}
     \sum_{i = 1}^{n} i = \frac{n (n + 1)}{2} = \frac{n^2 + n}{2} 
 \end{equation}
-Der Beweis ist durch Induktion trivial. 
+Der Beweis ist durch Induktion trivial.\newline\newline 
+\end{theorem}
+
+\begin{theorem}[\textbf{Schubfachprinzip}]\label{pigeonhole} Das Schubfachprinzip(engl. pigeonhole principle) lässt sich wie folgt formulieren.
+Falls $n$ Objekte auf $m$ Mengen mit $n,m > 0$ verteilt werden und $n$ größer als $m$ ist, dann gibt es mindestens eine Menge, in der mehr als ein Objekt landet. 
+
 \end{theorem}
 
 
@@ -355,6 +365,7 @@ Sei $f = (a_0, a_1,...a_n) \in R[X], \, f \neq 0 $ ein Polynom, dann heißt
 \begin{align*}
     deg \, f = max \{ i  \mid a_i \neq 0 \}
 \end{align*}
+der Grad vom Polynom $f$.  
 \end{definition}
 
 \smallskip
@@ -425,11 +436,18 @@ Somit ist die Ungleichung für $n = k + 1$ wahr.
 \smallskip
 
 \begin{theorem}\label{funny_id}
-Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{equation}
-    a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{n -1 - k} b^k.
-\end{equation}
+Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{align*}
+    a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k}.
+\end{align*}
 \end{theorem}
 
+\begin{proof}
+\begin{align*}
+(a - b) \cdot &\sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k} = \sum_{k = 0}^{n - 1} a^{k + 1}\cdot b^{n - 1 - k} - \sum_{k = 0}^{n - 1} a^k \cdot b^{n - k} \\
+\\
+&= \sum_{k = 0}^{n - 1} \, (a^{k + 1}\cdot b^{n - (1 + k)} -a^k \cdot b^{n - k}) = a^n - b^n.
+\end{align*}
+\end{proof}
 
 \smallskip
 
@@ -730,31 +748,31 @@ Wir betrachten das folgende Integral für $n \geq 1$:\newline
 
 Aus (\ref{intg}) ist es leicht zu sehen, dass $r \leq n - m $ und folglich $ r + m \leq n $. Das heißt $m + r \mid d_{n}$. Dabei ist es offensichtlich, dass $d_{n} \cdot I_{n,m} \in \mathbb{N}$.\newline\newline
 
-Wir wollen nun durch Induktion nach $n - m$ und partielle Integration zeigen, dass für $n,m \in \mathbb{N}, \, 1 \leq  m \leq n$
+Wir wollen nun durch Induktion nach $n - m = l \in \mathbb{N}$ und partielle Integration zeigen, dass für $n,m \in \mathbb{N}, \, 1 \leq  m \leq n$
 \begin{equation}\label{I_mn}
-    I_{n,m} = \int_{0}^{1} x^{m-1} (1-x)^{n - m} dx = \frac{1}{m \cdot {n \choose m}}
+    I_{n,m} = \int_{0}^{1} x^{m-1} (1-x)^{l} dx = \frac{1}{m \cdot {n \choose m}}
 \end{equation}
 immer gilt.\newline\newline
 
 
 \textbf{IA:}
-$n - m = 0 \iff n = m $:
+$\forall n,m \in \mathbb{N}$ mit $ n - m = 0$ gilt:
 \begin{align*}
-    I_{n,m} =  \int_{0}^{1} x^{m - 1 } \cdot (1-x)^{n - m = 0} dx = \int_{0}^{1} x^{m - 1} dx = \Big[ \frac{x^m}{m}\Big]_0^1 = \frac{1}{m} = \frac{1}{m \cdot {m \choose m}}
+    I_{n,m} =  \int_{0}^{1} x^{m - 1 } \cdot (1-x)^{0} dx = \int_{0}^{1} x^{m - 1} dx = \Big[ \frac{x^m}{m}\Big]_0^1 = \frac{1}{m} = \frac{1}{m \cdot {m \choose m}}
 \end{align*}
 
 \textbf{IH:}
-Nun wird Angenommen, dass (\ref{I_mn}) für $ 1 \leq m < n$ wahr ist.\newline\newline
+Nun wird angenommen, dass $\forall n,m \in \mathbb{N}$ mit $ n - m  = l$ die Aussage (\ref{I_mn}) gilt.\newline\newline
 
-\textbf{IS: }
-
+\textbf{IS:}
+zu zeigen: (\ref{I_mn}) gilt $\forall n,m \in \mathbb{N}$ mit $ n - m = l + 1$.\newline\newline
 Partielle Integration:\newline\newline
 \begin{align*}
-    I_{n,m} = \int_{0}^{1} &\underbrace{x^{m - 1}}_{f^{'}} \cdot \underbrace{(1 - x)^{n - m}}_{g} dx =\Big[ \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(1 - x)^{n - m + 1}}_{g}\Big]_0^1 - \int_{0}^{1} \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(-1 )\cdot (n - m) \cdot (1 -x)^{m - n - 1}}_{g^{'}} dx \\
+    I_{n,m} = \int_{0}^{1} &\underbrace{x^{m - 1}}_{f^{'}} \cdot \underbrace{(1 - x)^{n - m}}_{g} dx =\Big[ \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(1 - x)^{n - m + 1}}_{g}\Big]_0^1 - \int_{0}^{1} \underbrace{\frac{x^{m}}{m}}_{f} \cdot \underbrace{(-1 )\cdot (n - m) \cdot (1 -x)^{l + 1 - 1}}_{g^{'}} dx \\
     \\
-    &= 0 +  \int_{0}^{1} \frac{(n - m) \cdot x^{m}}{m} \cdot (1 - x)^{n - m - 1} dx \\
+    &= 0 +  \int_{0}^{1} \frac{(n - m) \cdot x^{m}}{m} \cdot (1 - x)^{l} dx \\
     \\
-    &= \frac{(n - m )}{m} \cdot \int_{0}^{1} x^{(m + 1) - 1} \cdot (1-x)^{n - (m + 1)} dx \\
+    &= \frac{(n - m )}{m} \cdot \int_{0}^{1} x^{(m + 1) - 1} \cdot (1-x)^{l} dx \\
     \\
     &\underbrace{=}_{IH} \frac{(n - m )}{m} \cdot \frac{1}{(m + 1) \cdot {n \choose m + 1}} = \frac{(n - m)}{m} \cdot \frac{(n - (m + 1))! \cdot (m + 1)!}{(m + 1) \cdot n!} \\ 
     \\ 
@@ -829,32 +847,32 @@ Folglich gilt auch $\forall n \in \mathbb{N}, \, n \geq 7$:
 \end{align*}
 \end{proof}
 
-\textbf{Abschätzung von r}.\newline\newline
-Das zweite Lemma befasst sich mit der Abschätzung von $r$. Zuerst wird gezeigt, dass $r$ in Schritt 2 des Algorithmus polynomial von $log \, n$ abhängig ist und das ermöglicht die Polynomiallaufzeit des Algorithmus.  
+\textbf{Abschätzung von $r$}.\newline
+Zuerst wird gezeigt, dass das geeignete $r$ in Schritt 2 des Algorithmus polynomiell von $log \, n$ abhängig ist und das ermöglicht die Polynomiallaufzeit des Algorithmus.  
 
 \begin{lemma}\label{limit_of_r}
 Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) > log^2 n$.
 \end{lemma}
 
 \begin{proof}
-Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen. 
-Sei $n \geq 1$.\newline\newline Für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
+Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen.\newline\newline
+Zunächst sei $n > 1$, für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
 Ab jetzt wird angenommen, dass $n > 2$.\newline\newline
 \textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline
 
 Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $kgV(B) \geq 2^B$. Zunächst wird gezeigt, dass   ein $r \leq B$ existiert, sodass
 \begin{equation}\label{prod_cor}
-     N_{B} = n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} (n^i - 1)
+     \Pi = n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} (n^i - 1)
 \end{equation}
-$r$ dieses Produkt nicht teilt. Dies kann durch Widerspruch bewiesen werden.
+durch $r$ nicht teilbar ist. Dies kann durch Widerspruch bewiesen werden.
 
-Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $N_{B}$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher gilt $N_{B} \geq kgV(B)$.\newline
-Wir betrachten $N_{B}$:
+Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $\Pi$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher gilt $\Pi \geq kgV(B)$.\newline
+Wir betrachten $\Pi$:
 \begin{equation}\label{long_p}
     \begin{split}
         \begin{aligned}
-            N_{B} &= n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} (n^i - 1)
+            \Pi &= n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} (n^i - 1)
                 < n^{\lfloor log B \rfloor } \cdot \prod_{i = 1}^{\lfloor log^2 n \rfloor} n^i \\
                 &= n^{\lfloor log B \rfloor + \sum_{i = 1}^{\lfloor log^2 n \rfloor } i}\\ 
                 &\underbrace{=}_{(\ref{gauss})} n^{\lfloor log B \rfloor + \frac{log^2 n \cdot (log^2 n + 1)}{2}}  \\
@@ -865,35 +883,35 @@ Wir betrachten $N_{B}$:
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $kgV(B) \leq N_{B} \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass $r_{i}$ das Produkt nicht teilt. Ferner sei $r_{m}$ das kleinste Element dieser Menge.\newline\newline Jetzt bleibt zu zeigen, dass $o_{r_{m}}(n)$ für dieses $r_{m}$ existiert, und $o_{r_{m}}(n) \geq log^2 n$.\newline\newline Sei $r_{m} = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$, außerdem ist die höchste Potenz, die ein Primfaktor(in der Primfaktorzerlegung) haben kann, kleiner als $\lfloor log B \rfloor$. Da sonst $a$ größer als $B$ wäre. Das heißt, jeder Primfaktor in $a$ hat einen Exponent kleiner als der Exponent beim gleichen Primfaktor von $n$ und jeder vorkommende Faktor in $a$, kommt auch in $n$ vor(alle Primfaktoren von $a$ teilen $n$).\newline\newline
+Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Ferner sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt $ \lfloor log B \rfloor$ ist die höchste Potenz in der Primfaktorzerlegung von $a$. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
 $\Rightarrow a \mid n^{log B}$.\newline\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r_{m}$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Zudem war $r_{m}$ das kleinste Element aus $R$, das $N_{B}$ nicht teilt, daher ist $r_{m}= b$ und $(b,n) = 1$ beziehungsweise $(r_{m},n) = 1$. Somit existiert $o_{r_{m}}(n)$.\newline\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline\newline
 
-Zuletzt bleibt nur der Beweis der Ungleichung $o_{r_{m}}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r_{m}}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r_{m}$) wahr ist. daher gilt auch:\newline\newline
-\centerline{$n^k - 1 = 0 $(mod  $r_{m}$) $\Rightarrow r_{m} \mid n^k - 1$.}
+Es bleibt nur noch zu zeigen, dass $o_{r}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r$) wahr ist. daher gilt auch:\newline\newline
+\centerline{$n^k - 1 = 0 \, (mod \, r) \, \Rightarrow r \mid n^k - 1$.}
 
-Aber wenn das gelten würde, würde $r_{m}$ das Produkt $N_{B}$ teilen und das führt zum Widerspruch, da $r_{m} \nmid N_{B}$. 
+Aber wenn das gelten würde, würde $r$ das Produkt $\Pi$ teilen und das führt zum Widerspruch, da $r \nmid \Pi$. Daraus folgt $o_{r}(n) > log^2 n$ und somit ist das Lemma bewiesen. 
 \end{proof}
 
 \smallskip
 
 \begin{lemma}\label{ord_prime_l}
-wenn $o_{r}(n) > 1$, dann existiert ein Primfaktor $p$ von $n$, sodass $o_{r}(p) > 1$ gilt. 
+wenn $o_{r}(n) > 1$, dann existiert ein Primfaktor $p$ von $n$, sodass $o_{r}(p) > 1$. 
 \end{lemma}
 \begin{proof}
-Sei $o_{r}(n) > 1$, mit der Primfaktorzerlegung $n = \prod_{i = 1}^{M} p_{i}^{e_{i}}$.\newline\newline Weiterhin sei $o_{r}(p_{i}) = 1$,$\forall 1 \leq i \leq M$ (es existiert kein $p_{i} : o_{r}(p_{i}) > 1$).\newline\newline
-$\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich ist $n = \prod_{i = 1} ^{M} p_{i}^{e_{i}} = \prod_{i = 1} ^{M}(1)^{e_{i}} = 1 $(mod $r$).\newline\newline Daraus wird ersichtlich, dass $o_{r}(n) = 1$ und das ist ein Widerspruch zur Voraussetzung, dass $o_{r}(n) > 1$. Daher muss mindestens ein Primfaktor $p : o_{r}(p) > 1$.  
+Sei $o_{r}(n) > 1$, mit der Primfaktorzerlegung $n = \prod_{i = 1}^{M} p_{i}^{e_{i}}$.\newline\newline Nun wird angenommen, dass $o_{r}(p_{i}) = 1$,$\forall 1 \leq i \leq M$ (es existiert kein $p_{i} : o_{r}(p_{i}) > 1$).\newline\newline
+$\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich ist $n = \prod_{i = 1} ^{M} p_{i}^{e_{i}} \, (mod \, r) = \prod_{i = 1} ^{M}(1)^{e_{i}} \,  (mod \, r) = 1 \, (mod \, r)$.\newline\newline Daraus wird ersichtlich, dass $o_{r}(n) = 1$ und das ist ein Widerspruch zur Voraussetzung, dass $o_{r}(n) > 1$. Daher existiert mindestens ein Primfaktor $p : o_{r}(p) > 1$.  
 \end{proof}
 
 \smallskip
 
-Nach Lemma (\ref{ord_prime_l}) muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über die Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(also, für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $l = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
+Nach Lemma \ref{ord_prime_l} muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über die Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(also, für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $l = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
 
 Der 5. Schritt des Algorithmus überprüft $l$ Gleichungen. Wir wollen nun die Ausgabe PRIME untersuchen, also nach Voraussetzung ist die Ausgabe PRIME . Das heißt, für alle Gleichungen $l$ gilt:\newline\newline
 \centerline{$(X + a)^n = X^n + a $ (mod $X^r - 1, n$)}.
 
 $\forall a$, $ 0 \leq a \leq l$.\newline\newline
-\textbf{Bemerkung:} Für a = 0 $\Rightarrow (X + 0)^n = X^n + 0$ und damit ist die Gleichung trivialerweise wahr.\newline\newline 
+\textbf{Bemerkung:} Für $a = 0 \,  \Rightarrow (X + 0)^n = X^n + 0$ und damit ist die Gleichung trivialerweise wahr.\newline\newline 
 Aus der oberen Gleichung kann man drei andere Gleichungen folgern:
 \begin{enumerate}
     \item $(X + a)^n = X^n + a $(mod $X^r - 1, p$).
@@ -1005,7 +1023,8 @@ Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach 
 Es gilt auch, dass $i \neq j  \in \mathbb{K}_p, \forall \, 1 \leq i \neq j \leq l = \lfloor \sqrt{\phi(r)} log n \rfloor$. Da $o_r(n) > log^2 n$, gilt $r > log^2 n$ und folglich gilt auch:\newline\newline
 \centerline{$l = \lfloor \sqrt{\phi(r)} log n \rfloor < \sqrt{r} log n < r < p$}
 
-Daher sind $X, X + 1, ..., X + l$ verschieden in $\mathbb{K}$. Außerdem gilt $deg \, h > 1$ und $X + a \neq 0 \, in \mathbb{K}, \, \forall a, \, 0 \leq a \leq l $. Das bedeutet es existieren $l + 1$ verschiedene Polynome vom Grad 1 (Da $deg \, X + a = 1$). Gesucht ist gerade die Anzahl von Polynomen mit Grad $ < t $ in $\mathcal{G}$. Das kann man durch Multiplikation bis $t - 1$ nicht unbedingt eindeutige Elemente in $\{ X, X + 1, ..., X+ l\} \subseteq P$ erreichen, also es existieren insgesamt ${t - 1 + l +1 \choose t - 1} = {t + l \choose t - 1}$ eindeutige Polynome $f \in P$ vom Grad $ < t$
+Daher sind $X, X + 1, ..., X + l$ verschieden in $\mathbb{K}$. Außerdem gilt $deg \, h > 1$ und $X + a \neq 0 \, in \mathbb{K}, \, \forall a, \, 0 \leq a \leq l $. Das bedeutet es existieren $l + 1$ verschiedene Polynome vom Grad 1 (Da $deg \, X + a = 1$). Gesucht ist gerade die Anzahl von Polynomen mit Grad $ < t $ in $\mathcal{G}$. Das kann man durch Multiplikation bis $t - 1$ nicht unbedingt eindeutige Elemente in $\{ X, X + 1, ..., X+ l\} \subseteq P$ erreichen, also es existieren insgesamt ${t - 1 + l +1 \choose t - 1} = {t + l \choose t - 1}$ eindeutige Polynome $f \in P$ vom Grad $ < t$.\newline\newline
+$\Rightarrow |\mathcal{G}| \geq {t + l \choose t - 1}$
 \end{proof}
 
 Wenn $n$ keine Potenz von $p$ ist, erhält man auch eine obere Grenze für $|\mathcal{G}|$.
@@ -1019,12 +1038,15 @@ Wenn $n$ keine Potenz von $p$, dann gilt:
 \end{lemma}
 
 \begin{proof}
-Angenommen $n$ ist keine Potenz von $p$. Dann ist $\frac{n}{p}$ durch $q \neq p$ teilbar. Wir betrachten folgende Teilmenge von $I$:
+Angenommen $n$ ist keine Potenz von $p$. Dann ist $\frac{n}{p}$ durch $q \neq p$ teilbar.\newline Wir betrachten folgende Teilmenge von $I$:
 \begin{equation}
     \widetilde{I} = \{ (\frac{n}{p})^i p^j \mid 0 \leq i,j \leq \sqrt{t}\} \subseteq I.
 \end{equation}
-Es gilt $|\widetilde{I}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |G|$, da es $ \lfloor \sqrt{t} \rfloor + 1$ für jeweils $i$ und $j$ gibt. Deshalb müssen mindestens zwei Elemente $m_1,m_2 \in \widetilde{I}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A gilt $m_1 > m_2 $ Folglich gilt auch:\newline\newline
-\centerline{$X^{m_1} = X^{m_2} \, (mod \, X^r - 1)$}.
+Es gilt $|\widetilde{I}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |G|$, da es $ \lfloor \sqrt{t} \rfloor + 1$  mögliche Werte für jeweils $i$ und $j$ gibt. Deshalb müssen (nach Theorem \ref{pigeonhole}) mindestens zwei Elemente $m_1,m_2 \in \widetilde{I}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A gilt $m_1 > m_2 $ , folglich gilt auch:\newline
+\begin{align*}
+    X^{m_1} = X^{m_2} \, (mod \, X^r - 1).
+\end{align*}
+
 für alle Polynome $ f \in P$. Das heißt es gilt:\newline
 \begin{equation}\label{m1_m2}
     \begin{aligned}
@@ -1065,7 +1087,7 @@ Gemäß Lemma \ref{closing_lemma} gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$, falls 
 
 Aus Theorem \ref{hin_rich} und Theorem \ref{rueck_rich} folgt der Hauptsatz der Korrektheit. 
 \section{Laufzeitanalyse}
-Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fact_2}) aus dem Zweiten Kapitel verwendet. Das heißt, Multiplikation, und Modulorechnung von zwei Zahlen jeweils mit $\lVert m \rVert$ Bits können in $O^{\sim}(\lVert m \rVert)$ Schritten durchgeführt werden. Nach dem gleichen Prinzip können diese Operationen auf zwei Polynome übertragen werden, für Polynome vom Grad $d$ und eine maximale Bitlänge von $\lVert m \rVert$ können Multiplikationen und Modulorechnungen in $O^{\sim}(d \cdot m)$ Schritten durchgeführt werden.
+Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fact_2}) aus dem Zweiten Kapitel verwendet. Das heißt, Multiplikation, und Modulorechnung von zwei Zahlen jeweils mit $\lVert m \rVert$ Bits können in $O^{\sim}(\lVert m \rVert)$ Schritten durchgeführt werden. Nach dem gleichen Prinzip können diese Operationen auf zwei Polynome übertragen werden, für Polynome vom Grad $d$ und eine maximale Bitlänge von $\lVert m \rVert$ können Multiplikationen und Modulorechnungen in $O^{\sim}(d \cdot \lVert m \rVert)$ Schritten durchgeführt werden.
 
 \begin{theorem}
 Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(log^{21/2}n)$. 
@@ -1087,13 +1109,23 @@ Mit Hilfe einer Grafik lässt sich diese Aussage verdeutlichen:
 
 \textbf{Schritt 2:}\newline
 Im zweiten Schritt wird ein $r$ gesucht, sodass $o_{r}(n) > log^2 n$. Dies kann durch Ausprobieren von sukzessiven Werten von $r$ und dann zu testen, ob $n^k \neq 1 \,  mod \, r, \, \forall k \leq log^2 n$. Für jedes $r$ gibt es höchstens $O(log^2 n)$ mögliche Werte für $k$. Dies kann in $O^{\sim}(\lVert k \rVert \cdot \rVert r \lVert) = O^{\sim}(log^2 n \, log \, r)$ berechnet werden.\newline\newline
-Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit für den zweiten Schritt $O^{\sim}(log^7 n)$ ist. 
+Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit für den zweiten Schritt $O^{\sim}(log^7 n) = O^{\sim}(\lVert n \rVert^7)$ ist. 
 
+Dies lässt sich am besten mit einer Grafik illustrieren:
 \begin{figure}[h]
 \includegraphics[width=8cm]{plots/findR.png}
 \centering
-\caption{Laufzeit von zweitem Schritt}
+\caption{Laufzeit von Schritt 2}
 \end{figure}
+
+\textbf{Schritt 3:}\newline
+Im dritten Schritt wird der größte gemeinsame Teiler von $r$ Zahlen (da $a \leq r$) berechnet. Eine ggT-Berechnung kann in $O(log \,n)$ berechnet werden\cite{D73}. Daraus folgt, dass Schritt 3 in $O(r \, log \, n) \underbrace{=}_{\ref{limit_of_r}} O(log^6 n) = O(\lVert n \rVert^6)$ berechnet werden kann. 
+
+\textbf{Schritt 4:}\newline
+Die Zeitkomplexität von $n \leq r$ ist einfach $O(log \, n)$ \cite{D73}.
+
+\textbf{Schritt 5 und 6:}\newline
+in diesem Schritt werden $l = \lfloor \sqrt{\phi(n)} log \, n \rfloor$ Gleichungen überprüft. In jeder Gleichung wird $(X + a)^n \, mod \, (X^r - 1,n)$ berechnet. Dies kann   
 
 \section{Zusammenfassung}
 
