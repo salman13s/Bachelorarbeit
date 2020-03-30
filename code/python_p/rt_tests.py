@@ -13,7 +13,7 @@ def bit_length(n): # return the bit size of a non-negative integer
     while n >> bits: bits += 1
     return bits
 
-def check_pefect_powers(n):
+def check_perfect_powers(n):
 
 	b = 2
 
@@ -35,7 +35,7 @@ def check_pefect_powers(n):
 
 
 
-def smallest(n):
+def find_r(n):
 	I = max(3,math.floor(math.log2(n)**5))
 	r = 2
 	while r <= math.floor(I):
@@ -81,35 +81,54 @@ def naive_aks(p):
 
 	
 
-
+def brute_force_prime_test(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
 # Runtime complexity plot
 
-x = [i  for i in range(2,200000,100)]
+x = [i  for i in range(2,2000000,10)]
 y = []
 bl = []
+y_2 = []
+bl_1 = []
 n = 10	
-for a in x:
-	start = time.process_time()
-	#check_pefect_powers(a)
-	smallest(a)
-	# naive_aks(a)
-	end = time.process_time()
-	t = end - start
-	l = bit_length(a)
-	if l not in bl:
-		y.append(t)
-		bl.append(bit_length(a))
-
-y = sorted(y)
-
-plt.plot(bl,y)
-plt.xlabel("#Bits")
-plt.ylabel("time")
-plt.title("find r")
-plt.show()
+# for a in x:
+# 	start = time.process_time()
+# 	check_perfect_powers(a)
+# 	# find_r(a)
+# 	# naive_aks(a)
+# 	end = time.process_time()
+# 	t = end - start
+# 	l = bit_length(a)
+# 	if l not in bl:
+# 		y.append(t)
+# 		bl.append(l)
 
 
 
+# y = sorted(y)
+
+
+# print(bl)
+# print(y)
+
+# plt.plot(bl,y)
+# plt.xlabel("#Bits")
+# plt.ylabel("time")
+# plt.title("complexity")
+# plt.show()
+
+
+r = [7,41,771,6991,462975,681472,941192,489721,3875741,1703020,294024210]
+for n in r:
+	s = time.process_time()
+	res = find_r(n)
+	e = time.process_time()
+	print("n = {}, bits: {}, time: {}, result = {}".format(n,bit_length(n),e-s,res))
 
 

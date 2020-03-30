@@ -10,7 +10,12 @@ from numpy.random import randint
 import timeit
 from sage.all import *
 
-
+def naive_prime(n):
+    limit = int(n)
+    for i in range(2,limit):
+        if n % i == 0:
+            return False
+    return True 
 
 ################ Helper Functions #####################################################
 """
@@ -25,19 +30,34 @@ def gcd(a,b):
 
 
 """
-check_for_perfect powers using the perfect power function of sympy
+check for perfect powers 
 """
+
 def check_perfect_power(n):
-    if perfect_power(n) == False:
-        return False
-    else:
-        return True 
+
+    b = 2
+
+    while 2**b <= n:
+        a = 1
+        c = n
+        while c - a >= 2:
+            m = math.floor((a+c)/2)
+            p = min([m**b, n + 1])
+
+            if p == n:
+                return True
+            if p < n:
+                a = m
+            else:
+                c = m
+        b = b + 1
+    return False         
 
 """
  a function to find the smalles r,
 such that n^k != 1 (mod r), for all k <= log^2 n
 """
-def smallest(n):
+def find_r(n):
 	m = max(3,math.floor(math.log2(n)**5))
 	r = 2
 	while r <= math.floor(m):
@@ -53,8 +73,6 @@ def smallest(n):
 		
 
 
-
-
 ##### The-Algorithm #############################################################
 
 def aks(n):
@@ -64,7 +82,7 @@ def aks(n):
     if check_perfect_power(n) == True:
         return False
     #STEP 2    
-    r = smallest(n)
+    r = find_r(n)
 
     #STEP 3
     for k in range(1,r):
@@ -83,7 +101,7 @@ def aks(n):
         V = Q((q^n)) # (x + a)^n in Q
         e = Mod(n,r) #  e = n mod r
         d = (x^e) + a # x^e + a
-        if (V != d): # if (x + a)^n = x^e + a -> COMPOSITE  
+        if (V != d): # if (x + a)^n != x^e + a -> COMPOSITE  
             return False
     return True            
 
@@ -99,51 +117,36 @@ def bit_length(n):
     return bits
 
 #best test values so far 
-x = [i  for i in range(2,200000,100)]
+x = [i  for i in range(2,200000,10)]
 y = []
 bl = []
+
 n = 10  
 for a in x:
     start = time.process_time()
-    # check_pefect_powers(a)
+   
     aks(a)
+    
     end = time.process_time()
     t = end - start
     l = bit_length(a)
     if l not in bl:
         y.append(t)
-        bl.append(bit_length(a))
-
+        bl.append(l)
 
 
 ############################### Plotting #################################################
 
 
+print(bl,y)
+
 y = sorted(y)
 
 plt.plot(bl,y)
-plt.xlabel("n")
+plt.xlabel("#Bits")
 plt.ylabel("required time")
-plt.title("#Bits")
+plt.title("complexity")
 plt.show()
-
-##Tests##
-
-"""
-First-Test: check_perfect_power
-"""
-# test_set = [i for i in range(10)]
-
-# for m in test_set:
-#     s = time.process_time()
-#     check_perfect_power(m)
-#     e = time.process_time()
-
-
-#     if check_perfect_power(m):
-#         print("{} is a perfect power with {}, time: {}".format(m,perfect_power(m),e-s))
-
-
 
 
 
