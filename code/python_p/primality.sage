@@ -145,7 +145,7 @@ y = sorted(y)
 plt.plot(bl,y)
 plt.xlabel("#Bits")
 plt.ylabel("required time")
-plt.title("complexity")
+plt.title("AKS")
 plt.show()
 
 
