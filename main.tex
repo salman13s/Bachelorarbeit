@@ -1,5 +1,4 @@
 
-
 \documentclass[12pt,oneside]{article}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -171,7 +170,7 @@ sorting=ynt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lhead{Abstract}
 \section*{Abstract}
-Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des mathematischen Primalitätsproblem benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert. Außerdem wird die Korrektheit des Algorithmus experimentell geprüft und mathematisch bewiesen. 
+Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des mathematischen Primalitätsproblem benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert. Außerdem wird die Korrektheit sowie die Laufzeit des Algorithmus experimentell geprüft und mathematisch bewiesen. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,23 +193,29 @@ Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptograph
 Die Arbeit gliedert sich in vier Bestandteile, wobei der
 erste Teil die Einleitung darstellt. Dort wird ein kurzer Überblick in das Thema gegeben und die Zielsetzung der Arbeit definiert.
 
-Das zweite Kapitel enthält die Grundlagen und die Definitionen. Hier werden Terminologie und Konzepte erläutert, die für das weitere Verständnis der Arbeit eine Rolle spielen. 
+Das zweite Kapitel enthält die Grundlagen. Hier werden Begriffe und Konzepte erläutert, die für das weitere Verständnis der Arbeit eine Rolle spielen. 
 
-Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Zuerst wird die Grundidee des Algorithmus erläutert, danach wird der Algorithmus in seiner ursprünglichen Form(wie im AKS-Paper) angegeben. Anschließend wird der Korrektheitsbeweis des Algorithmus geführt.
+Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels. Dort wird zunächst die Grundidee des Algorithmus erläutert. In diesem Kapitel wird der Algorithmus angegeben und die Korrektheit bewiesen. 
 
-Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert. Anschließend werden mehrere Grafiken zur Verdeutlichung der Polynomiallaufzeit dargestellt.     
+Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeit der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert. Anschließend werden mehrere Grafiken zur Verdeutlichung der Polynomiallaufzeit dargestellt. Es werden außerdem Tabellen angegeben, die die Korrektheit und die Laufzeit der Schritte illustrieren sollen        
 
 \subsection{Überblick}
-Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird. Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen zu gesucht. Der französische Wissenschaftler Marin Mersenne hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen Mersenne-Primzahlen, die größte Primzahl heute $2^{82,589,933} − 1$ ist eine Mersenne-Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Auf seinen Satz bauen viele Primzahltests(einschließlich des AKS-Primzahltests) auf. \newline\newline
-Im Laufe der Zeit wurden auch mehrere Algorithmen zur Lösung des Primalitätsproblems entwickelt, die entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird.
+
+Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Der französische Wissenschaftler Marin Mersenne hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen, die größte Primzahl heute $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden. \newline\newline
+Seit dem Beginn der Komplexitätstheorie in den 1960er Jahren, wurden Begriffe formalisiert und verschiedene Komplexitätsklassen definiert. Seitdem haben Informatiker und Mathematiker versucht, das Primalitätsproblem in einer Komplexitätsklasse einzuordnen. Daher wurde das Primalitätsproblem auch im Laufe der Jahre intensiv untersucht. Es war trivial zu sehen, dass dieses Problem in der Komplexitätsklasse co-NP liegt. In 1974 hat der australische Informatiker Vaughan Pratt eine wichtige Beobachtung gemacht, nämlich, dass das Primalitätsproblem auch in der Komplexitätsklasse NP liegt\cite{pratt}.
+
+Die Frage war nachher, ob es noch besser geht, also liegt das Primalitätsproblem auch in P? Viele haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Algorithmen entwickelt. Leider war keiner Versuche erfolgreich, da die Algorithmen entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren. Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen.  Dennoch kann der beste nicht probabilistische Algorithmus (vor AKS) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus entwickelt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
-In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Originalartikel behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und seine Laufzeit zu evaluieren. Dabei wird die Idee Algorithmus dargestellt und erläutert, danach wird die  Korrektheit des Algorithmus bewiesen, zuerst wird die Korrektheit mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt. Dazu wird der Algorithmus auf einem Rechner implementiert und getestet. Der Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht, hier wird auf ähnlicher Weise mathematisch bewiesen, dass der Algorithmus in Polynomialzeit läuft. Schließlich soll die Polynomialzeit Eigenschaft durch eine Grafik experimentell verdeutlicht werden.  
+In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Originalartikel behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und seine Laufzeit zu evaluieren. Um die Korrektheit zu testen soll Zunächst die Idee Algorithmus dargestellt und erläutert werden, dabei wird die Korrektheit zuerst mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt. Neben dem mathematischen Beweis wird auch einen experimentellen Beweis der Korrektheit durchgeführt, die Ergebnisse dieser Tests werden in mehreren Tabellen dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und getestet. Der Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht, hier wird auch auf ähnlicher Weise mathematisch und dann experimentell bewiesen, dass der Algorithmus in Polynomialzeit läuft. Schließlich soll die Polynomialzeit Eigenschaft durch mehrere Grafiken verdeutlicht werden.  
 
-Um die Korrektheit zu demonstrieren, soll der Algorithmus in Python implementiert werden, dabei wird die Ausgabe des Algorithmus bei mehreren Zahlen(meistens große Zahlen) geprüft. Zudem soll auch die Laufzeit durch eine Grafik illustriert werden.  
+Um die Korrektheit zu demonstrieren, soll der Algorithmus in Python(SageMath) implementiert werden, dabei wird die Ausgabe des Algorithmus bei mehreren Zahlen(meistens große Zahlen) geprüft. Um die Grafiken zu zeichnen wird Matplotlib verwendet, Zudem soll auch die Laufzeit durch Grafiken und Tabellen illustriert werden. 
+
+\newpage
 
 
-\section{Definitionen und Grundlagen}
+\section{Grundlagen}
 In diesem Kapitel handelt es sich darum, die essenziellen Begriffe und Theoreme aus der Zahlentheorie, der Algebra und der Komplexitätstheorie, die für den AKS-Algorithmus relevant sind, zu definiert.
 % Definitionen der Zhalentheorie 
 % Definitonen
@@ -266,6 +271,13 @@ Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit
 
 
 % Theoreme
+
+\begin{theorem}
+Seien $a,b \in \mathbb{N}$, dann existieren $x,y \in \mathbb{N}$, sodass $(a,b) = ax + by$ 
+\end{theorem}
+
+\smallskip
+
 \begin{theorem}[\textbf{Satz von Euler}]\label{Th_1}
 Seien $a,n \in \mathbb{N}$ teilerfremd, \newline dann gilt $a^{\phi(n)} = 1 \, (mod \, n) $.
 \end{theorem}
@@ -349,6 +361,24 @@ Falls $n$ Objekte auf $m$ Mengen mit $n,m > 0$ verteilt werden und $n$ größer 
 
 \end{theorem}
 
+\smallskip
+
+\begin{theorem}\label{funny_id}
+Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{align*}
+    a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k}.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+\begin{align*}
+(a - b) \cdot &\sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k} = \sum_{k = 0}^{n - 1} a^{k + 1}\cdot b^{n - 1 - k} - \sum_{k = 0}^{n - 1} a^k \cdot b^{n - k} \\
+\\
+&= \sum_{k = 0}^{n - 1} \, (a^{k + 1}\cdot b^{n - (1 + k)} -a^k \cdot b^{n - k}) = a^n - b^n.
+\end{align*}
+\end{proof}
+
+\smallskip
+
 \begin{flushleft}
 \begin{theorem}\label{useful_theorem_for_proof}
 ${2n + 1 \choose n} > 2^{n+1}, \forall n \geq 2$
@@ -385,22 +415,70 @@ Somit ist die Ungleichung für $n = k + 1$ wahr.
 
 \subsection{Algebra}
 \textbf{Bemerkung:} In diesem Kapitel wird davon ausgegangen, dass die grundlegenden Definitionen von Gruppen, Ringen, Körpern und ihre Eigenschaften dem Leser bekannt sind. Hier werden Theoreme und Begriffe der Algebra und Polynomentheorie, die später für den Korrektheitsbeweis von Bedeutung sind, vorgestellt und bewiesen.\newline
-\subsubsection{Abstrakte Algebra}
+\subsubsection{Algebraische Strukturen}
+Algebraische Strukturen spielen eine große Rolle für den AKS-Algorithmus, insbesondere Gruppen und Ringe. Daher werden diese hier ausführlich definiert.\newline     
 \begin{definition}
-Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
+Eine \textbf{Gruppe} ist ein Tupel $(G, \circ)$ bestehend aus einer Menge $G$ und einer inneren zweistelligen Verknüpfung $\circ$, für die folgende Eigenschaften gelten:
+\begin{itemize}
+    \item \textbf{Assoziativität:} Für alle Gruppenelemente $a,b$ und $c$ gilt:\newline
+    $(a \circ b) \circ c = a \circ (b \circ v)$.\newline
+    \item \textbf{Neutrales Element:} Es gibt ein einziges Neutrales Element $e \in G$, mit dem für alle Gruppenelemente $a \in G$ gilt:\newline
+    $a \circ e = a = e \circ a$.\newline
+    \item \textbf{Inverses Element:}Zu jedem Gruppenelement $a \in G$ existiert ein einziges inverses Element $a^{-1} \in G$, sodass 
+    $a^{-1} \circ a  = e = a \circ a^{-1}$.\newline
+\end{itemize}
 \end{definition}
 
-\smallskip
-
 \begin{definition}
-Sei $f = (a_0, a_1,...a_n) \in R[X], \, f \neq 0 $ ein Polynom, dann heißt
+Eine Gruppe $(G,\circ)$ heißt \textbf{kommutativ} oder \textbf{abelsch}, wenn
 \begin{align*}
-    deg \, f = max \{ i  \mid a_i \neq 0 \}
+    a \circ b = b \circ a  
 \end{align*}
-der Grad vom Polynom $f$.  
+$\forall a,b \in G$ gilt.
 \end{definition}
 
 \smallskip
+
+\begin{definition}
+Die \textbf{Ordnung} einer Gruppe $(G, \circ)$ ist die Kardinalität dieser Gruppe. Das heißt die Ordnung der Gruppe ist die Anzahl der Elemente in G. Die Ordnung wird mit $|G|$ bezeichnet. 
+\end{definition}
+
+\smallskip
+
+\begin{definition}
+Sei $H$ eine Untergruppe, man spricht von einer \textbf{Nebenklasse}. Je nach dem von welcher Seite multipliziert, heißt diese dann \textbf{Linksnebenklasse} beziehungsweise \textbf{Rechtsnebenklasse}
+\begin{align*}
+    aH = \{ a \circ h \mid h \in H \} \\
+    Ha = \{ h \circ a \mid h \in H \}
+\end{align*}
+\end{definition}
+
+\smallskip
+
+\begin{theorem}[\textbf{Satz von Lagrange}]
+Sei $H$ eine Untergruppe einer endlichen Gruppe $G$, dann gilt:
+\begin{align*}
+|H| \mid |G|
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+Sei $gH = \{ gh \mid h \in H\}$ die Linksnebenklasse für ein beliebiges $g \in G$. Es sei $ h \to gh$ eine Bijektion zwischen $H$ und $gH$
+\end{proof}
+
+\smallskip
+
+\begin{definition}
+Ein \textbf{Ring} $(R,+,\cdot)$ ist eine Menge $R$ mit zweistelligen Operationen $+, \cdot$, sodass diese folgenden Gesetze gelten:
+\begin{itemize}
+    \item $(R,+)$ ist eine abelsche Gruppe.
+    \item $(R,\cdot)$ ist eine Halbgruppe
+    \item das Distributivgesetz gilt für alle $a,b,c \in R$, das heißt: $a \cdot (b + a) = a \cdot b + a \cdot c \; ,\forall a,b,c \in R$.
+\end{itemize}
+\end{definition}
+
+\smallskip
+
 
 \begin{definition}
 Sei $I$ eine Teilmenge des Rings $(R,+,\cdot)$. $I$ heißt \textbf{Ideal}, wenn gilt:
@@ -420,7 +498,28 @@ ist $(R, +, \cdot)$ ein Ring und $I$ ein Ideal von R, dann bildet die Menge $R/I
     \item $(a + I) + (b + I) = (a + b) + I$.
     \item $(a + I) \cdot (b + I) = (a \cdot b ) + I$.\newline
 \end{itemize}
-Diesen Ring nennt man den \textbf{Quotientenring}. 
+Diesen Ring nennt man \textbf{Quotientenring}. 
+\end{definition}
+
+\smallskip
+
+
+
+% Polynome 
+\subsubsection{Polynome}
+
+\begin{definition}
+Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
+\end{definition}
+
+\smallskip
+
+\begin{definition}
+Sei $f = (a_0, a_1,...a_n) \in R[X], \, f \neq 0 $ ein Polynom, dann heißt
+\begin{align*}
+    deg \, f = max \{ i  \mid a_i \neq 0 \}
+\end{align*}
+der Grad vom Polynom $f$.  
 \end{definition}
 
 \smallskip
@@ -430,29 +529,12 @@ Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. F
 \end{theorem}
 
 \begin{proof}
-Beweis durch Widerspruch, angenommen $deg \, f = n - 1$ für ein beliebiges $n$. Sei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. \newline\newline Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0 \Rightarrow  b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
+Angenommen $deg \, f = n - 1$ für ein beliebiges $n$, wobei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. \newline\newline Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0 \Rightarrow  b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
 \end{proof}
 
 \smallskip
 
-\begin{theorem}\label{funny_id}
-Seien $a,b,n \in \mathbb{N}$ Dann gilt:\newline\newline \begin{align*}
-    a^{n} - b^n = (a - b) \cdot \sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k}.
-\end{align*}
-\end{theorem}
-
-\begin{proof}
-\begin{align*}
-(a - b) \cdot &\sum_{k = 0}^{n - 1} a^{k} \cdot  b^{n - 1 - k} = \sum_{k = 0}^{n - 1} a^{k + 1}\cdot b^{n - 1 - k} - \sum_{k = 0}^{n - 1} a^k \cdot b^{n - k} \\
-\\
-&= \sum_{k = 0}^{n - 1} \, (a^{k + 1}\cdot b^{n - (1 + k)} -a^k \cdot b^{n - k}) = a^n - b^n.
-\end{align*}
-\end{proof}
-
-\smallskip
-
-% Polynome 
-\subsubsection{Zyklotomische Polynome}
+\textbf{Zyklotomische Polynome}
 
 \begin{definition}
 Sei $n$ eine natürliche Zahl, die n-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
@@ -608,8 +690,7 @@ Sei (M,$\circ$,1) ein Monoid, dann existiert ein Algorithmus für alle $a \in  M
 \end{theorem}
 
 
-
-
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AKS ALGORITHMUS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der AKS-Primzahltest}
@@ -821,7 +902,7 @@ Nun zeigen wir nun durch vollständige Induktion, dass
 \begin{equation}\label{auss}
     n \cdot (2n + 1) {2n \choose n} \geq 2^{2n + 2}, \, \forall n \geq 3
 \end{equation}
-gilt.\newline\newline
+gilt.\footnote{Die Aussage ist erst ab $n = 3$ gültig. Für $n = 2, 2 \cdot 5 {4 \choose 2} = 60 < 64 = 2^{6} $, da alle Funktionen monoton wachsend sind gilt die Aussage auch für $n = 1$ nicht.}\newline\newline
 \textbf{IA:} $n = 3$
 \begin{align*}
     3 \cdot (2 \cdot 3 + 1) { 6 \choose 3} = 420 > 256 = 2^{2 \cdot 3 + 2}.
@@ -847,8 +928,9 @@ Daraus folgt $d_{2n + 2} \geq d_{2n + 1} \geq  n \cdot (2n + 1) {2n \choose n} \
 
 Folglich gilt auch $\forall n \in \mathbb{N}, \, n \geq 7$:
 \begin{align*}
-    d_{n} \geq 2^{n}
+    kgV(n)= d_{n} \geq 2^{n}
 \end{align*}
+was zu beweisen war.
 \end{proof}
 
 \textbf{Abschätzung von $r$}.\newline
@@ -883,14 +965,13 @@ Wir betrachten $\Pi$:
                 &= n^{\lfloor log B \rfloor + \frac{log^4 n + log^2 n}{2}}\\
                 & \leq n^{\lfloor log B \rfloor + \frac{log^4 n + \frac{log^4 n}{2}}{2}}\\
                 & \leq n^{\lfloor \frac{log^4 n}{4} \rfloor + \frac{log^4 n + \frac{log^4 n}{2}}{2}}\\
-                & \leq n^{log^4 n} = 2^{log n^{log^4 n}} = 2^{log^5 n} = 2^{B}.
+                &\leq n^{log^4 n} = 2^{log \, n^{log^4 n}} = 2^{log^5 n} = 2^{B}.
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Ferner sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt $ \lfloor log B \rfloor$ ist die höchste Potenz in der Primfaktorzerlegung von $a$. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
+Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt, dass $ \lfloor log B \rfloor$  die höchste Potenz in der Primfaktorzerlegung von $a$ ist. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
 $\Rightarrow a \mid n^{log B}$.\newline\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline\newline
-
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline
 Es bleibt nur noch zu zeigen, dass $o_{r}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r$) wahr ist. daher gilt auch:\newline\newline
 \centerline{$n^k - 1 = 0 \, (mod \, r) \, \Rightarrow r \mid n^k - 1$.}
 
@@ -1009,7 +1090,7 @@ Zur Definition der zweiten Gruppe sei nun $h(X)$ einer dieser Teiler aus Lemma \
 Wie benötigen nun eine untere Schranke für $\mathcal{G}$.
 
 \begin{lemma}\label{lemma47}
-$|\mathcal{G}| > {t + l \choose t - 1}$
+$|\mathcal{G}| \geq {t + l \choose t - 1}$
 \end{lemma}
 
 \begin{proof}
@@ -1091,10 +1172,10 @@ Gemäß Lemma \ref{closing_lemma} gilt $|\mathcal{G}| \leq n^{\sqrt{t}}$, falls 
 
 Aus Theorem \ref{hin_rich} und Theorem \ref{rueck_rich} folgt der Hauptsatz der Korrektheit. 
 \section{Laufzeitanalyse}
-Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fact_2}) aus dem Zweiten Kapitel verwendet. Das heißt, Multiplikation, und Modulorechnung von zwei Zahlen jeweils mit $\lVert m \rVert$ Bits können in $O^{\sim}(\lVert m \rVert)$ Schritten durchgeführt werden. Nach dem gleichen Prinzip können diese Operationen auf zwei Polynome übertragen werden, für Polynome vom Grad $d$ und eine maximale Bitlänge von  $m$ können Multiplikationen und Modulorechnungen in $O^{\sim}(d \cdot  m )$ Schritten durchgeführt werden.
+Zur Berechnung der Zeitkomplexität werden die Fakten(\ref{fact_1}) und (\ref{fact_2}) aus dem Zweiten Kapitel verwendet. Das heißt, Multiplikation, und Modulorechnung von zwei Zahlen jeweils mit $m$ Bits können in $O^{\sim}( m )$ Schritten durchgeführt werden. Nach dem gleichen Prinzip können diese Operationen auf zwei Polynome übertragen werden, für Polynome vom Grad $d$ und eine maximale Bitlänge von  $m$ können Multiplikationen und Modulorechnungen in $O^{\sim}(d \cdot  m )$ Schritten durchgeführt werden.
 
 \begin{theorem}
-Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(log^{21/2}n)$. 
+Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(\lVert n \rVert^{10.5})$. 
 \end{theorem}
 
 
@@ -1190,7 +1271,30 @@ Im fünften Schritt des Algorithmus werden $l = \lfloor \sqrt{\phi(n)} log \, n 
     &=O^{\sim}(log^{21/2}n) = O^{\sim}( \lVert n \rVert^{21/2}).
 \end{align*}
 
-Die Laufzeit des fünften Schritt ist größer als alle anderen. folglich gilt, dass die asymptotische Laufzeit des Algorithmus $O^{\sim}(log^{21/2}n) = O^{\sim}(\lVert n \rVert^{10.5})$ ist.
+Die Laufzeit des fünften Schritt ist größer als alle anderen. folglich gilt, dass die asymptotische Laufzeit des Algorithmus $O^{\sim}(log^{21/2}n) = O^{\sim}(\lVert n \rVert^{10.5})$ ist.\newline
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
+ \hline
+ \multicolumn{4}{|c|}{Laufzeituntersuchung} \\
+ \hline
+ Zahl (n)& Bits &Ergebnis&Zeit in s\\
+ \hline
+ 49   & 6    &False&   $8.5 \cdot 10^{-5}$\\
+ 233&   8  & True   &$0.063$\\
+ 12923 &14 & True&  $0.302$\\
+ 131071    &17 & True&  $1.006$\\
+ 2147483647&   31  & True& $43.54$\\
+ 3875741& 22  & True   &$2.9943$\\
+ 38890279& 26  & True& $7.890$\\
+ 170141183297& 38 & True& $119.432$\\
+ \hline
+\end{tabular}
+ \caption{Laufzeituntersuchung des AKS-Algorithmus.}
+\label{table:2}
+\end{table}
+
 
 \begin{figure}[h]
 \includegraphics[width=8cm]{plots/aks.png}
@@ -1217,7 +1321,7 @@ Die Laufzeit des fünften Schritt ist größer als alle anderen. folglich gilt, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \appendix
-\section{Algorithmen}
+\section{Algorithmenverzeichnis}
 % check_perefect_powers
 \begin{algorithm}[H]
 \SetAlgoLined
