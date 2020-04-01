@@ -10,12 +10,6 @@ from numpy.random import randint
 import timeit
 from sage.all import *
 
-def naive_prime(n):
-    limit = int(n)
-    for i in range(2,limit):
-        if n % i == 0:
-            return False
-    return True 
 
 ################ Helper Functions #####################################################
 """
@@ -30,7 +24,7 @@ def gcd(a,b):
 
 
 """
-check for perfect powers 
+check for perfect powers, i.e. n = a^b, for some a,b £ N 
 """
 
 def check_perfect_power(n):
@@ -76,8 +70,6 @@ def find_r(n):
 ##### The-Algorithm #############################################################
 
 def aks(n):
-    if n < 2:
-        return
     #STEP 1    
     if check_perfect_power(n) == True:
         return False
@@ -117,11 +109,11 @@ def bit_length(n):
     return bits
 
 #best test values so far 
-x = [i  for i in range(2,200000,10)]
+x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
 y = []
 bl = []
 
-n = 10  
+
 for a in x:
     start = time.process_time()
    
@@ -135,9 +127,12 @@ for a in x:
         bl.append(l)
 
 
-############################### Plotting #################################################
+# ############################### Plotting #################################################
 
 
+z = []
+
+t = []
 print(bl,y)
 
 y = sorted(y)
@@ -148,6 +143,17 @@ plt.ylabel("required time")
 plt.title("AKS")
 plt.show()
 
+# expected: c, p, p, p, c, p, c, p
+
+# for i in x:
+#     s = time.process_time()
+#     res = aks(i)
+#     e = time.process_time()
+#     z.append(bit_length(i))
+#     t.append(e-s)
+#     print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
+
+# print(z,t)
 
 
 
