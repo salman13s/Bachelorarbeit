@@ -446,29 +446,6 @@ Die \textbf{Ordnung} einer Gruppe $(G, \circ)$ ist die Kardinalität dieser Grup
 \smallskip
 
 \begin{definition}
-Sei $H$ eine Untergruppe, man spricht von einer \textbf{Nebenklasse}. Je nach dem von welcher Seite multipliziert, heißt diese dann \textbf{Linksnebenklasse} beziehungsweise \textbf{Rechtsnebenklasse}
-\begin{align*}
-    aH = \{ a \circ h \mid h \in H \} \\
-    Ha = \{ h \circ a \mid h \in H \}
-\end{align*}
-\end{definition}
-
-\smallskip
-
-\begin{theorem}[\textbf{Satz von Lagrange}]
-Sei $H$ eine Untergruppe einer endlichen Gruppe $G$, dann gilt:
-\begin{align*}
-|H| \mid |G|
-\end{align*}
-\end{theorem}
-
-\begin{proof}
-Sei $gH = \{ gh \mid h \in H\}$ die Linksnebenklasse für ein beliebiges $g \in G$. Es sei $ h \to gh$ eine Bijektion zwischen $H$ und $gH$
-\end{proof}
-
-\smallskip
-
-\begin{definition}
 Ein \textbf{Ring} $(R,+,\cdot)$ ist eine Menge $R$ mit zweistelligen Operationen $+, \cdot$, sodass diese folgenden Gesetze gelten:
 \begin{itemize}
     \item $(R,+)$ ist eine abelsche Gruppe.
@@ -944,8 +921,7 @@ Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) 
 Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen.\newline\newline
 Zunächst sei $n > 1$, für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $ord_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
-Ab jetzt wird angenommen, dass $n > 2$.\newline\newline
-\textbf{Bemerkung: } $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \forall n > 2$.\newline
+Nun wird angenommen, dass $n > 2$.\footnote{Der Logarithmus ist eine monoton wachsende Funktion und daher gilt:\newline $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \,  \forall n > 2$.}\newline\newline
 
 Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $kgV(B) \geq 2^B$. Zunächst wird gezeigt, dass   ein $r \leq B$ existiert, sodass
 \begin{equation}\label{prod_cor}
@@ -953,7 +929,7 @@ Sei $B = \lceil log^5 n \rceil$, nach Lemma \ref{lemma_1} gilt $kgV(B) \geq 2^B$
 \end{equation}
 durch $r$ nicht teilbar ist. Dies kann durch Widerspruch bewiesen werden.
 
-Angenommen, $\forall 1 \leq r \leq n$, $r$ teilt $\Pi$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher gilt $\Pi \geq kgV(B)$.\newline
+Angenommen, $\forall r, \, 1 \leq r \leq B$, $r$ teilt $\Pi$. Das Produkt ist ein gemeinsames Vielfaches aller Zahlen kleiner gleich $B$, daher gilt $\Pi \geq kgV(B)$.\newline
 Wir betrachten $\Pi$:
 \begin{equation}\label{long_p}
     \begin{split}
@@ -969,9 +945,10 @@ Wir betrachten $\Pi$:
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt, dass $ \lfloor log B \rfloor$  die höchste Potenz in der Primfaktorzerlegung von $a$ ist. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
+Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B \Rightarrow kgV(B) \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert\footnote{$o_{r}(n)$ existiert wenn $(n,r) = 1$}.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt, dass $ \lfloor log B \rfloor$  die höchste Potenz in der Primfaktorzerlegung von $a$ ist. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
 $\Rightarrow a \mid n^{log B}$.\newline\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben($(b,n) = 1$). Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben\footnote{Wegen $(b,n) = 1$}. Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline
+
 Es bleibt nur noch zu zeigen, dass $o_{r}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r$) wahr ist. daher gilt auch:\newline\newline
 \centerline{$n^k - 1 = 0 \, (mod \, r) \, \Rightarrow r \mid n^k - 1$.}
 
@@ -984,8 +961,12 @@ Aber wenn das gelten würde, würde $r$ das Produkt $\Pi$ teilen und das führt 
 wenn $o_{r}(n) > 1$, dann existiert ein Primfaktor $p$ von $n$, sodass $o_{r}(p) > 1$. 
 \end{lemma}
 \begin{proof}
-Sei $o_{r}(n) > 1$, mit der Primfaktorzerlegung $n = \prod_{i = 1}^{M} p_{i}^{e_{i}}$.\newline\newline Nun wird angenommen, dass $o_{r}(p_{i}) = 1$,$\forall 1 \leq i \leq M$ (es existiert kein $p_{i} : o_{r}(p_{i}) > 1$).\newline\newline
-$\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich ist $n = \prod_{i = 1} ^{M} p_{i}^{e_{i}} \, (mod \, r) = \prod_{i = 1} ^{M}(1)^{e_{i}} \,  (mod \, r) = 1 \, (mod \, r)$.\newline\newline Daraus wird ersichtlich, dass $o_{r}(n) = 1$ und das ist ein Widerspruch zur Voraussetzung, dass $o_{r}(n) > 1$. Daher existiert mindestens ein Primfaktor $p : o_{r}(p) > 1$.  
+Sei $o_{r}(n) > 1$, mit der Primfaktorzerlegung $n = \prod_{i = 1}^{M} p_{i}^{e_{i}}$.\newline\newline Nun wird angenommen, dass $o_{r}(p_{i}) = 1, \, \forall 1 \leq i \leq M$ (es existiert kein $p_{i} : o_{r}(p_{i}) > 1$).\newline\newline
+$\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich gilt
+\begin{align*}
+    n = \prod_{i = 1} ^{M} p_{i}^{e_{i}} \, (mod \, r) = \prod_{i = 1} ^{M}(1)^{e_{i}} \,  (mod \, r) = 1 \, (mod \, r)
+\end{align*}
+\newline\newline Daraus wird ersichtlich, dass $o_{r}(n) = 1$ und das ist ein Widerspruch zur Voraussetzung, dass $o_{r}(n) > 1$. Daher existiert mindestens ein Primfaktor $p : o_{r}(p) > 1$.  
 \end{proof}
 
 \smallskip
@@ -1066,7 +1047,7 @@ Aus Lemma \ref{intros_num} und Lemma \ref{intros_pol} folgt, dass jedes Element 
 
 Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den Beweis von Bedeutung sind.\newline\newline
 
-Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$, das heißt $G = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$. Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
+Die erste Gruppe G sei die Gruppe aller Restklassen in $I$ modulo $r$, das heißt $G = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist G eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$.\footnote{${Z}_{r}^{*} = \{ x \in Z_{r}^{*} \mid (x,r) =1 \}$} Sei die Kardinalität im weiteren $ | G | = t $. G wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\newline\newline
 
 Um die zweite Gruppe zu definieren, ist die folgende Eigenschaft von zyklotomischen Polynomen über endlichen Körpern erforderlich.
 
@@ -1085,7 +1066,7 @@ Nach Lemma \ref{impor_cyc_lemma} gilt $\Phi_{r}(X) \mid  X^{r} - 1$. Sei $\zeta$
 % $\mathcal{G}$
 \end{proof}
 
-Zur Definition der zweiten Gruppe sei nun $h(X)$ einer dieser Teiler aus Lemma \ref{cyc_ov_fields}. Die zweite Gruppe $\mathcal{G}$ sei die multiplikative Gruppe aller Restklassen von Polynomen in $P$ modulo $h(X)$ und $p$, also $\mathcal{G} = \{ \prod_{a = 0}^{l} (X + a)^{e_{a}} (mod \, h(X), p) \mid e_{a} \geq 0 \}$. $\mathcal{G}$ ist eine Untergruppe von $\mathbb{K} = \mathbb{K}_p[X] / (h(X))$ und wird von $X,X+1,X+2, ..., X + l $ im Körper $\mathbb{K}$ erzeugt.\newline
+Zur Definition der zweiten Gruppe sei nun $h(X)$ einer dieser Teiler aus Lemma \ref{cyc_ov_fields}. Die zweite Gruppe $\mathcal{G}$ sei die multiplikative Gruppe aller Restklassen von Polynomen in $P$ modulo $h(X)$ und $p$, also $\mathcal{G} = \{f \; (mod \, h(X), p) \mid f \in P \}$. $\mathcal{G}$ ist eine Untergruppe von $\mathbb{K} = \mathbb{K}_p[X] / (h(X))$ und wird von $X,X+1,X+2, ..., X + l $ im Körper $\mathbb{K}$ erzeugt.\newline
 
 Wie benötigen nun eine untere Schranke für $\mathcal{G}$.
 
@@ -1179,7 +1160,7 @@ Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(\lVert n \rVert^{10.5})
 \end{theorem}
 
 
-Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus(Potenz-Prüfung)im Anhang in Polynomialzeit berechnet werden. Zuerst wird die Laufzeit des Potenz-Prüfung Algorithmus analysiert(erster Schritt des Algorithmus).
+Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus(Potenz-Prüfung)im Anhang in Polynomialzeit berechnet werden.
 
 \textbf{Schritt 1:}\newline
 Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log^2 n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log^2 n$ wird für $a > 1$ geprüft, ob $a^b = n$ oder $a^b < n$. Die Potenzierung von einer Zahl mit der Bitlänge $\lVert n \lVert$ kann in $O(\lVert n \rVert^2) = O(log^2 n)$ Bit-Operationen berechnet werden.%cite the ref
@@ -1215,14 +1196,14 @@ Mit Hilfe einer Grafik lässt sich diese Aussage verdeutlichen:
 \label{table:1}
 \end{table}
 
-Tabelle \ref{table:1} macht deutlich, wie schnell die Potenztest entscheiden kann, ob eine Zahl eine Potenz einer anderen ist oder nicht. 
+Tabelle \ref{table:1} macht deutlich, wie schnell der Potenztest entscheiden kann, ob eine Zahl eine Potenz einer anderen ist oder nicht. 
 
 \smallskip 
 
 
 \textbf{Schritt 2:}\newline
 Im zweiten Schritt wird ein $r$ gesucht, sodass $o_{r}(n) > log^2 n$. Dies kann durch Ausprobieren von sukzessiven Werten von $r$ und dann zu testen, ob $n^k \neq 1 \,  mod \, r, \, \forall k \leq log^2 n$. Für jedes $r$ gibt es höchstens $O(log^2 n)$ mögliche Werte für $k$. Dies kann in $O^{\sim}(\lVert k \rVert \cdot \rVert r \lVert) = O^{\sim}(log^2 n \, log \, r)$ berechnet werden.\newline\newline
-Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit für den zweiten Schritt $O^{\sim}(log^7 n) = O^{\sim}(\lVert n \rVert^7)$ ist. 
+Aus Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit von dem zweiten Schritt $O^{\sim}(log^7 n) = O^{\sim}(\lVert n \rVert^7)$ ist. 
 
 Dies lässt sich auch am besten mit einer Grafik illustrieren:
 \begin{figure}[h]
@@ -1285,9 +1266,10 @@ Die Laufzeit des fünften Schritt ist größer als alle anderen. folglich gilt, 
  233&   8  & True   &$0.063$\\
  12923 &14 & True&  $0.302$\\
  131071    &17 & True&  $1.006$\\
- 2147483647&   31  & True& $43.54$\\
  3875741& 22  & True   &$2.9943$\\
  38890279& 26  & True& $7.890$\\
+ 2147483647&   31  & True& $43.54$\\
+ 140141183298&   38  & False& $0.019$\\
  170141183297& 38 & True& $119.432$\\
  \hline
 \end{tabular}
