@@ -86,7 +86,7 @@ def aks(n):
     #STEP 5
     l=floor((2*sqrt(euler_phi(r))*log(n,2)+1))
     for a in range(1,l):
-        s =Integers(n) # define n in Z_n 
+        s =Integers(n) # define s in Z_n 
         R.<x> = PolynomialRing(s) # define the polynomial ring
         Q = R.quotient((x^r)-1) # quotient ring Z\(X^r - 1)
         q = Q((x+a)) # representation of x + a in the Quotient ring Q  
@@ -133,27 +133,27 @@ for a in x:
 z = []
 
 t = []
-print(bl,y)
+# print(bl,y)
 
-y = sorted(y)
+# y = sorted(y)
 
-plt.plot(bl,y)
-plt.xlabel("#Bits")
-plt.ylabel("required time")
-plt.title("AKS")
-plt.show()
+# plt.plot(bl,y)
+# plt.xlabel("#Bits")
+# plt.ylabel("required time")
+# plt.title("AKS")
+# plt.show()
 
 # expected: c, p, p, p, c, p, c, p
 
-# for i in x:
-#     s = time.process_time()
-#     res = aks(i)
-#     e = time.process_time()
-#     z.append(bit_length(i))
-#     t.append(e-s)
-#     print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
+for i in x:
+    s = time.process_time()
+    res = aks(i)
+    e = time.process_time()
+    z.append(bit_length(i))
+    t.append(e-s)
+    print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
 
-# print(z,t)
+print(z,t)
 
 
 

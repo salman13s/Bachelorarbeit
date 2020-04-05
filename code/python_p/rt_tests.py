@@ -91,38 +91,37 @@ def brute_force_prime_test(n):
 
 # Runtime complexity plot
 
-# x = [i  for i in range(2,100000000,200)]
-# y = []
-# bl = []
-# y_2 = []
-# bl_1 = []
-# n = 10	
+x = [i  for i in range(2,10000000,200)]
+y = []
+bl = []
+y_2 = []
+bl_1 = []
+n = 10	
 
-# for a in x:
-# 	start = time.process_time()
-# 	check_perfect_powers(a)
-# 	# find_r(a)
-# 	# naive_aks(a)
-# 	end = time.process_time()
-# 	t = end - start
-# 	l = bit_length(a)
-# 	if l not in bl:
-# 		y.append(t)
-# 		bl.append(l)
-
-
-
-# y = sorted(y)
+for a in x:
+	start = time.process_time()
+	# check_perfect_powers(a)
+	find_r(a)
+	# naive_aks(a)
+	end = time.process_time()
+	t = end - start
+	l = bit_length(a)
+	if l not in bl:
+		y.append(t)
+		bl.append(l)
 
 
-# print(bl)
-# print(y)
 
-# plt.plot(bl,y)
-# plt.xlabel("#Bits")
-# plt.ylabel("time")
-# plt.title("check_perfect_powers")
-# plt.show()
+y = sorted(y)
 
 
-print(bit_length(570141191371))
+print(bl)
+print(y)
+
+plt.plot(bl,y)
+plt.xlabel("#Bits")
+plt.ylabel("required time")
+plt.title("find_r")
+plt.show()
+
+
