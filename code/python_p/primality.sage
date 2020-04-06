@@ -98,6 +98,13 @@ def aks(n):
     return True            
 
 
+def naive_prime(n):
+    limit = int(n)
+    for i in range(2,limit):
+        if n % i == 0:
+            return False
+    return True     
+
 
 
 #### Time-Complexity_Analysis ############################################################
@@ -110,9 +117,11 @@ def bit_length(n):
 
 #best test values so far 
 x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
+# x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163]
 y = []
 bl = []
-
+y_2 = []
+bl_2 = []
 
 for a in x:
     start = time.process_time()
@@ -126,6 +135,17 @@ for a in x:
         y.append(t)
         bl.append(l)
 
+for a in x:
+    start = time.process_time()
+    naive_prime(a)
+    end = time.process_time()
+    t = end - start
+    l = bit_length(a)
+    if l not in bl_2:
+        y_2.append(t)
+        bl_2.append(l)
+
+
 
 # ############################### Plotting #################################################
 
@@ -133,27 +153,28 @@ for a in x:
 z = []
 
 t = []
-# print(bl,y)
+print(bl,y)
 
+print(bl_2,y_2)
 # y = sorted(y)
 
-# plt.plot(bl,y)
-# plt.xlabel("#Bits")
-# plt.ylabel("required time")
-# plt.title("AKS")
-# plt.show()
+plt.plot(bl,y,bl_2,y_2)
+plt.xlabel("#Bits")
+plt.ylabel("required time")
+plt.title("AKS")
+plt.show()
 
 # expected: c, p, p, p, c, p, c, p
 
-for i in x:
-    s = time.process_time()
-    res = aks(i)
-    e = time.process_time()
-    z.append(bit_length(i))
-    t.append(e-s)
-    print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
+# for i in x:
+#     s = time.process_time()
+#     res = aks(i)
+#     e = time.process_time()
+#     z.append(bit_length(i))
+#     t.append(e-s)
+#     print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
 
-print(z,t)
+# print(z,t)
 
 
 
