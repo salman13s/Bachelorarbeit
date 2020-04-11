@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt # ploting
 import math 
 import time 
 from random import randint
+from sympy import perfect_power
+
 
 
 def bit_length(n): # return the bit size of a non-negative integer
@@ -87,66 +89,69 @@ def brute_force_prime_test(n):
             return False
     return True
 
+
+
+		
 # Runtime complexity plot
 
-# x = [i  for i in range(2,100000000000,200)]
-# y = []
-# bl = []
-# y_2 = []
-# bl_1 = []
-# n = 10	
+x = [i  for i in range(2,280000000,150)]
+y = []
+bl = []
+y_2 = []
+bl_1 = []
+n = 10	
 
-# for a in x:
-# 	start = time.process_time()
-# 	check_perfect_powers(a)
-# 	#find_r(a)
-# 	# naive_aks(a)
-# 	end = time.process_time()
-# 	t = end - start
-# 	l = bit_length(a)
-# 	if l not in bl:
-# 		y.append(t)
-# 		bl.append(l)
-
-
-
-# y = sorted(y)
+for a in x:
+	start = time.process_time()
+	check_perfect_powers(a)
+	#find_r(a)
+	# naive_aks(a)
+	end = time.process_time()
+	t = end - start
+	l = bit_length(a)
+	if l not in bl:
+		y.append(t)
+		bl.append(l)
 
 
-# print(bl)
-# print(y)
+
+y = sorted(y)
+
+
+print(bl)
+print(y)
 
 
 #############################################################################
 
 #Test results for AKS vs Naive
-x = [13, 17, 19, 26, 29, 31, 32, 34]; # input length
-# aks
-y = [0.3012730000000001, 1.076172, 1.5995600000000003, 7.705483, 23.567881, 43.665376, 45.481381999999996, 82.56921599999998];
-#naive 
-y2= [0.0005449999999882493, 0.008898999999985335, 0.03522099999997863, 2.7159679999999753, 27.237017000000037, 152.65455300000002, 160.04647300000005, 1201.7844949999999];
+# x = [13, 17, 19, 26, 29, 31, 32, 34]; # input length
+# # aks
+# y = [0.3012730000000001, 1.076172, 1.5995600000000003, 7.705483, 23.567881, 43.665376, 45.481381999999996, 82.56921599999998];
+# #naive 
+# y2= [0.0005449999999882493, 0.008898999999985335, 0.03522099999997863, 2.7159679999999753, 27.237017000000037, 152.65455300000002, 160.04647300000005, 1201.7844949999999];
 
 
-plt.subplot(2, 1, 1)
-plt.title("AKS vs Naive ")
-plt.plot(x,y,'tab:green')
-plt.ylabel("required time")
+# plt.subplot(2, 1, 1)
+# plt.title("AKS vs Naive ")
+# plt.plot(x,y,'tab:green')
+# plt.ylabel("required time")
 
 
-plt.subplot(2, 1, 2)
-plt.plot(x,y2,'tab:red')
-plt.xlabel("#Bits")
-plt.ylabel("required time")
+# plt.subplot(2, 1, 2)
+# plt.plot(x,y2,'tab:red')
+# plt.xlabel("#Bits")
+# plt.ylabel("required time")
 
-plt.legend()
-plt.show()
+# plt.legend()
+# plt.show()
 
 ##################################################################################################
 
-# plt.plot(bl,y)
-# plt.xlabel("#Bits")
-# plt.ylabel("required time")
-# plt.title("find_r")
-# plt.show()
+plt.plot(bl,y)
+plt.xlabel("#Bits")
+plt.ylabel("required time")
+plt.title("find_r")
+plt.show()
 
 
