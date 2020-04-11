@@ -204,16 +204,16 @@ Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels
 Im vierten Kapitel wird die Laufzeitanalyse des Algorithmus vorgestellt, dabei werden die Laufzeiten der einzelnen Schritte (STEPS 1-6) des Algorithmus ausführlich analysiert. Es werden außerdem mehrere Grafiken zur Verdeutlichung der Polynomiallaufzeit dargestellt, es werden auch Tabellen angegeben, die die Korrektheit und die Laufzeit der Schritte illustrieren sollen        
 
 \subsection{Überblick}
-Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und beweisen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt, sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird.
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und bewiesen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt. Sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahl zu aufwendig wird.
 
-Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson hat einen Satz aufgestellt, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen, die größte Primzahl heute $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen, aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
+Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson hat einen Satz aufgestellt, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen, die größte Primzahl heute $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl. Ein anderer französischer Mathematiker Pierre de Fermat hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
 \newline
 
 Die Sätze von Wilson, Mersenne, und Fermat sind aber zum Finden von großen Primzahlen höchst ineffizient. Natürlich hat damals sowieso niemand versucht, große Primzahlen mittels dieser Sätze zu finden, da es einfach keinen Grund dafür gab. Der frühste Einsatz von großen Primzahl findet sich im 20. Jahrhundert bei modernen kryptographische Systemen\cite{krypWiki}. Im Jahr 1997 wurde mit dem RSA-Verfahren eine Methode entdeckt, mit der man Daten sehr sicher verschlüsseln kann und die auch für den allgemeinen Gebrauch geeignet ist. Bei diesem verfahren muss aber ein Produkt aus Primzahlen berechnet\cite{rsa}. Man beachte dabei, dass die in der Praxis eingesetzte Primzahlen sehr groß sind und aus mehreren Hundert Stellen bestehen können. Aus diesem Grund ist es sinnvoll einen Algorithmus(oder mehrere Algorithmen) zu haben, mit dem man solche Primzahlen \textquotedbl schnell\textquotedbl bestimmen kann. Um das zu verwirklichen, braucht man zunächst eine formale Definition vom untersuchten Problem und darüber hinaus eine Definition für schnelle Algorithmen. Hier kommen die Komplexitätstheorie und die Berechenbarkeitstheorie zum Einsatz. 
 
 Seit dem Beginn der Komplexitätstheorie in den 1960er Jahren, wurden Begriffe formalisiert und verschiedene Komplexitätsklassen definiert\cite{com-theory}. Seitdem versuchten Informatiker und Mathematiker, das Primalitätsproblem in einer Komplexitätsklasse einzuordnen. Daher wurde das Primalitätsproblem auch im Laufe der Jahre intensiv untersucht. Es war trivial zu sehen, dass dieses Problem in der Komplexitätsklasse co-NP liegt\footnote{Dies entspricht der Aussage, dass geprüft wird, ob eine Zahl n zusammengesetzt ist in NP. Man soll hier nun ein Zertifikat (Faktor) d finden und testen ob $d \mid n$ gilt. Dies ist offensichtlich in Polynomialzeit realisierbar.\newline}. In 1974 hat der australische Informatiker Vaughan Pratt eine wichtige Beobachtung gemacht, nämlich, dass das Primalitätsproblem auch in der Komplexitätsklasse NP liegt\cite{pratt}.
 
-Die Frage war nachher, ob es noch besser geht, also liegt das Primalitätsproblem auch in P? Viele haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Algorithmen entwickelt. Leider war keiner der Versuche erfolgreich, da die Algorithmen entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren.\footnote{Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können(nicht deterministisch)}. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Allerdings kann der beste nicht probabilistische Algorithmus (bis 2002) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus vorgestellt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
+Die Frage war nachher zu klären, ob das Primalitätsproblem auch in P liegt? Viele Wissenschaftler haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Algorithmen entwickelt. Leider war keiner der Versuche erfolgreich, da die Algorithmen entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren.\footnote{Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können(nicht deterministisch)}. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen. Allerdings kann der beste nicht probabilistische Algorithmus (bis 2002) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus vorgestellt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
 In dieser Arbeit wird der AKS-Primzahltest Algorithmus aus dem Originalartikel behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu testen und seine Laufzeit zu evaluieren. Um die Korrektheit zu testen soll Zunächst die Idee Algorithmus dargestellt und erläutert werden, dabei wird die Korrektheit zuerst mathematisch bewiesen, dafür wird ein bidirektionaler Beweis geführt. Neben dem mathematischen Beweis wird auch einen experimentellen Beweis der Korrektheit durchgeführt, die Ergebnisse dieser Tests werden in mehreren Tabellen dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und getestet. Der Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht, hier wird auch auf ähnlicher Weise mathematisch und dann experimentell bewiesen, dass der Algorithmus in Polynomialzeit läuft. Schließlich soll die Polynomialzeit Eigenschaft durch mehrere Grafiken verdeutlicht werden.  
@@ -697,26 +697,28 @@ Dabei ist X ein Polynom über dem Ring $\mathbb{Z}_{n}[X]$
 \begin{proof}
 Aus dem binomischen Lehrsatz(\ref{Th_3}) folgt, dass der Koeffizient von $X^i$ in dem Polynom ${n \choose i} a^{n-i}$ ist.\newline\newline
 $"\Rightarrow"$\newline
-Angenommen $n$ ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! i!} = 0 $ (mod n). Das heißt alle Koeffizienten (bis auf den ersten und den letzten) sind Null.\newline\newline Für $i = 0$ erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
+Angenommen $n$ ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! \cdot i!} = 0 $ (mod n). Das heißt alle Koeffizienten (bis auf den ersten und den letzten) sind Null.\newline\newline Für $i = 0$ erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
 $(X + a)^n = a^n + 0 + 0 + ... + 0 + X^n = a^n + X^n$(mod n).\newline\newline
 $"\Leftarrow"$\newline
 Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor $q$ von $n$, mit der Vielfachheit $k$(Dabei ist zu beachten, dass Für $1 < q < n$, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
 Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 \begin{equation}
-    {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
+    {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! \cdot n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
 \end{equation}
 \newline\newline
 Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich $n$ als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\footnote{}\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^k mod \, r$ ersetzen, das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten.\newline Dies kann für ein entsprechend kleines $r$ in Polynomialzeit berechnet werden. Daher das Hauptziel jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^{k \, mod \, r}$ ersetzen, das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten.\newline Dies hält die Rechenkosten im polynomiellen Bereich, solange $r$ höchstens $O ((log n)^c), \, c > 0$ ist. Daher das Hauptziel jetzt ist ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
 \end{equation}
 
 erfüllt ist.\newline
 
-Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Jedoch ist das geeignete $r$ von oben durch ein Polynom in $log n$ beschränkt, das heißt der Algorithmus muss nur $log n$ a testen, um eine Entscheidung über die Primalität der Zahl $n$ zu treffen.
+Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Die obere Kongruenz kann mithilfe von FFT-basierten Multiplikationen in $O(r \, log^2 n)$ ausgewertet werden\cite{D73}. Die Idee vom AKS-Algorithmus ist ein "geeignetes"$\, r$ zu wählen und nur für dieses $r$ zu testen ob (\ref{eq:2}) für mehrere $a$ Werte erfüllt ist. Ein $r$ heißt geeignet, wenn es prim ist und $r \leq log^5 n$. Es soll außerdem gelten\footnote{. Da $r$ prim ist, gilt $r = \phi(r) - 1 $, wobei $\phi$ die eulersche Phi-Funktion ist.}, dass $r - 1$ einen Primfaktor hat, der mindestens $r^{\frac{1}{2} + \delta}$ groß ist.\footnote{In der ersten Version des Algorithmus war die obere Schranke für $r = log^6 n$}. Die Idee ist für dieses $r$ zu testen, ob die Gleichung (\ref{eq:2}) für alle $a$ Werte bis $O(\sqrt{r}\, logn)$ erfüllt ist, wenn das nicht der Fall ist, dann ist $n$ eine zusammengesetzte Zahl. Im Korrektheitsbeweis wird gezeigt, wenn (\ref{eq:2}) für mehrere Werte von $a$ erfüllt ist, dann ist $n$ eine Potenz einer Primzahl. Das geeignete $r$ sowie die Anzahl an $a$, die getestet werden müssen, von oben durch ein Polynom in $log n$ beschränkt sind, was die Polynomiallaufzeit ermöglicht.
+
+\newpage
 
 \end{flushleft}
 \subsection{Der Algorithmus}\label{algo}
@@ -771,13 +773,13 @@ Der Algorithmus überprüft alle drei Bedingungen für eine Zahl $n$.\newline
 
 \textbf{Schritt 2: }Hier probiert der Algorithmus sukzessive Werte von $r$ aus, bis $n^k \neq 1 (mod \, r), \, \forall k \leq log^2 n$.
 
-\textbf{Schritt 3: } In diesem Schritt wird überprüft, ob $n$ und $a, \, a \leq r$ gemeinsame Faktoren haben. 
+\textbf{Schritt 3: }In diesem Schritt wird überprüft, ob $n$ und $a, \, a \leq r$ gemeinsame Faktoren haben. 
 
 \textbf{Schritt 4: } Wenn keine Primfaktoren bei Schritt 3 gefunden worden sind, gibt der Algorithmus bei diesem Schritt PRIME zurück. Da $n \leq r$ und $(k,n) = 1, \, \forall k \leq r $(sonst hätte er beim 3. Schritt schon COMPOSITE zurückgegeben).
 
 \textbf{Schritt 5: } Hier wird die dritte Bedingung aus \ref{aks-prop} überprüft.
 
-\textbf{Schritt 6: } Wenn kein $a$ in Schritt 5 gefunden wurde, dann muss die Zahl prim sein. 
+\textbf{Schritt 6: } Wenn kein $a$ in Schritt 5 gefunden wurde, sodass die Gleichung aus 3 nicht erfüllt ist. dann muss die Zahl prim sein(da n keine Potenz ist). 
 \subsection{Korrektheitsbeweis}
 
 \begin{theorem}
@@ -959,9 +961,9 @@ Wir betrachten $\Pi$:
         \end{aligned}
     \end{split}
 \end{equation}
-Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B \Rightarrow kgV(B) \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert\footnote{$o_{r}(n)$ existiert wenn $(n,r) = 1$}.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt, dass $ \lfloor log B \rfloor$  die höchste Potenz in der Primfaktorzerlegung von $a$ ist. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
+Aus (\ref{long_p}) folgt: $kgV(B) \leq \Pi \leq 2^B \Rightarrow kgV(B) \leq 2^B$. Das ist aber ein Widerspruch zu Lemma \ref{lemma_1}. Das heißt es existiert eine Menge von Zahlen $R = \{r_{1},r_{2},...,r_{t}\}$, $ 1 \leq r_i \leq B$,$\, i = 1,2, ..,t$, sodass alle $r_{i}$ das Produkt nicht teilen. Sei $r$ das kleinste Element dieser Menge.\newline\newline Nun zeigen wir, dass $o_{r}(n)$ für dieses $r$ existiert\footnote{. $o_{r}(n)$ existiert wenn $(n,r) = 1$}.\newline\newline Sei $r = ab $, wobei $a$ aus den Primfaktoren besteht, die $n$ teilen und $b$ aus den restlichen Primfaktoren. Offensichtlich $(b,n) = 1$. Aus der Beobachtung, dass $m^k \leq B, \, m \geq 2$ höchstens $\lfloor log B \rfloor$ ist, folgt, dass $ \lfloor log B \rfloor$  die höchste Potenz in der Primfaktorzerlegung von $a$ ist. Da sonst $a \leq r$ größer als $B$ wäre.\newline\newline
 $\Rightarrow a \mid n^{log B}$.\newline\newline
-Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben\footnote{Wegen $(b,n) = 1$}. Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline
+Das heißt $b$ teilt $\prod_{i = 1}^{\lfloor log^2 n \rfloor}(n^i - 1)$ nicht, da sonst $r$ das Produkt teilen würde. $b$ teilt $n^{log B}$ auch nicht, da $n$ und $b$ keine gemeinsamen Primfaktoren haben\footnote{. Wegen $(b,n) = 1$}. Aber da $r$ das kleinste Element ist, das $\Pi$ nicht teilt, gilt $r= b$. Es gilt außerdem $(b,n) = 1$ beziehungsweise $(r,n) = 1$ und somit existiert $o_{r}(n)$.\newline
 
 Es bleibt nur noch zu zeigen, dass $o_{r}(n) > log^2 n$. Das lässt sich auch wie oben durch einen Widerspruch zeigen. Sei $o_{r}(n) = k \leq log^2 n$, per Definition ist $k$ die kleinste Zahl, für die $n^k = 1$ (mod $r$) wahr ist. daher gilt auch:\newline\newline
 \centerline{$n^k - 1 = 0 \, (mod \, r) \, \Rightarrow r \mid n^k - 1$.}
@@ -1192,28 +1194,11 @@ Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festge
 Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log^2 n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log^2 n$ wird für $a > 1$ geprüft, ob $a^b = n$ oder $a^b < n$. Die Potenzierung von einer Zahl mit der Bitlänge $\lVert n \lVert$ kann in $O(\lVert n \rVert^2) = O(log^2 n)$ Bit-Operationen berechnet werden.%cite the ref
 Danach wird eine binäre Suche durchgeführt, um ein $a$ zu finden, sodass $ n = a^b$. Die Laufzeit für eine binäre Suche ist $O(log \, n)$. Daraus folgt, dass die Laufzeit für die Potenz-Prüfung $O(log^3 n) = O(\lVert n \rVert^3)$ ist. Das heißt, dass der erste Schritt des AKS-Algorithmus in Polynomialzeit realisiert werden kann.\newline 
 
-Mit Hilfe einer Grafik lässt sich diese Aussage verdeutlichen\footnote{}:
-\begin{figure}[h]
-\includegraphics[width=8cm]{plots/pp.png}
-\centering
-\caption{Laufzeit des Potenz-Prüfung Algorithmus}
-\end{figure}
-
- 
-
 
 \textbf{Schritt 2:}\newline
 Im zweiten Schritt wird ein $r$ gesucht, sodass $o_{r}(n) > log^2 n$. Dies kann durch Ausprobieren von sukzessiven Werten von $r$ und dann zu testen, ob $n^k \neq 1 \,  mod \, r, \, \forall k \leq log^2 n$. Für jedes $r$ gibt es höchstens $O(log^2 n)$ mögliche Werte für $k$. Dies kann in $O^{\sim}(log^2 n \cdot \rVert r \lVert) = O^{\sim}(log^2 n \, log \, r)$ berechnet werden.\newline\newline
 Gemäß Lemma \ref{limit_of_r} gilt, dass $ r \leq log^5 n$, folglich gilt $O^{\sim}(log^2 n \, log^5 n)$, somit gilt, dass die Laufzeit von dem zweiten Schritt $O^{\sim}(log^7 n) = O^{\sim}(\lVert n \rVert^7)$ ist. 
 
-Dies lässt sich auch am besten mit einer Grafik illustrieren:
-\begin{figure}[h]
-\includegraphics[width=8cm]{plots/findR.png}
-\centering
-\caption{Laufzeit von Schritt 2}
-\end{figure}
-
-\newpage
 
 \textbf{Schritt 3:}\newline
 Im dritten Schritt wird der größte gemeinsame Teiler von $r$ Zahlen (da $a \leq r$) berechnet. Eine ggT-Berechnung kann in $O(log \,n)$ berechnet werden\cite{D73}. Daraus folgt, dass Schritt 3 in $O(r \, log \, n) \underbrace{=}_{\ref{limit_of_r}} O(log^6 n) = O(\lVert n \rVert^6)$ berechnet werden kann. 
@@ -1234,17 +1219,32 @@ Die Laufzeit des fünften Schritts ist größer als alle anderen. folglich gilt,
 
 In der folgenden Grafik, es ist gut erkennbar, dass der Algorithmus ein polynomielles Verhalten hat\footnote{. In der Grafik wurde die Zeit für Primzahlen bis zu 40 Bits gemessen}.
 
-\begin{figure}[h]
-\includegraphics[width=8cm]{plots/aks.png}
-\centering
-\caption{Laufzeit des AKS-Primzahltests}
-\end{figure}
 
- 
 \newpage
 
-\section{Experimente}
+\section{Experimentelle Auswertung}
+In diesem Kapitel werden die Laufzeiten der im Kapitel 4 untersuchten Algorithmen(Schritt 1, 2, 5) experimentell geprüft. Des Weiteren wird der AKS-Algorithmus mit dem naiven Algorithmus\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.} verglichen. Zusätzlich wird geprüft welchen Einfluss die Primalität einer Zahl auf die Laufzeit hat. Das heißt es wird auf folgende Frage benatowertet:\newline
+\textbf{Was ist mit dem AKS-Algorithmus schneller zu bestimmen, ob eine Zahl Primzahl oder zusammengesetzt ist?}
 
+Um dies zu illustrieren zu können, sind folgende Mengen erforderlich:
+\begin{enumerate}
+    \item \textbf{Menge 1:} Die Menge aller Zahlen, die auch Potenzen von anderen Zahlen sind. $M_1 = \{ n \in \mathbb{N} \mid n = a^b, \, a,b \in \mathbb{N}\}$.\newline
+    
+    \item \textbf{Menge 2:} Die Menge aller Zahlen, die nicht aus der ersten Menge sind, aber zusammengesetzt sind. $M_2 = \{ n \in \mathbb{N}\setminus	 M_1 \mid 1 < (a,n) < n, \forall a \leq \sqrt{n} \}$.\newline
+    
+    \item \textbf{Menge 3:} Die Menge der Zahlen, die weder aus $M_1$ noch aus $M_2$, sodass die Gleichung \ref{eq:2}, die im 3 Kapitel beschrieben wurde, erfüllt ist. $M_3 = \{ n \in \mathbb{N} \setminus (M_1 \cup M_2) \mid \exists a,r : (X + a)^n = X^n + a \, (\, mod \, X^r - 1,p) \}$
+\end{enumerate}
+
+
+\subsection{Implementierungsdetails}
+Zur Implementierung der Algorithmen wurde das Computer Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf dem beigefügten USB zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.
+
+\subsection{Experimentelle Ergebnisse}
+
+\subsubsection{Experiment 1: Potenz-Prüfung}
+Zunächst wird der Potenz-Prüfung Algorithmus untersucht, im vierten Kapitel wurde mathematisch gezeigt, dass dieser Algorithmus eine polynomielle Laufzeit hat. Nun wird dieses Resultat durch die folgende Laufzeituntersuchung verdeutlicht. Dabei ist einerseits wichtig, sicherzustellen, dass der Algorithmus korrekt ist, andererseits soll der Algorithmus eine Entscheidung in Polynomialzeit für $\lVert n \rVert$ treffen.
+\newpage
+Die Zeitmessung wurde gem. der Beschreibung in Anhang (\ref{appendix:fast_expo}) durchgeführt. 
 \begin{table}[h!]
 \centering
 \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
@@ -1253,12 +1253,12 @@ In der folgenden Grafik, es ist gut erkennbar, dass der Algorithmus ein polynomi
  \hline
  Zahl (n)& Bits &Ergebnis&Zeit in s\\
  \hline
- 32   & 6    &True&   $7 \cdot 10^{-5}$\\
+ 32   & 6    &True&   $0.00007$\\
  8199&   14  & False   &$0.000112$\\
  10019 &14 & False&  $0.000109$\\
- 474552    &19 & True&  $2.8 \cdot 10^{-5}$\\
- 941192&   20  & True&$2.6 \cdot 10^{-5}$\\
- 1643032& 21  & True   &$3 \cdot 10^{-5}$\\
+ 474552    &19 & True&  $0.000028$\\
+ 941192&   20  & True&$0.000026$\\
+ 1643032& 21  & True   &$0.00003$\\
  294024210& 29  & False&$0.000588$\\
  \hline
 \end{tabular}
@@ -1266,7 +1266,15 @@ In der folgenden Grafik, es ist gut erkennbar, dass der Algorithmus ein polynomi
 \label{table:1}
 \end{table}
 
-Tabelle \ref{table:1} macht deutlich, wie schnell der Potenztest entscheiden kann, ob eine Zahl eine Potenz einer anderen ist oder nicht. 
+
+Tabelle \ref{table:1} macht deutlich, wie schnell der Potenztest entscheiden kann, ob eine Zahl eine Potenz einer anderen ist oder nicht. Man kann anhand dieser Tabelle eine Grafik plotten. 
+
+Mit Hilfe dieser Grafik lässt sich verdeutlichen, dass die Laufzeit polynomiell ist.\footnote{. Die Grafik beschreibt die Laufzeit in Sekunden für verschiedene Inputgrößen}:
+\begin{figure}[h]
+\includegraphics[width=8cm]{plots/pp.png}
+\centering
+\caption{Laufzeit des Potenz-Prüfung Algorithmus}
+\end{figure}
 
 
 \begin{table}[h!]
@@ -1291,6 +1299,13 @@ Tabelle \ref{table:1} macht deutlich, wie schnell der Potenztest entscheiden kan
 \end{table}
 
 Obige Tabelle \ref{table:2} zeigt, dass das geeignete $r$ auch für große Zahlen schnell (unter einer Sekunde)bestimmt werden kann.\footnote{. Es ist auffällig, dass der Algorithmus mehr zeit gebraucht hat um das geeignete $r$ für eine 22 Bit Zahl (3875741) zu finden, als für eine 29 Bit Zahl (294024210). Das liegt aber daran, dass der Algorithmus bei 294024210 weniger Zahlen ausprobieren musste.}
+
+Dies lässt sich auch am besten mit einer Grafik illustrieren:
+\begin{figure}[h]
+\includegraphics[width=8cm]{plots/findR.png}
+\centering
+\caption{Laufzeit von Schritt 2}
+\end{figure}
 
 
 
@@ -1318,6 +1333,13 @@ Obige Tabelle \ref{table:2} zeigt, dass das geeignete $r$ auch für große Zahle
  \caption{Laufzeituntersuchung des AKS-Algorithmus.}
 \label{table:3}
 \end{table}
+
+\begin{figure}[h]
+\includegraphics[width=8cm]{plots/aks.png}
+\centering
+\caption{Laufzeit des AKS-Primzahltests}
+\end{figure}
+
 
 % TODO: rewrite the whole passage !!
 Tabelle \ref{table:3} zeigt deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn der Anzahl der Bits steigt. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Potenzen sind, ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für 147763360000 hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das viel weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.  
