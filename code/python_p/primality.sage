@@ -88,16 +88,17 @@ def aks(n):
     for a in range(1,l):
         s =Integers(n) # define s in Z_n 
         R.<x> = PolynomialRing(s) # define the polynomial ring
-        Q = R.quotient((x^r)-1) # quotient ring Z\(X^r - 1)
+        Q = R.quotient((x^r)-1) # quotient ring Q = Z_n\(X^r - 1)
         q = Q((x+a)) # representation of x + a in the Quotient ring Q  
         V = Q((q^n)) # (x + a)^n in Q
         e = Mod(n,r) #  e = n mod r
-        d = (x^e) + a # x^e + a
+        d = (x^e) + a # x^e + a, i.e exponents reduction
         if (V != d): # if (x + a)^n != x^e + a -> COMPOSITE  
             return False
-    return True            
+    return True #STEP 6           
 
 
+# naive primality test
 def naive_prime(n):
     limit = int(n)
     for i in range(2,limit):
@@ -116,34 +117,36 @@ def bit_length(n):
     return bits
 
 #best test values so far 
-x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
+# x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
 # x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163]
+x = [8191,131071,524287,38757413,58890301,2147483647,2547587681,17014120163,90552556889,170141183297]#,570141191371]#x = [i  for i in range(2,200000,100)]
+
 y = []
 bl = []
 y_2 = []
 bl_2 = []
 
-for a in x:
-    start = time.process_time()
+# for a in x:
+#     start = time.process_time()
    
-    aks(a)
+#     aks(a)
     
-    end = time.process_time()
-    t = end - start
-    l = bit_length(a)
-    if l not in bl:
-        y.append(t)
-        bl.append(l)
+#     end = time.process_time()
+#     t = end - start
+#     l = bit_length(a)
+#     if l not in bl:
+#         y.append(t)
+#         bl.append(l)
 
-for a in x:
-    start = time.process_time()
-    naive_prime(a)
-    end = time.process_time()
-    t = end - start
-    l = bit_length(a)
-    if l not in bl_2:
-        y_2.append(t)
-        bl_2.append(l)
+# for a in x:
+#     start = time.process_time()
+#     naive_prime(a)
+#     end = time.process_time()
+#     t = end - start
+#     l = bit_length(a)
+#     if l not in bl_2:
+#         y_2.append(t)
+#         bl_2.append(l)
 
 
 
@@ -153,23 +156,40 @@ for a in x:
 z = []
 
 t = []
-print(bl,y)
 
-print(bl_2,y_2)
-# y = sorted(y)
+# print(bl,y)
 
-plt.plot(bl,y,bl_2,y_2)
-plt.xlabel("#Bits")
-plt.ylabel("required time")
-plt.title("AKS")
-plt.show()
+# print(bl_2,y_2)
+# # y = sorted(y)
 
-# expected: c, p, p, p, c, p, c, p
+# plt.plot(bl,y,bl_2,y_2)
+# plt.xlabel("#Bits")
+# plt.ylabel("required time")
+# plt.title("AKS")
+# plt.show()
 
+
+
+# we can use the follwing command to empirically verify the correctness of the aks algorithm
+# it is known that there are 25 prime numbers in [2,100):
+
+nums = [i for i in range(2,100)]
+
+primes_1_100 = []
+for n in nums:
+    if aks(n):
+        primes_1_100.append(n)
+
+print("#primes < 100 = {}".format(len(primes_1_100))) # should return 25
+print("primes < 100 = {}".format(primes_1_100))# should list the primes 
+
+
+
+# used to record the runtime of the aks and the naive algorithm
 # for i in x:
-#     s = time.process_time()
-#     res = aks(i)
-#     e = time.process_time()
+#     s = time.process_time() #start 
+#     res = naive_prime(i) # pick any algorithm to record its runtime
+#     e = time.process_time() # end 
 #     z.append(bit_length(i))
 #     t.append(e-s)
 #     print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
