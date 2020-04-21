@@ -14,7 +14,7 @@ Bachelorarbeit zum Thema AKS-Primzahltest
 
 ## how to run the code and the run time analysis 
 ### how to run the code
-go to the directory named code and run the aks.sage file to run the script use `sage aks.sage`
+cd to the directory named code and then to subdirectory python_p and run the primality.sage file to run the script use `sage primality.sage`
 ### to see and run the run time analysis
 uncomment the lines where it says "uncomment to see the run time analysis"
 to display the plots presented in the thesis, go to code and run the file `rt_tests.py`(uncomment the method you want analyse)   
