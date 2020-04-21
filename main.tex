@@ -6,6 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{enumerate}  
 \usepackage{fancyhdr}
+\usepackage{polynom}
 \usepackage{a4wide}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -85,7 +86,7 @@ sorting=ynt
 \fancyhf{}
 \cfoot{\thepage}
 \setlength{\headheight}{16pt}
-
+\newcommand\showdiv[1]{\overline{\smash{)}#1}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Definition des Deckblattes und der Titelseite  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -209,7 +210,7 @@ Das fünfte Kapitel beinhaltet die experimentelle Laufzeit- und Korrektheitsanal
 \subsection{Überblick}
 Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und bewiesen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt. Sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahlen zu aufwendig wird.
 
-Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson(1741-1793) hat einen Satz aufgestellt, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen, die größte Primzahl heute(Jahr: 2020) $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl\cite{largePrimes}. Ein anderer französischer Mathematiker Pierre de Fermat(1607-1665) hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
+Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson(1741-1793) hat einen Satz aufgestellt, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen. Die größte Primzahl heute(Jahr: 2020) $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl\cite{largePrimes}. Ein anderer französischer Mathematiker Pierre de Fermat(1607-1665) hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
 \newline
 
 Die Sätze von Wilson, Mersenne, und Fermat sind aber zum Finden von großen Primzahlen höchst ineffizient. Natürlich hat damals sowieso niemand versucht, große Primzahlen mittels dieser Sätze zu finden, da es einfach keinen Grund dafür gab. Der frühste Einsatz von großen Primzahl findet sich im 20. Jahrhundert bei modernen kryptographische Systemen\cite{krypWiki}. Im Jahr 1997 wurde mit dem RSA-Verfahren eine Methode entdeckt, mit der man Daten sehr sicher verschlüsseln kann und die auch für den allgemeinen Gebrauch geeignet ist. Bei diesem verfahren muss aber ein Produkt aus Primzahlen berechnet\cite{rsa}. Man beachte dabei, dass die in der Praxis eingesetzte Primzahlen sehr groß sind und aus mehreren Hundert Stellen bestehen können. Aus diesem Grund ist es sinnvoll einen Algorithmus(oder mehrere Algorithmen) zu haben, mit dem man solche Primzahlen \textquotedbl schnell\textquotedbl   $\;$ bestimmen kann. Um das zu verwirklichen, braucht man zunächst eine formale Definition vom untersuchten Problem und darüber hinaus eine Definition für schnelle Algorithmen. Hier kommen die Komplexitätstheorie und die Berechenbarkeitstheorie zum Einsatz. 
@@ -219,7 +220,7 @@ Seit dem Beginn der Komplexitätstheorie in den 1960er Jahren, wurden Begriffe f
 Die Frage war nachher zu klären, ob das Primalitätsproblem auch in P liegt? Viele Wissenschaftler haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Algorithmen entwickelt. Leider war keiner der Versuche erfolgreich, da die Algorithmen entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren\footnote{Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können(nicht deterministisch)}. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen\cite{milRab}. Allerdings kann der beste nicht probabilistische Algorithmus (bis 2002) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Die Eingabe ist in diesem Fall die Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen\footnote{$\, m = log \, n \Rightarrow n = 2^m$, das bedeutet, dass die Laufzeit exponentiell wächst.}. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus vorgestellt, der das Primalitätsproblem in Polynomialzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES\footnote{PRIMES $= \{ n \in \mathbb{N} \mid n \in \mathbb{P} \}$, wobei $\mathbb{P}$ die Menge der Primzahlen ist.}) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
-Im Rahmen dieser  Arbeit soll der AKS-Primzahltest Algorithmus aus dem Originalartikel(Version 6) behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu demonstrieren und seine Laufzeit zu evaluieren. Um die Korrektheit zu zeigen soll Zunächst der mathematische Korrektheitsbeweis durchgeführt. Neben dem mathematischen Beweis werden auch mehrere Tests durchgeführt, um die Korrektheit experimentell zu beweisen. Die Ergebnisse dieser Tests werden mittels Tabellen sowie Grafiken dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und durch mehrere Testfälle evaluiert. Der AKS-Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht, hier wird auch auf ähnlicher Weise erst mathematisch und dann experimentell bewiesen. Schließlich soll der AKS-Algorithmus mit dem naiven Primzahltest verglichen.  
+Im Rahmen dieser  Arbeit soll der AKS-Primzahltest Algorithmus aus dem Originalartikel behandelt\cite{aks}. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu demonstrieren und seine Laufzeit zu evaluieren. Um die Korrektheit zu zeigen soll Zunächst der mathematische Korrektheitsbeweis durchgeführt. Neben dem mathematischen Beweis werden auch mehrere Tests durchgeführt, um die Korrektheit experimentell zu beweisen. Die Ergebnisse dieser Tests werden mittels Tabellen sowie Grafiken dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und durch mehrere Testfälle evaluiert. Der AKS-Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht. Hier wird auch auf ähnlicher Weise erst mathematisch und dann experimentell bewiesen. Schließlich soll der AKS-Algorithmus mit dem naiven Primzahltest verglichen.  
 
 
 \newpage
@@ -235,7 +236,9 @@ In diesem Kapitel handelt es sich darum, die essenziellen Begriffe und Theoreme 
 % Zahlentheorie
 
 \subsection{Zahlentheorie}
-\textbf{Grundlegende Begriffe}
+In diesem Abschnitt werden grundlegende Begriffe und Theoreme aus der Zahlentheorie definiert(und ggf. bewiesen). Zuerst werden zahlentheoretische Funktionen und Begriffe definiert. Des Weiteren werden Theoreme, die für das Verständnis des AKS-Algorithmus erforderlich sind, dargestellt und bewiesen. Beispielsweise, die Sätze von Euler und Fermat. Hier wird angenommen, das der Leser eine rudimentäre Kenntnisse über die Zahlentheorie hat. Für eine ausführliche Einführung in der Zahlentheorie und Primzahlen siehe \cite{prime-numbers}.\newline
+
+\textbf{Grundlegende Begriffe}\newline
 \theoremstyle{definition}
 \begin{definition}\label{Df_1}
 Seien $a,b \in \mathbb{N}$. Der \textbf{größte gemeinsame Teiler} von $a$ und $b$ wird mit $(a,b)$ bezeichnet, ist die größte positive Zahl $n$, sodass $n \mid a$ und $n$ $ \mid b$
@@ -293,6 +296,7 @@ Seien $r,n \in \mathbb{N}$ mit $(n,r) = 1$, dann ist die \textbf{Ordnung} von $n
 \smallskip 
 
 \textbf{Die eulersche Phi-Funktion und der Satz von Euler}\newline
+In 1763 hat Leonhard Euler eine neue Funktion eingeführt, die für eine Zahl $n$ die Anzahl der teilerfremden Zahlen $ < n$ liefert. Diese Funktion ist nach dem Mathematiker L.Euler benannt und wird mit dem griechischen Symbol $\phi$ bezeichnet.    
 \begin{definition}\label{Df_6}
 Sei $n \in \mathbb{N}$ mit $n > 1$. Die \textbf{eulersche Phi-Funktion} wird mit $\phi(n)$ bezeichnet, ist die Anzahl der Zahlen $k, \, 1 \leq k \leq n$, sodass $(k,n) = 1$. Das heißt $\phi(n) = |\{ k \in \mathbb{N} \mid (k,n) = 1, 1 \leq k \leq n \}|$.\footnote{$| \cdot |$ ist die Kardinalität der Menge(Anzahl der Elemente in der Menge).}
 \end{definition}
@@ -311,12 +315,14 @@ Seien $R =\{ r \in \mathbb{Z}_{n}^{*} \mid (r,n) = 1 \} =  \{r_{1}, r_{2},...,r_
     r_{1}r_{2} \dots r_{\phi(n)} &= a^{\phi(n)} r_{1}r_{2} \dots r_{\phi(n)} \, (mod \, n) \\
     1 &= a^{\phi(n)} \, (mod \, n)
 \end{align*}
-
+Der Beweis ist auf der Argumentation der Wikipedia-Website basiert\cite{eulerthm}. 
 \end{proof}
 
 \smallskip
 
 \textbf{Weitere Theoreme}\newline
+Die folgenden Theoreme werden bei dem Korrektheitsbeweis des AKS-Algorithmus eine Rolle spielen.
+
 \begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
 Sei n eine natürliche Zahl, dann gilt für $a,b \in \mathbb{Z}$:\newline\newline
  \begin{equation}
@@ -381,7 +387,7 @@ und das ist nach der IH durch p teilbar.\newline
 \smallskip
 
 \subsection{Algebra}
-Hier werden die für den AKS-Primzahltest nötigen Grundbegriffe aus der Algebra definiert. Im Zentrum der Aufmerksamkeit stehen grundlegende Fakten aus der Gruppentheorie, insbesondere über zyklische Gruppen. Darüber hinaus werden (kommutative)Ringe vorgestellt, dabei liegt der Fokus auf den Ring $\mathbb{Z}_{n}$. Schließlich werden Fakten und Definitionen über endliche Körper diskutiert, dabei ist vor allem wichtig, dass die multiplikative Gruppe über endliche Körper zyklisch ist.   
+Hier werden die für den AKS-Primzahltest nötigen Grundbegriffe aus der Algebra definiert. Im Zentrum der Aufmerksamkeit stehen grundlegende Fakten aus der Gruppentheorie, insbesondere über zyklische Gruppen. Darüber hinaus werden (kommutative)Ringe vorgestellt, dabei liegt der Fokus auf den Ring $\mathbb{Z}_{n}$. Es werden auch Fakten und Definitionen über endliche Körper diskutiert, dabei ist vor allem wichtig, dass die multiplikative Gruppe über endliche Körper zyklisch ist. Schließlich werden Definitionen und Theoreme aus der Polynomtheorie dargestellt, insbesondere zyklotomische Polynome über endlichen Körpern und ihre Eigenschaften.
 
 \subsubsection{Algebraische Strukturen}
 
@@ -435,6 +441,14 @@ Die Gruppe $(\mathbb{Z},+)$ ist eine abelsche Gruppe, da die Operation $+$ kommu
 
 \smallskip
 
+Eine wichtige Gruppe ist die multiplikative Gruppe $\mathbb{K}^{*} = \mathbb{K} - \{ 0\}$\footnote{Hier entspricht der Mengendifferenz-Operator, das heißt $\mathbb{K} - \{ 0\} = \mathbb{K}\setminus \{ 0\}$ } der Primrestklassen. Für eine Primzahl $p$ besteht diese Gruppe aus den Elementen $\{ 0,1,\dots, p - 1 \}$.
+
+\begin{definition}\label{mul-group}
+Die Gruppe der \textbf{Primrestklassen} bezüglich eine Moduls einer ganzen Zahl $n$ besteht aus den Restklassen $a + n\mathbb{Z}$, deren Elemente teilerfremd zu $n$ sind. Mit anderen Worten ist diese Menge, die Menge aller Zahlen $a \in \mathbb{Z}$ für die $(a,n) = 1$. Sie wird mit $\mathbb{Z}_{n}^{*}$ bezeichnet, das heißt $\mathbb{Z}_{n}^{*} = \{ a \in \mathbb{Z} \mid (a,n) = 1 \}$.
+\end{definition}
+
+\smallskip
+
 \begin{definition}
 Sei $(G,\circ)$ eine Gruppe. Eine Menge $H \subseteq G$ heißt eine \textbf{Untergruppe} von G, wenn $H$ mit der Operation $\circ$ eine Gruppe bildet.
 \end{definition}
@@ -460,7 +474,7 @@ Sei $(G,\circ)$ eine Gruppe, dann heißt die kleinste Zahl $n$, sodass $a^n = a 
 \smallskip
 
 \textbf{Zyklische Gruppen}\newline
-In der Algebra eine zyklische Gruppe $G$ ist eine Gruppe, die von einem einzigen $a \in G$ Element erzeugt wird. Zunächst betrachtet man die Potenzen der Elemente von beliebigen Gruppen. Sei $(G,\circ)$ eine Gruppe und $a \in G$ beliebig. Wir betrachten die Menge $\langle a \rangle = \{ a \circ a \circ \dots \circ a =  a^i \mid i \in \mathbb{Z}\}$, diese Menge heißt die Menge der Potenzen von $a \in G$. $G$ heißt zyklisch, wenn sie ein Element $a$ enthält, sodass die Potenzen von $a$ die Gruppe $G$ erzeugen. 
+Eine zyklische Gruppe $G$ ist eine Gruppe, die von einem einzigen $a \in G$ Element erzeugt wird. Zunächst betrachtet man die Potenzen der Elemente von beliebigen Gruppen. Sei $(G,\circ)$ eine Gruppe und $a \in G$ beliebig. Wir betrachten die Menge $\langle a \rangle = \{ a \circ a \circ \dots \circ a =  a^i \mid i \in \mathbb{Z}\}$, diese Menge heißt die Menge der Potenzen von $a \in G$. $G$ heißt zyklisch, wenn sie ein Element $a$ enthält, sodass die Potenzen von $a$ die Gruppe $G$ erzeugen. 
 
 \begin{definition}
 Eine Gruppe $G$\footnote{$\, G $ ist eine Abkürzung für $(G,\circ)$.} ist zyklisch, wenn sie ein Element $a$ enthält, sodass jedes Element von $G$ eine Potenz von a ist. Das heißt $\langle a \rangle = G$.
@@ -484,6 +498,14 @@ Ein \textbf{Ring} $(R,+,\cdot)$ ist eine Menge $R$ mit zweistelligen Operationen
 
 \begin{definition}
 Ein Ring $R$ heißt \textbf{kommutativ}, wenn die Operation $\cdot$ kommutativ ist.\footnote{ $\,$ z.B. wenn die Operation $\cdot$ die übliche Multiplikation ist. Dies ist nicht immer zwangsweise der Fall. Eine nicht kommutative Multiplikation wäre z.B. die Matrizenmultiplikation.}
+\end{definition}
+
+\begin{definition}
+Ein Ring heißt \textbf{nullteilerfrei}, wenn die Multiplikation von zwei Elementen $a,b \neq 0 \in R$ nicht null ist. Das heißt $a \cdot b \neq 0$, wenn $a,b \neq 0$.
+\end{definition}
+
+\begin{definition}
+Ein nullteielrfreier Ring heißt \textbf{Integritätsring}, wenn er kommutativ und von Null verschieden($R \neq 0$) ist. 
 \end{definition}
 
 \smallskip
@@ -518,14 +540,14 @@ Diesen Ring nennt man \textbf{Quotientenring}.
 \smallskip
 
 \textbf{Körper}\newline
-Eine zusätzliche algebraische Struktur ist der Körper. Im Korrektheitsbeweis werden (zyklotomische)Polynome über endlichen Körpern behandelt. Aus diesem Grund sind die Struktur und die Eigenschaften von Körpern nötig. Ein Körper ist eine Art von Erweiterung für den Ring.
+Eine zusätzliche algebraische Struktur ist der Körper. Im Korrektheitsbeweis werden (zyklotomische)Polynome über endlichen Körpern behandelt. Aus diesem Grund sind die Struktur und die Eigenschaften von Körpern nötig.
 
-\begin{definition}
+\begin{definition}\label{field_axioms}
 Ein \textbf{Körper} $\mathbb{K}$ ist eine Menge mit zwei binären Operation $+,\circ$ (die Addition und Multiplikation genannt werden) für die folgende Bedingungen erfüllt sind:
 \begin{enumerate}
     \item $(\mathbb{K},+)$ ist eine abelsche Gruppe(neutrales Element 0).
     
-    \item $(\mathbb{K}\setminus \{ 0\}, \circ)$ ist eine abelsche Gruppe (neutrales Element 1).
+    \item $(\mathbb{K}\setminus \{ 0\}, \circ)$ ist eine abelsche Gruppe (Identitätselement 1).
     
     \item Distributivgesetze:\newline
         $a \circ (b + c) = a \circ a + a \circ c, \, \forall a,b,c \in \mathbb{K}$.\newline
@@ -540,11 +562,29 @@ Ein Körper heißt endlich, wenn die Grundmenge $\mathbb{K}$ endlich ist($|\math
 Sei $p$ eine Primzahl, dann ist der Ring $\mathbb{Z}_p$ ein Körper.\footnotetext{Für den Beweis siehe \cite{fields}.}
 \end{theorem}
 
+\smallskip
+
+Eine zentrale Eigenschaft eines beliebigen endlichen Körpers $\mathbb{K}_p$ mit $p$ Elementen ist, dass die Multiplikative Gruppe $\mathbb{K}_p^{*} = \mathbb{K} - \{ 0\}$ zyklisch ist. Definitionsmäßig(Def. \ref{field_axioms}) bildet die Menge $\mathbb{K}_{p}^{*}, \, |\mathbb{K}_{p}^{*}| = p - 1$ mit der Multiplikation eine abelsche Gruppe(Identitätselement 1).
+
+\begin{theorem}
+Sei $\mathbb{K}_p$ ein Körper, dann ist $\mathbb{K}_p^{*}$ eine zyklische Gruppe. Das heißt es existiert ein $g \in \mathbb{K}_p^{*}$ mit $\mathbb{K}_p^{*} = \{1,g, \dots, g^{|\mathbb{K}| - 1} \}$. Für einen Beweis siehe \cite{D73} oder \cite{fields}. 
+\end{theorem}
+
 
  
 
 % Polynome 
 \subsubsection{Polynome}
+Ein Polynom ist ein Ausdruck der Form $a_0 + a_{1} X + \dots + a_{n}X^n$. Die $a_{i}, \, i \in \{1,2, \dots, n\}$ heißen die Koeffizienten des Polynoms. Polynome sind in der Regel in einem algebraischen Ring definiert.
+
+\begin{definition}
+Sei $R$ ein beliebiger Ring. Ein Polynom $f(X)$ über dem Ring R hat folgende Form:
+\begin{align*}
+    f(X) = \sum_{i = 0}^{n} a_{i}X^i = a_0 + a_{1} X + \dots + a_{n}X^n.
+\end{align*}
+
+Die Arithmetik von Polynomen ist ähnlich zur Arithmetik von ganzen Zahlen. Die Operationen $+, \cdot$ und die Menge der Polynome mit Koeffizienten $a \in R$ bilden einen Ring, da $f(X) + g(X)  =  \sum_{i = 0}^{n} a_{i}X^i + \sum_{i = 0}^{n} b_{i}X^i = \sum_{i = 0}^{n} (a_{i} + b_{i})X^i$ und $f(X) \cdot g(X) = \sum_{i = 0}^{n + m} c_{i}X^i$. Für eine ausführliche Beschreibung von Polynomarithmetik über einem Ring siehe bspw. \cite{fields}. 
+\end{definition}
 
 \begin{definition}
 Sei $R$ ein Ring, dann ist der \textbf{Polynomring} $R[X]$ die Menge aller Polynome der Form $a_{0} + a_{1}X + a_{2} X^2 + ... + a_{n}X^n$, wobei $a_{0},a_{1}...,a_{n} \in R$.
@@ -562,6 +602,12 @@ der \textbf{Grad} vom Polynom $f$.
 
 \smallskip
 
+\begin{definition}
+Sei $R$ ein Integritätsring. Dann heißt ein Polynom  $f\in R[X]$ irreduzibel, wenn  $f \neq 0$  nicht invertierbar(es existiert kein $f^{-1} : f \cdot f^{-1} = e$, wobei $e$ das neutrale Element von $R$ ist) in $R[X]$ ist und für $g,h\in R[X]$ und $f=gh$ entweder $g$ oder $h$ invertierbar ist.\footnote{$\, $ Für mehrere Beispiele und Definitionen von Invertierbaren Elementen bzw. Polynomen siehe : \url{https://de.wikipedia.org/wiki/Inverses_Element}.} 
+\end{definition}
+
+\smallskip
+
 \begin{theorem}\label{number_of_roots}
 Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. Ferner seien $a_1, a_2,...,a_n \in R$ die Wurzeln\footnote{$\,$ Die Wurzeln eines Polynoms $f(X)$ sind die Nullstellen dieses Polynoms, das heißt alle $X \, : \, f(X) = 0$ } von $f$ mit $a_i - a_j \in R\setminus\{0\} , \, \forall i,j, \, 1 \leq i,j, \leq n$. Dann ist $deg \, f \geq n$.
 \end{theorem}
@@ -570,9 +616,30 @@ Sei $R$ ein kommutativer Ring und $f \in R[X]$ ein Polynom, sodass $f \neq 0$. F
 Sei $deg \, f = n - 1, \; n \in \mathbb{N}$, wobei $f(X) = b_{n-1}X^{n-1} + b_{n-2}X^{n-2} + ... + b_1 X + b_0$ mit $b_{n-1} \neq 0$. Weiterhin seien $a_1,a_2,...,a_{n}$ die Wurzeln des Polynoms $f(X)$, dann gilt $f(a_i) = 0, \, \forall 1 \leq i \leq n$, das heißt $b_{n-1} a_i^{n-1} +...+ b_1 a_i + b_0 = 0, \, \forall 1 \leq i \leq n$. \newline\newline Zudem sei $A = [a_{i,j}]_{1 \leq i,j \leq n}$ die Matrix der Wurzeln und $b = (b_1 b_2 ...b_{n}) \neq 0$ der Vektor der Koeffizienten von $f(X)$. Dann gilt $b \cdot A = 0$, aber $det \, A \neq 0 \Rightarrow  b = 0$ und dies ist ein Widerspruch(Da $b \neq 0$), daraus folgt es existiert $f(X) : deg \, f \geq n$  
 \end{proof}
 
+\textbf{Polynomdivision}\newline
+Im folgenden werden Polynome über (nicht zwangsweise endliche) Körper betrachtet. Ein Polynom $g \in \mathbb{K}[X]$ teilt das Polynom $f \in \mathbb{K}[X]$, wenn ein drittes Polynom $h \in \mathbb{K}[X]$ existiert, sodass $f = gh$.
+
+\begin{theorem}\label{poly_div}
+Sei $g \neq 0 $ ein Polynom im Körper $\mathbb{K}[X]$, dann existiert für jedes Polynom $f \in \mathbb{K}[X]$ Polynome $q,r \in \mathbb{K}[X]$, sodass
+\begin{align*}
+    f = gq + r, wobei \; deg r  < deg g.
+\end{align*}
+erfüllt ist. 
+\end{theorem}
+
+\begin{example}
+Seien $f(X) = 2X^5 + X^4 + 4X + 3 \in \mathbb{K}_5[X]$, $g(X)= 3X^2 + 1 \in \mathbb{K}_5[X]$, wobei $\mathbb{K}_5$ der Körper der Restklassen von $5$ ist\footnote{$ \,\mathbb{K}_5 = \{ 0, 1, 2, 3, 4\}$}. Gemäß Theorem \ref{poly_div} existieren $q,r \in \mathbb{K}_5[X]$, sodass $f = qg + r$, man verwendet nun die schriftliche Division Algorithmus(in $\mathbb{K}_5$)\cite{long-div}:
+
+\begin{align*}
+   \underbrace{\frac{2X^5 + X^4 + 4X + 3}{3X^2 + 1}}_{\frac{f}{g}} = \underbrace{(4X^3 + 2X^2 + 2x + 1) }_{q}+ \underbrace{\frac{2X + 2}{3X^2 + 1}}_{\frac{r}{g}}
+\end{align*}
+Folglich ist $q(X) = 4X^3 + 2X^2 + 2X + 1, \; r(X) = 2X + 2$ und $deg(r) = 1 < deg(g) = 2 $. 
+\end{example}
+
 \smallskip
 
-\textbf{Zyklotomische Polynome}
+\textbf{Zyklotomische Polynome}\newline
+Das $n$-te zyklotomische Polynome (auch: Kreisteilungspolynom) ist ein spezielles irreduzibles Polynom mit ganzzahligen Koeffizienten, die Teiler von $X^n - 1$ sind. Die Wurzeln des $n$-ten zyklotomischen Polynom sind alle $n$ Einheitswurzeln. 
 
 \begin{definition}
 Sei $n$ eine natürliche Zahl, die $n$-te \textbf{Einheitswurzel} wird mit $\zeta$ bezeichnet ist eine komplexe Zahl, sodass
@@ -585,7 +652,7 @@ Z.B. 1 und -1 sind die quadratischen Einheitswurzeln, und 1, -1, i, -i, sind die
 \smallskip
 
 \begin{definition}\label{prim_ein}
-Die \textbf{$n$-te primitive Einheitswurzel} ist jede Einheitswurzel $\zeta$, für die $ord_{\mathbb{C}}(\zeta) = n $ gilt. Die Menge aller primitiven $n$-ten Einheitswurzeln wird mit \textbf{P(n)} bezeichnet. 
+Eine $n$-te Einheitswurzel $\zeta$ heißt eine \textbf{primitive Einheitswurzel}, wenn alle $n$-ten Einheitswurzeln als Potenzen von $\zeta$ darstellbar sind. Die Menge aller primitiven $n$-ten Einheitswurzeln wird mit $P(n)$ bezeichnet. 
 \end{definition}
 
 \smallskip
@@ -612,20 +679,8 @@ Für jede natürliche Zahl n . gilt:\newline
     x^n - 1 = \prod_{d \mid n} \Phi_{d}(n).
 \end{equation}
 %TO: cite the reference 
-Für den Beweis, siehe (Fields and Cyclotomic Polynomials) 
+Für den Beweis, siehe \cite{cyclo}. 
 \end{theorem}
-
-\smallskip
-
-\begin{theorem}\label{num_of_prim_uni}
-Für alle $n \geq 1$ existieren genau $\phi(n)$ $n$-te primitive Einheitswurzeln. 
-\end{theorem}
-
-\smallskip
-
-\begin{definition}\label{ord_def}
-Sei $\mathbb{K}$ ein Körper, und $a \in \mathbb{K}^x$. Dann ist \textbf{Ordnung} $ ord_{ \mathbb{K} }(a)$ , die kleinste natürliche Zahl $k$, für die $a^k = 1 $ gilt, wenn ein solches $k$ nicht existiert, dann hat a eine unendliche Ordnung. 
-\end{definition}
 
 \smallskip
 
@@ -634,9 +689,7 @@ Sei $\mathbb{K}$ ein Körper mit $m$ Elementen, dann gilt:
 \begin{equation}
     a^{m-1} = 1
 \end{equation}
-für alle $a \in \mathbb{K}^x$\newline
-%TODO : cite the ref. 
-Beweis: siehe (Fields and Cyclotomic Polynomials) 
+für alle $a \in \mathbb{K}^x$.\footnote{$\,$ Für einen Beweis siehe bswp. \url{http://www.heldermann-verlag.de/Mathe-Kabinett/Kreisteilungspolynome.pdf}.}\newline
 \end{theorem}
 
 \smallskip
@@ -732,11 +785,11 @@ Seien $n,k \in \mathbb{N}$. Die Anzahl der Möglichkeiten $n$ Zahlen auszuwähle
 \begin{proof}
 Vollständige Induktion nach $n$:
 
-\textbf{IA:} Für $n = 1$ gibt es genau $k$ Möglichkeiten, um eine Zahl auszuwählen, sodass diese Zahl kleiner oder gleich $k - 1$ ist. Außerdem gilt auch ${n + k - 1 \choose n} = {k \choose 1} = k$.\footnote{$\,$ Für Erklärungen und Beispiele siehe:\url{https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)}}\newline  
+\textbf{IA:} Für $n = 1$ gibt es genau $k$ Möglichkeiten, um eine Zahl auszuwählen, sodass diese Zahl kleiner oder gleich $k - 1$ ist. Außerdem gilt auch ${n + k - 1 \choose n} = {k \choose 1} = k$.\footnote{$\,$ Für Erklärungen und Beispiele siehe:$\, $\url{https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)}}\newline  
 
 \textbf{IH:} Angenommen: es existiert ein $n \in \mathbb{N}$, sodass die Aussage wahr ist.\newline
 
-\textbf{IS:} $a_0$ wird festgesetzt, dann bleibt $n$ Zahlen $a_1,a_2, \dots,a_n$ auszuwählen, sodass $\sum_{i = 0}^{n} a_i \leq k - 1$. Für $ 0 \leq i \leq k - 1$ folgt aus der IH, dass die Anzahl der Möglichkeiten, sodass $\sum_{i = 0}^{n} a_i \leq k - 1$, ist ${n + k - j - 1 \choose n}$, um die gesamte Anzahl der Möglichkeiten werden alle ${n + k - j - 1 \choose n}, \; \forall  \, 0 \leq j \leq k - 1 $ addiert.
+\textbf{IS:} wenn z.B. $a_0$ festgesetzt wird, dann bleibt $n$ Zahlen $a_1,a_2, \dots,a_n$ auszuwählen, sodass $\sum_{i = 0}^{n} a_i \leq k - 1$. Das kann man auch für jedes $a_i \in \{ a_1, \dots,a_n\}$ machen.  Für $ 0 \leq j \leq k - 1$ folgt aus der IH, dass die Anzahl der Möglichkeiten, sodass $\sum_{i = 0}^{n} a_i \leq k - 1$, ist ${n + k - j - 1 \choose n}$, um die gesamte Anzahl der Möglichkeiten werden alle ${n + k - j - 1 \choose n}, \; \forall  \, 0 \leq j \leq k - 1 $ addiert.
 \begin{align*}
     \sum_{j = 0}^{k - 1}{n + k - j - 1 \choose n} = \sum_{j = n}^{n + k -1} {j \choose n} \underbrace{=}_{\ref{chr_sto_thm}} {n + k \choose n + 1}
 \end{align*}
@@ -799,16 +852,18 @@ Somit ist die Ungleichung für $n = k + 1$ wahr.
 
 \subsection{Komplexitätstheorie}
 
-Hier handelt es sich darum, die relevanten Begriffe aus dem Gebiet der Komplexitätstheorie, deutlich zu definieren. Grundlagen der Berechenbarkeitstheorie, wie Turingmaschinen, groß $O$-Notation, und Entscheidungsprobleme werden in dieser Arbeit nicht definiert, jedoch sind sie eine Voraussetzung, um die hier behandelten Themen zu verstehen. Anschließend werden Fakten über Computer-Arithmetik dargestellt.\newline  
+In diesem Abschnitt handelt es sich darum, die relevanten Begriffe aus dem Gebiet der Komplexitätstheorie, deutlich zu definieren. Grundlagen der Berechenbarkeitstheorie, wie Turingmaschinen, groß $O$-Notation, und Entscheidungsprobleme werden in dieser Arbeit nicht definiert, jedoch sind sie eine Voraussetzung, um die hier behandelten Themen zu verstehen. Anschließend werden Fakten über die Kosten der einfachen Operationen(Addition, Subtraktion, Multiplikation,...) im Computer dargestellt.\newline  
 
 \textbf{\normalsize{Komplexitätstheorie}}\newline
-Der AKS-Algorithmus ist hauptsächlich dafür bekannt, eine polynomielle Laufzeit zu haben. Daher ist zuerst wichtig, das Konzept der polynomiellen Laufzeit zu definieren. In der Informatik wird die Menge der Algorithmen mit polynomieller Laufzeit mit $P$ bezeichnet.
+Der AKS-Algorithmus ist hauptsächlich dafür bekannt, eine polynomielle Laufzeit zu haben. Daher ist zuerst wichtig, das Konzept der polynomiellen Laufzeit zu definieren. Ein Algorithmus mit polynomieller Laufzeit ist einer, dessen Laufzeit durch eine Polynomfunktion der Größe ihrer Eingabe begrenzt ist. In der Informatik wird die Menge der Algorithmen mit polynomieller Laufzeit mit $P$ bezeichnet.
 
 \begin{definition}
 In der Komplexitätstheorie ist \textbf{P} die Komplexitätsklasse, die alle Entscheidungsprobleme enthält, die in Polynomialzeit für deterministische Turingmaschinen lösbar sind. 
 \end{definition}
 
-Neben der Komplexitätsklasse $P$ gibt es auch weitere Klassen, wie NP und co-NP, diese Klassen werden hier aber nicht behandelt, da sie nicht direkt mit dem AKS-Algorithmus verbunden sind. Ein Algorithmus ist in $P$, wenn die Laufzeit von der Eingabegröße polynomiell abhängig ist. In unserem Fall ist die Eingabe eine natürliche Zahl. $n$, das heißt, dass die Eingabegröße ist ungefähr $log \, n$.\footnote{$\,$ Da die Zahlen im Computer im binären System dargestellt werden, ist die Eingabe ungefähr $log_2(n)$(Anzahl der Bits, um $n$ zu repräsentieren). Für weitere Information zu diesem Thema siehe: \cite{D73}, \cite{computer-algebra}.} In dieser Arbeit wird die Eingabegröße\footnote{$\, $In dieser Arbeit wird auch das Synonym Inputgröße manchmal benutzt.} mit $\lVert n \rVert$ bezeichnet.   
+
+
+Neben der Komplexitätsklasse $P$ gibt es auch weitere Klassen, wie z.B. NP und co-NP, diese Klassen werden hier aber nicht behandelt, da sie nicht direkt mit dem AKS-Algorithmus verbunden sind. Ein Algorithmus ist in $P$, wenn die Laufzeit von der Eingabegröße polynomiell abhängig ist. Im Rahmen von Primalitätstesten bedeutet dies ein Algorithmus, der eine natürliche Zahl $n$ als Eingabe verwendet und bestimmt, ob $n$ eine Primzahl ist oder nicht. Das heißt, dass die Eingabegröße ungefähr $log \, n$ ist.\footnote{$\,$ Da die Zahlen im Computer im binären System dargestellt werden, ist die Eingabe ungefähr $log_2(n)$(Anzahl der Bits, um $n$ zu repräsentieren). Für weitere Information zu diesem Thema siehe: \cite{D73}, \cite{computer-algebra}.} In dieser Arbeit wird die Eingabegröße\footnote{$\, $In dieser Arbeit wird auch das Synonym Inputgröße manchmal benutzt.} mit $\lVert n \rVert$ bezeichnet.   
 
 \begin{definition}
 Für eine natürliche Zahl $n \geq 1$, ist $\lVert n \rVert= \lceil log(n + 1) \rceil$, wobei $log \, n = log_{2} n$
@@ -870,22 +925,22 @@ Dabei ist X ein Polynom über dem Ring $\mathbb{Z}_{n}[X]$
 \begin{proof}
 Aus dem binomischen Lehrsatz(\ref{Th_3}) folgt, dass der Koeffizient von $X^i$ in dem Polynom ${n \choose i} a^{n-i}$ ist.\newline\newline
 $"\Rightarrow"$\newline
-Sei $n$ ist eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i $, 0 < i < n,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! \cdot i!} = 0 $ (mod $n$). Das heißt alle Koeffizienten (bis auf den ersten und den letzten) sind Null.\newline\newline Für $i = 0$ erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$, ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
+Sei $n$ eine Primzahl, dann ist es nach (\ref{th_25}) klar, dass $\forall i , \;  0 < i < n$,\newline\smallskip ${n \choose i} = \frac{n!}{(n-i)! \cdot i!} = 0 $ (mod $n$). Das heißt alle Koeffizienten (bis auf den ersten und den letzten) sind Null.\newline\newline Für $i = 0$ erhält man  ${n \choose 0} a^n X^0 = a^n$, analog für $i = n$ gilt ${n \choose n} a^0 X^n = X^n$. Daraus folgt:
 \begin{align*}
     (X + a)^n = a^n + 0 + 0 + ... + 0 + X^n = a^n + X^n \; ( \, mod \; n).
 \end{align*}
 
 $"\Leftarrow"$\newline
-Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Betrachte einen Faktor $q$ von $n$, mit der Vielfachheit $k$(Dabei ist zu beachten, dass Für $1 < q < n$, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
+Sei $n$ nun eine zusammengesetzte Zahl(COMPOSITE). Man betrachtet einen Faktor $q$ von $n$, mit der Vielfachheit $k$(Dabei ist zu beachten, dass Für $1 < q < n$, $q^k | n$, aber $q^{k+1} \nmid n$).\newline
 Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 \begin{equation}
     {n \choose q} \cdot a^{n-q} = \frac{n!}{(n-q)! \cdot n!} \cdot a^{n-q} = \frac{n(n-1)\cdot \cdot \cdot (n-q+1)}{q!} \cdot a^{n-q}.
 \end{equation}
 \newline\newline
-Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich $n$ als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der qs im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
+Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich $n$ als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das q im Nenner hebt sich mit einem der $q$ Werte im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^{k \, mod \, r}$ ersetzen, das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten.\newline Dies hält die Rechenkosten im polynomiellen Bereich, solange $r$ höchstens $O ((log n)^c), \, c > 0$ ist.
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^{k \, mod \, r}$ ersetzen, das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten.\newline Die Rechenkosten bleiben im polynomiellen Bereich, solange $r$ höchstens $O ((log n)^c), \, c > 0$ ist.
 Daher ist das Hauptziel jetzt ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
@@ -893,7 +948,7 @@ Daher ist das Hauptziel jetzt ein entsprechend kleines $r$ zu wählen und zu tes
 
 erfüllt ist.\newline
 
-Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Die obere Kongruenz kann mithilfe von FFT-basierten Multiplikationen in $O(r \, log^2 n)$ ausgewertet werden\cite{D73},\cite{computer-algebra}. Die Idee vom AKS-Algorithmus ist ein "geeignetes"$\, r$ zu wählen und nur für dieses $r$ zu testen ob (\ref{eq:2}) für mehrere $a$ Werte erfüllt ist. Ein $r$ heißt geeignet, wenn es prim ist und wenn $r - 1$ einen Primfaktor hat, der mindestens $r^{\frac{1}{2} + \delta}$ groß ist\footnote{. Da $r$ prim ist, gilt $r = \phi(r) + 1 $, wobei $\phi$ die eulersche Phi-Funktion ist.}. Die Idee ist für dieses $r$ zu testen, ob die Gleichung (\ref{eq:2}) für eine "kleine"$ $ Anzahl von $a$ Werten erfüllt ist\footnote{$\,$ In der ersten Version des AKS-Artikel werden $O(\sqrt{r}log \, n)$ getestet. Aber in neueren Versionen wurde dieser Wert durch $O(\sqrt{\phi(r)}log \, n)$ ersetzt. Es wird später klar, warum dieser Wert ausreicht.}. Wenn das nicht der Fall ist, dann ist $n$ eine zusammengesetzte Zahl. Im Korrektheitsbeweis wird gezeigt, wenn (\ref{eq:2}) für mehrere Werte von $a$ erfüllt ist, dann ist $n$ eine Potenz einer Primzahl. Das geeignete $r$ sowie die Anzahl an $a$, die getestet werden, sind durch ein Polynom in $log n$ beschränkt. Was die Polynomiallaufzeit ermöglicht.
+Nach Lemma \ref{hauptlemma} ist die Gleichung (\ref{eq:2}) für alle Primzahlen erfüllt. Aber ein Problem bei diesem Ansatz wäre, dass es auch zusammengesetzte Zahlen gibt, für die die Gleichung für manche Werte von $a$ und $r$ erfüllt ist. Die obere Kongruenz kann mithilfe von FFT-basierten Multiplikationen in $O(r \, log^2 n)$ ausgewertet werden\cite{D73},\cite{computer-algebra}. Die Idee vom AKS-Algorithmus ist ein "geeignetes"$\, r$ zu wählen und nur für dieses $r$ zu testen ob (\ref{eq:2}) für mehrere $a$ Werte erfüllt ist. Ein $r$ heißt geeignet, wenn es prim ist und wenn $r - 1$ einen Primfaktor hat, der mindestens $r^{\frac{1}{2} + \delta}$ groß ist, $\delta > 0$\footnote{. Da $r$ prim ist, gilt $r = \phi(r) + 1 $\cite{mit_aks}, wobei $\phi$ die eulersche Phi-Funktion ist(Def. \ref{Df_6}).}. Die Idee ist für dieses $r$ zu testen, ob die Gleichung (\ref{eq:2}) für eine "kleine"$ $ Anzahl von $a$ Werten erfüllt ist\footnote{$\,$ In der ersten Version des AKS-Artikel werden $O(\sqrt{r}log \, n)$ getestet. Aber in neueren Versionen wurde dieser Wert durch $O(\sqrt{\phi(r)}log \, n)$ ersetzt. Es wird später klar, warum dieser Wert ausreicht.}. Wenn das nicht der Fall ist, dann ist $n$ eine zusammengesetzte Zahl. Im Korrektheitsbeweis wird gezeigt, wenn (\ref{eq:2}) für mehrere Werte von $a$ erfüllt ist, dann ist $n$ eine Potenz einer Primzahl. Das geeignete $r$ sowie die Anzahl an $a$, die getestet werden, sind durch ein Polynom in $log n$ beschränkt. Was die Polynomiallaufzeit ermöglicht.
 
 \newpage
 
@@ -963,9 +1018,13 @@ Wenn $n$ eine Primzahl ist, gibt der erste Schritt in (\ref{algo}) niemals COMPO
 
 \subsubsection{Zweiter Teil des Beweises($\Leftarrow$)}
 
-Hier wird die Rückrichtung behandelt; also  wenn die Ausgabe PRIME ist, dann ist $n$ eine Primzahl. Wir werden uns nur auf die Schritte konzentrieren, die PRIME zurückgeben. Dies sind die schritte 4 und 6.\newline\newline Wenn der Algorithmus bei Schritt 4 PRIME zurückgibt, dann muss $n$ eine Primzahl sein, da sonst der Algorithmus einen nicht trivialen Faktor von $n$ in Schritt 3 gefunden hätte. Das heißt, es bleibt nur der Fall bei Schritt 6. Der Algorithmus hat Zwei Hauptschritte, das sind Schritt 2 und Schritt 5. Bei Schritt 2 wird ein geeignetes $r$ gefunden und bei Schritt 5 wird verifiziert, ob die Gleichung (\ref{eq:2}) für mehrere a Werte gilt.    
+Hier wird die Rückrichtung behandelt; also  wenn die Ausgabe PRIME ist, dann ist $n$ eine Primzahl. Wir werden uns nur auf die Schritte konzentrieren, die PRIME zurückgeben. Dies sind die Schritte 4 und 6.\newline\newline 
 
-Für diesen Teil ist eine Vorarbeit nötig. Wir brauchen zunächst eine untere Schranke für das kleinste gemeinsame Vielfaches. Diese Abschätzung wird bei dem Existienzbeweis für das geeignete $r$ benötigt.
+Wenn der Algorithmus bei Schritt 4 PRIME zurückgibt, dann muss $n$ eine Primzahl sein, da sonst der Algorithmus einen nicht trivialen Faktor von $n$ in Schritt 3 gefunden hätte. Das heißt, es bleibt nur der Fall bei Schritt 6. Der Algorithmus hat Zwei Hauptschritte, das sind Schritt 2 und Schritt 5. Bei Schritt 2 wird ein geeignetes $r$ gefunden und bei Schritt 5 wird verifiziert, ob die Gleichung (\ref{eq:2}) für mehrere a Werte gilt.\newline
+
+\smallskip
+
+Für diesen Teil ist eine Vorarbeit nötig. Zuerst wird eine obere Schranke für das geeignete $r$ bestimmt. Hierzu benötigt man das folgende Lemma über das kleinste gemeinsame Vielfaches von $n$ Zahlen\footnote{Der Beweis basiert auf Argumentationen in \cite{aks-aachen} und \cite{nair}}.
 
 
 \begin{lemma}\label{lemma_1}
@@ -1100,7 +1159,7 @@ Es existiert ein $ r \leq max \{ 3, \lceil log^5 n \rceil \}$, sodass $o_{r}(n) 
 
 
 \begin{proof}
-Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen.\newline\newline
+Der Beweis lässt sich in 3 Schritten zerlegen; beim ersten Schritt handelt es sich darum, zu zeigen, dass ein geeignetes $r \leq B$ existiert, danach wird die Existenz von $o_{r}(n)$ gezeigt. Als letztes wird die Eigenschaft $o_{r}(n) \geq log^2 n$ für dieses $r$ bewiesen.\newline\newline
 Zunächst sei $n > 1$, für $n = 2$ und $r = 3$ gilt trivialerweise :\newline\newline $o_{3}(2) = 2^2 = 4 = 1 $(mod 3) > 1 = $log^2 2$.
 
 Nun wird angenommen, dass $n > 2$.\footnote{. Der Logarithmus ist eine monoton wachsende Funktion und daher gilt:\newline $\lceil log^5 3 \rceil = 11 \Rightarrow log^5 n > 10, \,  \forall n > 2$.}\newline\newline
@@ -1157,7 +1216,11 @@ $\Rightarrow p_{i} = 1 $(mod $r$), $\forall i$. Folglich gilt
 
 \smallskip
 
-Nach Lemma \ref{ord_prime_l} muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Außerdem ist es klar, dass $p > r$, da sonst der Algorithmus eine Entscheidung über die Primalität schon im 3. beziehungsweise im 4. Schritt getroffen hätte(für den Fall $a \leq r$ oder $n \leq r$). Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $\ell = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline\newline
+
+
+\textbf{Schritt 5 und 6}\newline
+
+Nach Lemma \ref{ord_prime_l} muss für  $o_{r}(n) > 1$ ein Primteiler $p$ von $n$(Aus der Primfaktorzerlegung) existieren, sodass $o_{r}(p) > 1$. Seien $p,n \in \mathbb{Z}_{r}^{*}$ fest. Ferner sei  $\ell = \lfloor \sqrt{\phi(r)} log n \rfloor$.\newline
 
 \begin{prop}\label{pGreaterThnr}
 Im fünften Schritt des Algorithmus ist $p > r$.
@@ -1166,6 +1229,8 @@ Im fünften Schritt des Algorithmus ist $p > r$.
 \begin{proof}
 Sei $p \leq r$, wenn $p < r$ ist, dann gibt der Algorithmus im dritten Schritt COMPOSITE zurück(da der Algorithmus Faktoren $a \leq r$ sucht, sodass $a \mid n$). Wenn $p = n$ ist, dann gibt der Algorithmus im vierten Schritt PRIME zurück. Das bedeutet, wenn der Algorithmus Schritt 5 erreicht hat, dann ist $ p > r$.   
 \end{proof}
+
+\textbf{\small{Beobachtung:}} $r < n$, sonst hätte den Algorithmus bei Schritt 3 beziehungsweise 4 COMPOSITE zurückgegeben. 
 
 Der 5. Schritt des Algorithmus überprüft $\ell$ Gleichungen. Nach Voraussetzung ist die Ausgabe PRIME . Das heißt, für alle  $\ell + 1$  Gleichungen gilt:\newline\newline
 \centerline{$(X + a)^n = X^n + a $ (mod $X^r - 1, n$)}.
@@ -1193,7 +1258,10 @@ $(X + a)^{\frac{n}{p}} = X^{\frac{n}{p}} + a \, (\, mod \, X^r -1,p). \; \, \for
 \begin{align*}
     X^{n} + a \underbrace{=}_{\ref{fintro}} (X + a)^n = ((X + a)^{p})^{\frac{n}{p}} \; \underbrace{=}_{\ref{sintro}} \; ((X^{p} + a))^{\frac{n}{p}} (\, mod \, X^r - 1,p). \; \, \forall\,a, \, 0 \leq a \leq \ell.
 \end{align*}
-$\Rightarrow \, X^{n} + a = (X^{p} + a)^{\frac{n}{p}} (\, mod \, X^r - 1,p). \; \, \forall\,a, \, 0 \leq a \leq \ell.$
+
+Für eine Primzahl $p$, gilt nach Theorem \ref{Th_2} $a^p = a \, (mod \, p)$
+
+$\Rightarrow \, X^{\frac{n}{p}} + a = (X + a)^{\frac{n}{p}} (\, mod \, X^r - 1,p). \; \, \forall\,a, \, 0 \leq a \leq \ell.$
 \end{proof}
 
 Das heißt,$\forall$ $0 \leq a \leq \ell$, $n$, $\frac{n}{p}$ und $p$ haben ein identisches Verhalten bezüglich der obigen Gleichung. Diese Eigenschaft heißt Introspektivität.\newline    
@@ -1253,8 +1321,10 @@ Aus Lemma \ref{intros_num} und Lemma \ref{intros_pol} folgt, dass jedes Element 
 
 Wir definieren jetzt zwei Gruppen basierend auf diese zwei Mengen, die für den Beweis von Bedeutung sind. Das Ziel ist eine Abschätzung für diese Gruppen zu machen, und dann dadurch einen Widerspruch herzuleiten.\newline\newline
 
+\textbf{Die multiplikative Gruppe $G \subseteq \mathbb{Z}_{n}^{*}$}\newline
 Die erste Gruppe $G$ sei die Gruppe aller Restklassen in $\mathcal{I}$ modulo $r$, das heißt $G = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist $G$ eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$.\footnote{$\; {Z}_{r}^{*} = \{ x \in Z_{r} \mid (x,r) =1 \}$.} Sei die Kardinalität im weiteren $ | G | = t $. $G$ wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\footnote{$ \,$Da $n \in G$ mit Ordnung $> log^2 $, folgt $t = |G| > log^2n$.}\newline\newline
 
+\textbf{Die Gruppe $\mathcal{G}$ der Restklassen von Polynomen}\newline
 Um die zweite Gruppe zu definieren, ist die folgende Eigenschaft von zyklotomischen Polynomen über endlichen Körpern erforderlich.
 
 \begin{lemma}\label{cyc_ov_fields}
@@ -1290,9 +1360,9 @@ Angenommen $f(X) = g(X)$ im Körper $\mathbb{K}$. Weiterhin sei $m \in \mathcal{
 
 folglich gilt $f(X^m) = g(X^m)$ in $\mathbb{K}$. Daraus folgt, dass $X^m$ eine Wurzel des Polynoms $Q(Y) = f(Y) - g(Y), \, \forall m \in \mathcal{I}$ ist. Da $X$ eine primitive $r$-te Einheitswurzel von $\Phi_r(X)$ in $\mathbb{K}$ und $(m,r) = 1(\mathcal{I} \subseteq \mathbb{Z}_{r}^*), \, \forall m \in G$, folgt auch, dass $X^m$ eine $r$-te primitive Einheitswurzel in $\mathbb{K}$ ist.
 
-Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach der Wahl von $f,g$ ist aber $deg \, Q < t$. Das ist ein Widerspruch zu Theorem \ref{number_of_roots} und folglich gilt $f(X) \neq g(X)$ in $\mathbb{K}$.
+Es existieren also $|G| = t$ verschiedene Wurzeln von $Q$ in $\mathbb{K}$. Nach der Wahl von $f,g$ ist aber $deg \, Q < t$. Das ist ein Widerspruch zu Theorem \ref{number_of_roots}. Daraus folgt, dass $f(X) \neq g(X)$ in $\mathbb{K}$.
 
-Es gilt auch, dass $i \neq j  \in \mathbb{K}_p, \forall \, 1 \leq i \neq j \leq \ell = \lfloor \sqrt{\phi(r)} log n \rfloor$. Da $o_r(n) > log^2 n$, gilt auch $r > log^2 n$ und folglich:\footnote{$\, r$ ist eine Primzahl und daher gilt: $\phi(r) = r - 1  \, \Rightarrow \phi(r) < r$. Außerdem gilt auch: $r > o_r(n) > log^2n \Rightarrow \sqrt{r} > log \, n $}\newline\newline
+Es gilt auch, dass $i \neq j  \in \mathbb{K}_p, \forall \, 1 \leq i \neq j \leq \ell = \lfloor \sqrt{\phi(r)} log n \rfloor$. Da $o_r(n) > log^2 n$, gilt auch $r > log^2 n$ und folglich gilt:\footnote{$\, r$ ist eine Primzahl und daher gilt: $\phi(r) = r - 1  \, \Rightarrow \phi(r) < r$. Außerdem gilt auch: $r > o_r(n) > log^2n \Rightarrow \sqrt{r} > log \, n $}\newline\newline
 \centerline{$\ell = \lfloor \sqrt{\phi(r)} log n \rfloor < \sqrt{r} log  n < r \underbrace{<}_{(\ref{pGreaterThnr})} p$}.\newline
 
 Daher sind $X, X + 1, ..., X + \ell$ verschieden in $\mathbb{K}$. Außerdem gilt $deg \, h > 1$ und $X + a \neq 0 \,$ in $\mathbb{K}, \, \forall a, \, 0 \leq a \leq \ell $. Das bedeutet es existieren $\ell + 1$ verschiedene Polynome vom Grad 1 (Da $deg \, X + a = 1$). Nun zählen wir alle eindeutige Polynome vom Grad $ < t$, das heißt wir suchen die Polynome der Form $X^{e_0} \, (X + 1)^{e_1} \cdot \cdot \cdot (X + \ell)^{e_\ell}$, wobei $\sum_{i = 0}^{\ell} e_i < t$. Das Auswahlprobelm der Polynome vom Grad $ < t$ in $\mathcal{G}$ ist äquivalent zur Auswahlproblem von $\ell + 1$ Zahlen $e_0, e_1, \dots , e_\ell$, sodass $\sum_{i = 0}^{\ell} e_i < t$. Gemäß Theorem \ref{number_of_choices} existieren mindestens:
@@ -1303,7 +1373,7 @@ Daher sind $X, X + 1, ..., X + \ell$ verschieden in $\mathbb{K}$. Außerdem gilt
 solche Zahlen und folglich existieren mindestens ${t + \ell \choose t - 1}$ Polynome vom Grad $ < t $ in $\mathcal{G}$.\newline Daraus folgt $| \mathcal{G}| \geq {t + \ell \choose t - 1} $ 
 \end{proof}
 
-Wenn $n$ keine Potenz von $p$ ist, erhält man auch eine obere Schranke für $|\mathcal{G}|$. Mit dieser oberen Schranke kann man später einen Widerspruch konstruieren. 
+Wenn $n$ keine Potenz von $p$ ist, erhält man auch eine obere Schranke für $|\mathcal{G}|$. Mit dieser oberen Schranke kann man nachher einen Widerspruch konstruieren. 
 
 \begin{lemma}\label{closing_lemma}
 \textbf{Obere Schranke für $|\mathcal{G}|$}.\newline
@@ -1318,7 +1388,7 @@ Wir betrachten folgende Teilmenge von $\mathcal{I}$:
 \begin{equation}
     \widetilde{\mathcal{I}} = \{ (\frac{n}{p})^i p^j \mid 0 \leq i,j \leq \sqrt{t}\} \subseteq \mathcal{I}.
 \end{equation}
-Es gilt $|\widetilde{\mathcal{I}}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |G|$, da es $ \lfloor \sqrt{t} \rfloor + 1$  mögliche Werte für jeweils $i$ und $j$ gibt. Deshalb müssen (nach Theorem \ref{pigeonhole}) mindestens zwei Elemente $m_1,m_2 \in \widetilde{\mathcal{I}}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A sei $m_1 > m_2 $, folglich gilt:\newline
+Es gilt $|\widetilde{\mathcal{I}}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |G|$, da es $ \lfloor \sqrt{t} \rfloor + 1$  mögliche Werte für jeweils $i$ und $j$ gibt. Deshalb müssen (nach Theorem \ref{pigeonhole}) mindestens zwei Elemente $m_1,m_2 \in \widetilde{\mathcal{I}}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A sei $m_1 > m_2 $, dann gilt:\newline
 \begin{align*}
     X^{m_1} = X^{m_2} \, (mod \, X^r - 1).
 \end{align*}
@@ -1386,7 +1456,7 @@ Die asymptotische Laufzeit des Algorithmus ist $O^{\sim}(\lVert n \rVert^{10.5})
 Dieses Resultat wird durch Analyse der einzelnen Schritte des Algorithmus festgestellt. Zunächst wird überprüft, ob $n$ eine Potenz von einer anderen Zahl ist, dies kann durch Algorithmus \ref{appendix:potenz} im Anhang in Polynomialzeit berechnet werden.
 
 \textbf{Schritt 1:}\newline
-Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log \, n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log \,  n$ wird für $a > 1$ geprüft, ob $a^b = n$(Die Potenzierung kann in $O(log \, n)$ berechnet werden) oder $a^b < n$. Um ein $a$ zu finden, sodass $ n = a^b$, wird eine binäre Suche durchgeführt($O(log \, n)$). Daraus folgt, dass die Laufzeit für den Potenz-Prüfung Algorithmus $O(log^3 n) = O(\lVert n \rVert^3)$ ist.\footnote{$\,$ Schritt 1 kann mit Algorithmus \ref{appendix:potenz} in $O(log^3)$ berechnet werden.}\newline 
+Eine Zahl $n \geq 1$ ist eine Potenz, wenn $ n  = a^b, \, b \geq 2$. Dabei werden nur Zahlen $b \leq log \, n$ berücksichtigt, da sonst $b$ größer als $n$ wäre. Für jedes $b \leq log \,  n$ wird für $a > 1$ geprüft, ob $a^b = n$(Die Potenzierung kann in $O(log \, n)$ berechnet werden) oder $a^b < n$. Um ein $a$ zu finden, sodass $ n = a^b$, wird eine binäre Suche durchgeführt($O(log \, n)$). Daraus folgt, dass die Laufzeit für den Potenz-Prüfung Algorithmus $O(log^3 n) = O(\lVert n \rVert^3)$ ist.\footnote{$\,$ Schritt 1 kann mit Algorithmus \ref{appendix:potenz} in $O(log^3 n)$ berechnet werden oder in  $log^{1 + o(1)}n$, wenn man den Algorithmus in \cite{perf_pow_db} benutzt.}\newline 
 
 
 \textbf{Schritt 2:}\newline
@@ -1430,12 +1500,12 @@ Um dies illustrieren zu können, sind folgende Mengen erforderlich:
 Zusätzlich wird der AKS-Algorithmus mit dem naiven Algorithmus\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.} verglichen, um zeigen, dass der AKS-Ansatz eine bessere asymptotische Laufzeit als der naive Ansatz hat.
 
 \subsection{Implementierungsdetails}
-Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf dem beigefügten USB zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.\footnote{$\,$ Alle Zeitmessungen wurden mit der Python-Funktion process\_time() gemessen.}
+Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf meinem Github \url{https://github.com/salman13s/Bachelorarbeit} zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.\footnote{$\,$ Alle Zeitmessungen wurden mit der Python-Funktion process\_time() gemessen.}
 
 \subsection{Experimentelle Ergebnisse}
 
 \subsubsection{Experiment 1: Potenz-Prüfung}
-Zunächst wird der Potenz-Prüfung Algorithmus untersucht, eine Zahl ist eine Potenz, wenn sie aus der ersten Menge $M_1$ ist. Im vierten Kapitel wurde mathematisch gezeigt, dass dieser Algorithmus eine polynomielle Laufzeit hat. Nun wird dieses Resultat durch die folgende Laufzeituntersuchung verdeutlicht. Dabei ist einerseits wichtig, sicherzustellen, dass der Algorithmus korrekt ist, andererseits soll der Algorithmus eine Entscheidung in Polynomialzeit für $\lVert n \rVert$ treffen.\footnote{. Hier entspricht $\lVert n \rVert$ die Bitlänge einer Zahl $n$.}.
+Zunächst wird der Potenz-Prüfung Algorithmus untersucht, eine Zahl ist eine Potenz, wenn sie aus der ersten Menge $M_1$ ist. Im vierten Kapitel wurde mathematisch gezeigt, dass dieser Algorithmus eine polynomielle Laufzeit hat. Nun wird dieses Resultat durch ein Experiment verdeutlicht. Dabei ist einerseits wichtig, sicherzustellen, dass der Algorithmus korrekt ist, andererseits soll der Algorithmus eine Entscheidung in Polynomialzeit für $\lVert n \rVert$ treffen.\footnote{. Hier entspricht $\lVert n \rVert$ die Bitlänge einer Zahl $n$.}.
 \newpage
 Die Zeitmessung wurde gem. der Beschreibung in Anhang (\ref{appendix:fast_expo}) durchgeführt. 
 \begin{table}[h!]
@@ -1510,7 +1580,7 @@ Die polynomielle Laufzeit des 2. Schritts lässt sich auch am besten mit einer G
 \newpage
 
 \subsubsection{Experiment 3: Laufzeit des AKS-Algorithmus}
-In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannte Primzahlen gemessen\footnote{$\,$ Für die Primzahlen siehe \url{http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php} und \url{https://en.wikipedia.org/wiki/Largest_known_prime_number}.}. Es wurden auch bekannte zusammengesetzte Zahlen eingegeben, um die Korrektheit des Algorithmus zu testen. Diese wurden aber nicht in der Laufzeit enthalten, da sie den Worst-case nicht darstellen.
+In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannte Primzahlen gemessen\footnote{$\,$ Für die Primzahlen siehe \url{http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php} und \url{https://en.wikipedia.org/wiki/Largest_known_prime_number}.}. Es wurden auch bekannte zusammengesetzte Zahlen eingegeben, um die Korrektheit des Algorithmus zu testen. Diese sind aber nicht in der Laufzeit enthalten, da sie den schlechtestmöglichen Fall nicht darstellen.
 \begin{table}[h!]
 \centering
 \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
@@ -1544,14 +1614,14 @@ In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannt
 
 
 % TODO: rewrite the whole passage !!
-Tabelle \ref{table:3} zeigt deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn die Eingabegröße größer wird. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Potenzen sind, ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für 147763360000 hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das wesentlich weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.
+Tabelle \ref{table:3} zeigt deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn die Eingabegröße größer wird. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Potenzen sind, ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für 147763360000 hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das ist wesentlich weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.
 
 Aus dieser Beobachtung kann man nun auf die im Einleitung dieses Kapitels gestellte Frage beantworten. Der AKS-Algorithmus liefert die schnellste Antwort(ja oder nein), wenn die Zahl aus der Menge $M_1$ ist. Das liegt daran, dass solche Zahlen im ersten Schritt identifiziert werden, das heißt in $O(log^3 n)$. Es gibt jedoch zusammengesetzte Zahlen, die, im dritten(Zahlen aus $M_2$) oder im fünften Schritt(Zahlen aus $M_3$) identifiziert werden. Für diese Zahlen ist der maximale Aufwand $O^{\sim}(log^{21/2}n)$.\footnote{$\,$ Diese sind Zahlen, die in der Schleife des 5. Schritts identifiziert werden.} Während Primzahlen entweder im vierten oder im sechsten Schritt identifiziert werden, das bedeutet entweder in $O^{\sim}(log^7n)$ oder $O^{\sim}(log^{21/2}n)$. Daraus kann man folgern, dass Primzahlen und zusammengesetzte Zahlen im schlimmsten Fall nach $O^{\sim}(log^{21/2}n)$ erkannt werden. Im besten Fall kann der AKS-Algorithmus eine schnellere Antwort liefern, wenn die Zahl zusammengesetzt ist. Daher lautet die Antwort auf die Frage: der AKS-Algorithmus liefert für zwei gleich große Zahlen(eine Primzahl und eine zusammengesetzte Zahl) im Durchschnitt eine schnellere Antwort\footnote{$\,$ Schneller im Sinne von der Anzahl an Schritte.}, wenn die Zahl zusammengesetzt ist. Das heißt, dass die durchschnittliche Laufzeit für zusammengesetzte Zahlen kleiner als die durchschnittliche Laufzeit für Primzahlen ist.      
 
 \subsubsection{Experiment 4: AKS vs naiver Primzahltest}
 In der Einführung wurde ein Algorithmus erwähnt, der das Primalitätsproblem in $\Omega(\sqrt{n})$ löst. Allerdings hat dieser Algorithmus eine exponentielle Laufzeit. Der AKS-Algorithmus hat eine polynomielle Laufzeit, und ist somit schneller als der naive Primzahltest(engl. brute-force primality test). In diesem Experiment wurden die Laufzeiten beider Algorithmen bis zur Inputgröße $37$ verglichen.  
 
-Zur Untersuchung der Laufzeit beider Algorithmen als Primzahltest werden bewusst nur Primzahlen als Eingabewerte herangezogen. Das liegt einerseits daran, dass diese den schlechtest möglichen Fall beider Algorithmen darstellt. Andererseits ist oft der Fall, dass der AKS-Algorithmus bei zusammengesetzte Zahlen aus $M_1$ das Ergebnis  schnell liefern kann.\newline\footnote{. Dadurch soll ein Verglich zwischen der Potenz-Prüfung und dem naiven Algorithmus vermieden werden.}
+Zur Untersuchung der Laufzeit beider Algorithmen als Primzahltest werden bewusst nur Primzahlen als Eingabewerte herangezogen. Das liegt einerseits daran, dass diese den schlechtest möglichen Fall beider Algorithmen darstellt. Andererseits ist oft der Fall, dass der AKS-Algorithmus für zusammengesetzte Zahlen aus $M_1$ das Ergebnis  schnell liefern kann.\newline\footnote{. Dadurch soll ein Verglich zwischen der Potenz-Prüfung und dem naiven Algorithmus vermieden werden.}
 
 \begin{table}[h!]
 \centering
@@ -1572,11 +1642,12 @@ Zur Untersuchung der Laufzeit beider Algorithmen als Primzahltest werden bewusst
 
  \hline
 \end{tabular}
- \caption{Laufzeituntersuchung des AKS-Algorithmus.}
+ \caption{AKS vs naiver Primzahltest.}
 \label{table:4}
 \end{table}
 
-Obige Tabelle macht deutlich, dass der AKS-Primzahltest eine geringere asymptotische Laufzeit als der naive Primzahltest hat.
+
+Obige Tabelle macht deutlich, dass der AKS-Primzahltest eine bessere asymptotische Laufzeit als der naive Primzahltest hat.
 
 Man kann nun die Werte aus Tabelle \ref{table:4} in einer Grafik darstellen. 
 
@@ -1587,13 +1658,13 @@ Man kann nun die Werte aus Tabelle \ref{table:4} in einer Grafik darstellen.
 \label{plot_aks_naive}
 \end{figure}
 
-Grafik \ref{plot_aks_naive} zeigt deutlich, dass der AKS-Algorithmus bei Inputgröße $37$ in unter $200 \, s$ eine Antwort geliefert hat, während der naive Algorithmus mehr als $6500 \, s$ brauchte.
+Grafik \ref{plot_aks_naive} zeigt deutlich, dass der AKS-Algorithmus bei Inputgröße $37$ in unter $200 \, s$ eine Antwort geliefert hat, während der naive Algorithmus mehr als $6500 \, s(> 1.5 h)$ brauchte.
 
 
 \begin{figure}[h]
 \includegraphics[width=8cm]{plots/aksVsNaiveSubPlots.png}
 \centering
-\caption{Laufzeit des AKS-Algorithmus(grün) im Vergleich zum naiven Algorithmus(rot), aber in getrennten Subplots}
+\caption{Laufzeit des AKS-Algorithmus(grün) im Vergleich zum naiven Algorithmus(rot)}
 \end{figure}
 
 \section{Zusammenfassung}
