@@ -1718,40 +1718,34 @@ Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath v
 \subsection{Experimentelle Ergebnisse}
 
 \subsubsection{Experiment 1: Die Suche nach einem geeigneten $r$}
-Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem geeinigten $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird die Laufzeit des zweiten Schritt geprüft. Hierzu wird die Funktion \texttt{find\_r}(siehe Quellcode)benutzt.
+Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird gezeigt, dass die Laufzeit des 2. Schritts polynomiell von der Eingabegröße abhängig ist.
 
 \textbf{\samll{Beschreibung des Experiments:}}\newline
-In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS-Primzahltest demonstriert werden. Hierzu werden verschiedene Inputgröße betrachtet. Für jede Inputgröße werden 100 zufällig ausgewählte Datenpunkte verwendet, danach wird für jeden Datenpunkt die Laufzeit gemessen. Dadurch erhält man mehrere verstreute Punkte im zweidimensional Raum. Nun wird ein Polynom an diese Punkte angepasst, diese Polynom soll (Gemäß Kapitel 4) Grad 7 haben.   
+In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS-Primzahltest demonstriert werden. Hierzu werden verschiedene Inputgrößen betrachtet. Für jede Inputgröße werden 100 zufällig ausgewählte Datenpunkte verwendet, danach wird für jeden Datenpunkt die Laufzeit gemessen. Dadurch erhält man mehrere verstreute Punkte im zweidimensional Raum. Nun wird ein Polynom an diese Punkte angepasst, dieses Polynom soll (Gemäß Kapitel 4) Grad 7 haben. Dafür sind folgende Mengen erforderlich:
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
- \hline
- \multicolumn{4}{|c|}{\texttt{find\_r}} \\
- \hline
- Zahl & Inputgröße &Ergebnis&Zeit in s\\
- \hline
- 7   & 3    &5&   $0.000032$\\
- 41&   6  & 41   &$0.00038$\\
- 771 &10 & 3&  $0.0001$\\
- 6991    &13 & 149&  $0.02306$\\
- 462975&   19  & 3&$ 0.0027$\\
- 3875741& 22  & 443   &$1.512932$\\
- 294024210& 29  & 2&$0.022265$\\
- \hline
-\end{tabular}
- \caption{Laufzeituntersuchung des zweiten Schritts.}
-\label{table:2}
-\end{table}
+\begin{enumerate}
+    \item $I = \{ I_{1},I_{2}, \dots, I_{n} \}$ Menge der Inputs, die Inputs sind in diesem Fall Arrays von  Bitlängen. $I_{k}$ beschreibt die Menge der Zahlen, die Bitlänge $k$ haben\footnote{$I_{k} = \{ n \in \mathbb{N} \mid \lVert n\rVert = k\}$}\newline
+    
+    \item $ T = \{T_{1},T_{2}, \dots, T_{n}\}$ Menge der Outputs, hier sind die Outputs Arrays von gemessenen Laufzeiten für die jeweiligen Inputs. 
+\end{enumerate}
+Das Ziel ist eine bestmögliche Approximation(durch ein Polynom) für die Funktion $f(x) = y$ zu berechnen, wobei $x \in I_{k}$ und $y \in T_{k}, k = 1,2, \dots, n$.
 
-Obige Tabelle \ref{table:2} zeigt, dass das geeignete $r$ auch für große Zahlen relativ schnell bestimmt werden kann. Es ist jedoch auffällig, dass der Algorithmus mehr zeit gebraucht hat um das geeignete $r$ für eine 22 Bit Zahl (3875741) zu finden, als für eine 29 Bit Zahl (294024210). Das liegt aber daran, dass der Algorithmus bei 294024210 weniger Zahlen ausprobieren musste. 
+\textbf{\small{Erwartetes Verhalten:}}\newline
+Das angepasste Polynom soll die Mittelwerte von den 100 Punkten bei jeder Inputgröße nahezu perfekt darstellen.
 
+\textbf{\small{Die Daten:}}
+Für dieses Experiment wurden 14 Inputgrößen verwendet.\newline 
+$I = \{ I_{8},I_{9},I_{10},I_{12},I_{13},I_{15},I_{16},I_{17},I_{19},I_{22},I_{24},I_{25},I_{27} \}$.
+
+\textbf{\small{Ergebnisse:}}
 \begin{figure}[h]
-\includegraphics[width=7.06cm]{plots/aks.png}
+\includegraphics[width=10cm]{plots/runtime_find_r.png}
 \centering
-\caption{Laufzeit des AKS-Primzahltests}
-\label{aks-runtime}
+\caption{Anpassung des Polynoms an die Laufzeiten}
+\label{runtime-find_r}
 \end{figure}
+
+Abbildung \ref{runtime-find_r} zeigt, dass das gewählte Polynom vom Grad 7 (rot in der Grafik) die Funktion der Mittelwerte von den Inputgrößen(bl) nahezu zu perfekt darstellt.
 
 
 
