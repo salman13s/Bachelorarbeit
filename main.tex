@@ -178,7 +178,7 @@ sorting=ynt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lhead{Abstract}
 \section*{Abstract}
-Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des Primalitätsproblems benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Algorithmus wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert.  
+Primzahlen haben in der Informatik, speziell im Anwendungsgebiet der Kryptographie, eine sehr hohe Relevanz für moderne kryptographische Systeme ist es von Wichtigkeit selbige schnell bestimmen zu können. Hierzu werden effiziente Algorithmen zur Lösung des Primalitätsproblems(PRIMES) benötigt. Das Primalitätsproblem umfasst die Frage um die Entscheidung, ob eine gegebene Zahl eine Primzahl ist oder nicht. Der erste deterministische Primzahltest in Polynomialzeit wurde von den indischen Informatikern Agrawal, Kayal, und Saxena vorgestellt. Der nach ihnen benannte AKS-Primzahltest wird im Rahmen dieser Arbeit repräsentiert, implementiert und evaluiert.  
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -207,22 +207,23 @@ Der Algorithmus und seine Korrektheit sind die Bestandteile des dritten Kapitels
 
 Im vierten Kapitel wird die mathematische Laufzeitanalyse des AKS-Algorithmus vorgestellt, dabei werden die Laufzeiten der einzelnen Schritte (STEPS 1-6) des AKS-Algorithmus ausführlich analysiert. Anschließend werden mögliche Verbesserungen der Laufzeit vorgestellt. 
 
-Das fünfte Kapitel beinhaltet die experimentelle Laufzeit- und Korrektheitsanalyse, dort  soll die Laufzeit der Schritte des AKS-Algorithmus auf einem Rechner getestet werden. Darüber hinaus soll auch die Korrektheit dieser Schritte geprüft werden. Schließlich soll der AKS-Algorithmus mit dem naiven Algorithmus\footnote{. Der naive Algorithmus ist der beste nicht probabilistische Algorithmus. Die Laufzeit dieses Algorithmus ist $\Omega(\sqrt{n})$} verglichen werden.  
+Das fünfte Kapitel beinhaltet die experimentelle Laufzeit- und Korrektheitsanalyse, dort  soll die Laufzeit der Schritte des AKS-Algorithmus auf einem Rechner getestet werden. Darüber hinaus soll auch die Korrektheit dieser Schritte geprüft werden. Schließlich soll der AKS-Algorithmus mit dem naiven Algorithmus\footnote{. Der naive Algorithmus ist der beste nicht probabilistische Algorithmus. Die Laufzeit dieses Algorithmus ist $\Omega(\sqrt{n})$} verglichen werden.
+
 
 \subsection{Überblick}
-Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und bewiesen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt. Sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahlen zu aufwendig wird.
+Eine Primzahl ist eine von 1 verschiedene natürliche Zahl, die keine Teiler außer 1 und sich selbst hat. Die Frage, ob eine Zahl eine Primzahl ist oder nicht, war schon im antiken Griechenland interessant. Euklid hat sich mit dieser Frage beschäftigt und bewiesen, dass es unendlich viele Primzahlen gibt. Im 3. Jahrhundert v. Chr. hat der griechische Mathematiker Eratosthenes einen Algorithmus zur Bestimmung einer Liste aller Primzahlen kleiner oder gleich einer vorgegebenen Zahl vorgestellt. Sein Algorithmus ist jedoch zur Lösung des Primalitätsproblem nicht effizient, da die Generierung solcher Listen bei sehr großen Zahlen extrem aufwendig wird.
 
-Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson(1741-1793) hat einen Satz aufgestellt, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$.\footnote{$\mathbb{P}$ ist die Menge der Primzahlen} Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen. Die größte Primzahl heute(Jahr: 2020) $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl\cite{largePrimes}. Ein anderer französischer Mathematiker Pierre de Fermat(1607-1665) hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
+Im 17. und 18. Jahrhundert haben Wissenschaftler nach einem Verfahren zum Finden von Primzahlen gesucht. Ein wichtiges Resultat war der Satz von Wilson, der britische Mathematiker John Wilson(1741-1793) hat einen Satz formuliert, um Primzahlen von zusammengesetzten Zahlen zu unterscheiden. Der Satz lautet: $p \geq 2$ ist genau dann eine Primzahl, wenn $(p - 1)! + 1$ durch $p$ teilbar ist. Der französische Wissenschaftler Marin Mersenne(1588 - 1648) hat sich auch mit Primzahlen beschäftigt, er behauptete, dass für eine nach ihm benannte mersennsche Zahl(eine Zahl der Form $2^p - 1$) genau dann eine Primzahl, wenn $p$ eine Primzahl ist. Seine Behauptung war jedoch nicht vollständig\footnote{$p = 67$ ist prim aber $2^{67} - 1 = 0 \, mod \, \, 193707721$}, beispielsweise $ p = 67 \in \mathbb{P}$, aber $2^{67} - 1 \not \in \mathbb{P}$. Obwohl diese Behauptung falsch war, hat sie sehr viel zur mathematischen Theoriebildung beigetragen. Zahlen für die $2^p - 1 \in \mathbb{P}$ gilt, heißen mersennsche Primzahlen. Die größte Primzahl heute(Jahr: 2020) $2^{82,589,933}$ $ - 1$ ist eine mersennsche Primzahl\cite{largePrimes}. Ein anderer französischer Mathematiker Pierre de Fermat(1607-1665) hat einen Satz zur Beschreibung der Eigenschaften von Primzahlen aufgestellt. Sein Satz ist später die Grundlage für Primzahltests geworden.
 \newline
 
-Die Sätze von Wilson, Mersenne, und Fermat sind aber zum Finden von großen Primzahlen höchst ineffizient. Natürlich hat damals sowieso niemand versucht, große Primzahlen mittels dieser Sätze zu finden, da es einfach keinen Grund dafür gab. Der frühste Einsatz von großen Primzahl findet sich im 20. Jahrhundert bei modernen kryptographische Systemen\cite{krypWiki}. Im Jahr 1997 wurde mit dem RSA-Verfahren eine Methode entdeckt, mit der man Daten sehr sicher verschlüsseln kann und die auch für den allgemeinen Gebrauch geeignet ist. Bei diesem verfahren muss aber ein Produkt aus Primzahlen berechnet werden\cite{rsa}. Man beachte dabei, dass die in der Praxis eingesetzte Primzahlen sehr groß sind und aus mehreren Hundert Stellen bestehen können. Aus diesem Grund ist es sinnvoll einen Algorithmus(oder mehrere Algorithmen) zu haben, mit dem man solche Primzahlen \textquotedbl schnell\textquotedbl   $\;$ bestimmen kann. Um das zu verwirklichen, braucht man zunächst eine formale Definition vom untersuchten Problem und darüber hinaus eine Definition für schnelle Algorithmen. Hier kommen die Komplexitätstheorie und die Berechenbarkeitstheorie zum Einsatz. 
+Die Sätze(Algorithmen) von Wilson, Mersenne, und Fermat sind aber zum Finden von großen Primzahlen nicht geeignet und ineffizient. Natürlich hat damals sowieso niemand versucht, große Primzahlen mittels dieser Sätze zu finden, da es einfach keinen Grund dafür gab. Der frühste Einsatz von großen Primzahl findet sich im 20. Jahrhundert bei modernen kryptographische Systemen\cite{krypWiki}. Im Jahr 1997 wurde mit dem RSA-Verfahren eine Methode entdeckt, mit der man Daten sehr sicher verschlüsseln kann und die auch für den allgemeinen Gebrauch geeignet ist. Bei diesem verfahren muss aber ein Produkt aus Primzahlen berechnet werden\cite{rsa}. Man beachte dabei, dass die in der Praxis eingesetzte Primzahlen sehr groß sind und aus mehreren Hundert Stellen bestehen können. Aus diesem Grund ist es sinnvoll einen Algorithmus(oder mehrere Algorithmen) zu haben, mit dem man solche Primzahlen \textquotedbl schnell\textquotedbl   $\;$ bestimmen kann. Um das zu verwirklichen, braucht man zunächst eine formale Definition vom untersuchten Problem und darüber hinaus eine Definition für schnelle Algorithmen. Hier kommen die Komplexitätstheorie und die Berechenbarkeitstheorie zum Einsatz. 
 
-Seit dem Beginn der Komplexitätstheorie in den 1960er Jahren, wurden Begriffe formalisiert und verschiedene Komplexitätsklassen definiert\cite{com-theory}. Seitdem versuchten Informatiker und Mathematiker, das Primalitätsproblem in einer Komplexitätsklasse einzuordnen. Daher wurde das Primalitätsproblem auch im Laufe der Jahre intensiv untersucht. Es war trivial zu sehen, dass dieses Problem in der Komplexitätsklasse co-NP liegt\footnote{Dies entspricht der Aussage, dass geprüft wird, ob eine Zahl $n$ zusammengesetzt ist in NP. Man soll hier nun ein Zertifikat (Faktor) $d$ finden und testen ob $d \mid n$ gilt. Dies ist offensichtlich in polynomiellzeit realisierbar.}. In 1974 hat der australische Informatiker Vaughan Pratt eine wichtige Beobachtung gemacht, nämlich, dass das Primalitätsproblem auch in der Komplexitätsklasse NP liegt\cite{pratt}.
+Seit dem Beginn der Komplexitätstheorie in den 1960er Jahren, wurden Begriffe formalisiert und verschiedene Komplexitätsklassen definiert\cite{com-theory}. Seitdem versuchten Informatiker und Mathematiker, das Primalitätsproblem in einer Komplexitätsklasse einzuordnen. Daher wurde das Primalitätsproblem auch im Laufe der Jahre intensiv untersucht. Es war trivial zu sehen, dass dieses Problem in der Komplexitätsklasse co-NP liegt\footnote{Dies entspricht der Aussage, dass geprüft wird, ob eine Zahl $n$ zusammengesetzt ist in NP. Man soll hier nun ein Zertifikat (Faktor) $d$ finden und testen ob $d \mid n$ gilt. Dies ist offensichtlich in Polynomialzeit realisierbar.}. In 1974 hat der australische Informatiker Vaughan Pratt eine wichtige Beobachtung gemacht, nämlich, dass das Primalitätsproblem auch in der Komplexitätsklasse NP liegt\cite{pratt}.
 
-Die Frage war nachher zu klären, ob das Primalitätsproblem auch in P liegt. Mit anderen Worten, dass es ein Algorithmus mit polynomieller Laufzeit gibt und das Primalitätsproblem löst. Viele Wissenschaftler haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Algorithmen entwickelt. Leider war keiner der Versuche erfolgreich, da die Algorithmen entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren\footnote{Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können(nicht deterministisch)}. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen\cite{milRab}. Allerdings kann der beste nicht probabilistische Algorithmus (bis 2002) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Die Eingabe ist in diesem Fall die Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Solcher Algorithmus braucht exponentielle Zeit, um das Primalitätsproblem zu lösen\footnote{Für eine Erklärung, waurm $\Omega(\sqrt{n})$ eine exponentielle Laufzeit hat siehe: \url{https://cs.stackexchange.com/questions/88398/primality-testing-why-is-dividing-a-number-n-by-every-integer-between-2-and}.}. In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus vorgestellt, der das Primalitätsproblem in polynomiellzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES\footnote{PRIMES $= \{ n \in \mathbb{N} \mid n \in \mathbb{P} \}$, wobei $\mathbb{P}$ die Menge der Primzahlen ist.}) zur Komplexitätsklasse $P$ gehört.      
+Die Frage war nachher zu klären, ob das Primalitätsproblem auch in P liegt. Mit anderen Worten, dass es einen Algorithmus(Primzahltest) mit polynomieller Laufzeit gibt und das Primalitätsproblem löst. Viele Wissenschaftler haben danach versucht, auf diese Frage zu beantworten, dazu wurden zahlreiche Primzahltests entwickelt. Leider war keiner der Versuche erfolgreich, da alle entwickelten Primzahltests entweder von unbewiesenen Hypothesen, wie zum Beispiel die verallgemeinerte Riemannsche Vermutung, abhängig waren oder probabilistisch waren\footnote{Probabilistische Algorithmen sind randomisierte Algorithmen, die auch ein falsches Ergebnis liefern können(nicht deterministisch)}. Ein bekannter probabilistischer Primzahltest ist der Miller-Rabin-Primzahltest, er kann das Primalitätsproblem in $O(k log^3 n)$ lösen\cite{milRab}. Allerdings kann der beste nicht probabilistische Algorithmus (bis 2002) das Primalitätsproblem in $ \Omega(\sqrt{n}) $ Schritten lösen, wobei $n$ die Eingabegröße ist(Die Eingabe ist in diesem Fall die Anzahl der nötigen Bits, um die Zahl $n$ zu repräsentieren). Dieser Primzahltest heiß der Probedivision-Primzahltest oder naiver Primzahltest und hat eine exponentielle Zeit.\footnote{Für eine Erklärung, warum ein Algorithmus mit $\Omega(\sqrt{n})$ im Rahmen von Primalitätstesten eine exponentielle Laufzeit hat siehe: \url{https://cs.stackexchange.com/questions/88398/primality-testing-why-is-dividing-a-number-n-by-every-integer-between-2-and}.} In 2002 haben drei Informatiker Agrawal, Kayal, und Saxena den ersten deterministischen unbedingten Algorithmus vorgestellt, der das Primalitätsproblem in polynomiellzeit lösen kann. Das heißt sie haben gezeigt, dass das Primalitätsproblem(PRIMES) zur Komplexitätsklasse $P$ gehört.      
 
 \subsection{Zielsetzung}
-Im dieser Arbeit wird der AKS-Primzahltest aus dem Originalartikel behandelt\cite{aks}. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu demonstrieren und seine Laufzeit zu evaluieren. Um die Korrektheit zu zeigen soll Zunächst der mathematische Korrektheitsbeweis durchgeführt. Neben dem mathematischen Beweis werden auch mehrere Tests durchgeführt, um die Korrektheit experimentell zu beweisen. Die Ergebnisse dieser Tests werden mittels Tabellen sowie Grafiken dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und durch mehrere Testfälle evaluiert. Der AKS-Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht. Hier wird auch auf ähnlicher Weise erst mathematisch und dann experimentell bewiesen, dass der AKS-Algorithmus eine polynomielle Laufzeit hat. Schließlich soll der AKS-Algorithmus mit dem naiven Primzahltest verglichen.  
+Im dieser Arbeit wird der AKS-Primzahltest aus dem Originalartikel(\cite{aks}) behandelt. Ziel dieser Arbeit ist die Korrektheit des AKS-Algorithmus zu demonstrieren und seine Laufzeit zu evaluieren. Um die Korrektheit zu zeigen soll Zunächst der mathematische Korrektheitsbeweis durchgeführt. Neben dem mathematischen Beweis werden auch mehrere Tests durchgeführt, um die Korrektheit experimentell zu beweisen. Die Ergebnisse dieser Tests werden mittels Tabellen sowie Grafiken dargestellt. Dazu wird der Algorithmus auf einem Rechner implementiert und durch mehrere Testfälle evaluiert. Der AKS-Algorithmus ist hauptsächlich dafür bekannt, das Primalitätsproblem in Polynomialzeit zu lösen, diese Eigenschaft wird auch untersucht. Hier wird auch auf ähnlicher Weise erst mathematisch und dann experimentell bewiesen, dass der AKS-Algorithmus eine polynomielle Laufzeit hat. Schließlich soll der AKS-Algorithmus mit dem naiven Primzahltest verglichen.  
 
 
 \newpage
@@ -332,9 +333,6 @@ Der Beweis ist auf der Argumentation der Wikipedia-Website basiert\cite{eulerthm
 
 \smallskip
 
-\textbf{Weitere Theoreme}\newline
-
-
 \begin{theorem}[\textbf{Binomischer Lehrsatz}]\label{Th_3}
 Sei n eine natürliche Zahl, dann gilt für $a,b \in \mathbb{Z}$:\newline\newline
  \begin{equation}
@@ -390,7 +388,7 @@ Für die Koeffizienten gilt:
 \begin{align*}
     {p \choose k} = \frac{p \cdot (p - 1) \cdot \cdot \cdot (p - k + 1)}{1 \cdot 2 \cdot \cdot \cdot k}
 \end{align*}
-$\forall k, \,  1 \leq k \leq p - 1$, somit sind alle Koeffizienten(bis auf das erste und das letzte) durch $p$ teilbar.\newline\newline
+$\forall k, \,  1 \leq k \leq p - 1$, somit sind alle Koeffizienten(bis auf den ersten und den letzten Koeffizienten) durch $p$ teilbar.\newline\newline
 Also es gilt:
 \begin{align*}
 (a + 1)^p - (a + 1) = \big{[} a^p + 1 \big{]} - (a + 1) = a^p - a \, mod \, p.
@@ -495,17 +493,17 @@ Sei $(G,\circ)$ eine Gruppe. Eine Menge $H \subseteq G$ heißt eine \textbf{Unte
 \smallskip
 
 \textbf{Ordnung}\newline
-Ein weiteres wichtiges Konzept der Gruppentheorie ist die Ordnung. Man unterscheidet zwischen der Ordnung einer Gruppe, und der Ordnung eines Elementes von einer beliebigen Gruppe. Die Ordnung einer Gruppe $G$ ist die Kardinalität dieser Gruppe(Anzahl der Elemente in der Gruppe). Während Die Ordnung eines Elements $a \in G$\footnote{Hier ist $a$ ein Element einer beliebigen Gruppe $G$.} die kleinste Zahl $n$, sodass $a^n =e$, ist.\footnote{$\, a^n$ ist keine Potenzierung sondern eine wiederholte Anwendung(in diesem Fall $n$ mal) des Gruppen Operators. z.B. für die Gruppe $(\mathbb{Z},+)$ ist $a^n = \underbrace{a + a + \dots a}_{n-mal}$}Wobei $e$ das neutrale Element der Gruppe $G$ ist.  
+Ein weiteres wichtiges Konzept der Gruppentheorie ist die Ordnung. Man unterscheidet zwischen der Ordnung einer Gruppe, und der Ordnung eines Elementes von einer beliebigen Gruppe. Die Ordnung einer Gruppe $G$ ist die Kardinalität dieser Gruppe(Anzahl der Elemente in der Gruppe). Während Die Ordnung eines beliebigen Elements $a \in G$ die kleinste Zahl $n$, sodass $a^n =e$, ist.\footnote{$\, a^n$ ist keine Potenzierung sondern eine wiederholte Anwendung(in diesem Fall $n$ mal) des Gruppen Operators. z.B. für die Gruppe $(\mathbb{Z},+)$ ist $a^n = \underbrace{a + a + \dots a}_{n-mal}$}Wobei $e$ das neutrale Element der Gruppe $G$ ist.  
 
 
 
 
 \begin{definition}
-Die \textbf{Ordnung} einer Gruppe $(G, \circ)$ ist die Kardinalität dieser Gruppe. Das heißt die Ordnung der Gruppe ist die Anzahl der Elemente in $G$. Die Ordnung wird mit $|G|$ bezeichnet. 
+Die \textbf{Ordnung} einer Gruppe $(G, \circ)$ ist die Kardinalität dieser Gruppe. Das heißt die Ordnung der Gruppe ist die Anzahl der Elemente in $G$. Die Ordnung einer Gruppe $G$ wird mit $|G|$ bezeichnet. 
 \end{definition}
 
 \begin{definition}
-Sei $(G,\circ)$ eine Gruppe, dann heißt die kleinste Zahl $n$, sodass $a^n = a \circ a \circ \dots \circ a = e$ die \textbf{Ordnung} von $a$ und wird mit $ord_{G}(a) = n $ bezeichnet\footnote{$\,$ $ord_{G}(a)$ ist die Ordnung von $a$ in der Gruppe $G$.}.
+Sei $(G,\circ)$ eine Gruppe, dann heißt die kleinste Zahl $n$, sodass $a^n = a \circ a \circ \dots \circ a = e$ die \textbf{Ordnung} von $a$ und wird mit $ord_{G}(a) = n $ bezeichnet.
 \end{definition}
 
 
@@ -657,7 +655,7 @@ Folglich ist $q(X) = 4X^3 + 2X^2 + 2X + 1, \; r(X) = 2X + 2$ und $deg(r) = 1 < d
 
 \smallskip
 
-\textbf{Körper}\newline
+\subsubsection{Körper}
 Eine zusätzliche algebraische Struktur ist der Körper. Im Korrektheitsbeweis werden (zyklotomische)Polynome über endlichen Körpern behandelt. Aus diesem Grund sind die Struktur und ihre Eigenschaften für das weitere Verständnis der Arbeit nötig.
 
 \begin{definition}\label{field_axioms}
@@ -707,7 +705,7 @@ Für einen Beweis siehe \cite{fields}.
 \begin{theorem}
 Sei $\mathbb{K}$ ein Körper und $a \in \mathbb{K} - \{ 0 \}$. Weiterhin sei $ n \in \mathbb{N}$, mit $n \geq 1$. Dann gilt $a^n = 1 \Leftrightarrow	 $ $ord_{\mathbb{K}}(a) \mid n$. 
 \end{theorem}
-\textbf{Zyklotomische Polynome}\newline
+\subsubsection{Zyklotomische Polynome}
 Das $n$-te zyklotomische Polynome (auch: Kreisteilungspolynom) ist ein spezielles irreduzibles Polynom mit ganzzahligen Koeffizienten, die Teiler von $X^n - 1$ sind. Die Wurzeln des $n$-ten zyklotomischen Polynom sind alle $n$ Einheitswurzeln. 
 
 \begin{definition}
@@ -781,7 +779,7 @@ In der Komplexitätstheorie ist \textbf{P} die Komplexitätsklasse, die alle Ent
 
 
 
-Neben der Komplexitätsklasse $P$ gibt es auch weitere Klassen, wie z.B. NP und co-NP, diese Klassen werden hier aber nicht behandelt, da sie nicht direkt mit dem AKS-Algorithmus verbunden sind. Ein Algorithmus ist in $P$, wenn die Laufzeit von der Eingabegröße polynomiell abhängig ist. Im Rahmen von Primalitätstesten bedeutet dies ein Algorithmus, der eine natürliche Zahl $n$ als Eingabe verwendet und bestimmt, ob $n$ eine Primzahl ist oder nicht. Das heißt, dass die Eingabegröße ungefähr $log \, n$ ist.\footnote{$\,$ Da die Zahlen im Computer im binären System dargestellt werden, ist die Eingabe ungefähr $log_2(n)$(Anzahl der Bits, um $n$ zu repräsentieren). Für weitere Information zu diesem Thema siehe: \cite{D73}, \cite{computer-algebra}.} In dieser Arbeit wird die Eingabegröße\footnote{$\, $In dieser Arbeit wird auch das Synonym Inputgröße manchmal benutzt.} mit $\lVert n \rVert$ bezeichnet.   
+Neben der Komplexitätsklasse $P$ gibt es auch weitere Klassen, wie z.B. NP und co-NP, diese Klassen werden hier aber nicht behandelt, da sie nicht direkt mit dem AKS-Algorithmus verbunden sind. Wie bereits erwähnt, ein Algorithmus ist in $P$, wenn die Laufzeit von der Eingabegröße polynomiell abhängig ist. Im Rahmen von Primalitätstesten bedeutet dies ein Algorithmus, der eine natürliche Zahl $n$ als Eingabe verwendet und bestimmt, ob $n$ eine Primzahl ist oder nicht. Das heißt, dass die Eingabegröße ungefähr $log \, n$ ist.\footnote{$\,$ Da die Zahlen im Computer im binären System dargestellt werden, ist die Eingabe ungefähr $log_2(n)$(Anzahl der Bits, um $n$ zu repräsentieren). Für weitere Information zu diesem Thema siehe: \cite{D73}, \cite{computer-algebra}.} In dieser Arbeit wird die Eingabegröße\footnote{$\, $In dieser Arbeit wird auch das Synonym Inputgröße manchmal benutzt.} mit $\lVert n \rVert$ bezeichnet.   
 
 \begin{definition}
 Für eine natürliche Zahl $n \geq 1$, ist $\lVert n \rVert= \lceil log(n + 1) \rceil$, wobei $log \, n = log_{2} n$
@@ -797,7 +795,7 @@ Eine Funktion $f(n)$ ist in $ O^{\sim}(t(n))$, wenn
 \begin{equation}
     O^{\sim}(log^k n) = O(log^k n) \cdot poly(log \, log^k n) = O(log^k n) \cdot poly(log( k \cdot log n)) = O(log^{k+\epsilon}n)
 \end{equation}
-Für alle $\epsilon > 0$, wenn der Algorithmus eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann ist die Laufzeit des Algorithmus  polynomiell von $log \, n$ abhängig. Das heißt der Algorithmus hat eine polynomielle Laufzeit.
+Für alle $\epsilon > 0$, wenn ein Primzahltest eine Laufzeit von $O^{\sim}(log^k n)$ hat. Dann ist die Laufzeit dieses Primzahltests polynomiell von $log \, n$ abhängig. Das heißt dieser Primzahltest hat eine polynomielle Laufzeit.
 \end{definition}
 
 \smallskip
@@ -831,7 +829,7 @@ Sei (M,$\circ$,1) ein Monoid\footnote{Ein Monoid ist eine algebraische Struktur,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AKS ALGORITHMUS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der AKS-Primzahltest}
 \subsection{Grundidee des Algorithmus}
-Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz (\ref{Th_2}) für Polynome.
+Die Idee des Algorithmus ist basiert auf  Verallgemeinerung des kleineren fermatschen Satz (Theorem \ref{Th_2}) für Polynome und beruht auf folgende Identität.
 \begin{flushleft}
 \begin{lemma}\label{hauptlemma}
 seien $a,n \in \mathbb{N}$ mit a < n und teilerfremd(Def. \ref{Df_2}), dann ist n genau dann eine Primzahl, wenn \newline
@@ -860,7 +858,7 @@ Der Koeffizient von $X^q$ sieht wie folgt aus:\newline\smallskip
 Im Nenner lässt sich $q!$ als $q \cdot (q-1)!$ schreiben und im Zähler lässt sich $n$ als $q^k\cdot m$ schreiben, $m \in \mathbb{Z}_{+}$. Das $q$ im Nenner hebt sich mit einem der $q$ Werte im Zähler auf. Der resultierende Term ist daher nicht durch $q^k$ teilbar, außerdem sind $q^k$ und $a^{n-k}$ teilerfremd. Daraus folgt $(X + a)^n \neq X^n + a $(mod $n$).
 \end{proof}
 
-Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in polynomiellzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^{k \, mod \, r}$ ersetzen. Das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten. Die Rechenkosten bleiben im polynomiellen Bereich, solange $r$ höchstens $O ((log n)^c), \, c > 0$ ist. Daher ist das Hauptziel jetzt ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
+Es wäre nun möglich anhand dieser Identität einen Primzahltest für eine Zahl $n$ zu realisieren. Dies wäre jedoch sehr ineffizient, da im Polynom die Auswertung von $n$ Koeffizienten nötig ist. Mit anderen Worten der Algorithmus braucht $\Omega(n)$ um zu entscheiden, ob die Zahl $n$ eine Primzahl ist oder nicht, und das ist nicht in Polynomialzeit realisierbar.\newline\newline Die Idee von AKS ist nicht nur modulo $n$, sondern auch modulo ein Polynom ($X^r -1$) zu nehmen. Das bedeutet, dass wir nicht nur alle Koeffizienten $c_{k}$ durch $c_{k}$ modulo $n$ ersetzen, sondern auch jedes $X^k$ durch $X^{k \, mod \, r}$ ersetzen. Das heißt wir arbeiten immer mit Polynomen vom Grad weniger als $r$. Dabei wird $r$ so gewählt, dass die Anzahl an Berechnungen kleiner als bei (\ref{eq:1}) ist. Außerdem hat der Rest von $(X + a)^n$(mod $ n, X^r - 1$) nur $ r + 1$ Koeffizienten. Die Rechenkosten bleiben im polynomiellen Bereich, solange $r$ höchstens $O ((log n)^c), \, c > 0$ ist. Daher ist das Hauptziel jetzt ein entsprechend kleines $r$ zu wählen und zu testen, ob die Gleichung:\newline\newline
 \begin{equation}\label{eq:2}
     \centerline{$(X + a)^n = X^n + a $(mod $X^r - 1, n$)}
 \end{equation}
@@ -890,7 +888,7 @@ Wie schon angedeutet, es gibt zusammengesetzte Zahlen für die
 \end{equation}
 erfüllt ist. Das heißt es gibt zusammengesetzte Zahlen für die man ohne weitere Bedingungen an $r$ und $a$ kein AKS-Zertifikat finden kann. Hier stellt sich die Frage, ob man Bedingungen finden kann. Wenn sie für ein $r$(ein geeignetes $r$) in $O(log^k n), \, k > 0$ und $ 0 < a < \ell$ erfüllt sind, dann ist $n$ sicherlich eine Primzahl.
 
-Wir nehmen nun an, dass $n$ eine Potenz einer Primzahl $p$ ist($p$ ist ein Primfaktor von $n$)\footnote{Hier ist $n$ natürlich auch eine zusammengesetzte Zahl für die die Kongruenz \ref{iden-aks} wahr ist.}. Danach wird versucht, Bedingungen für $a, r,p,n$ zu finden, um $n$ zu zwingen, eine Potenz zu sein. Wenn $n$ dann keine Potenz ist, gilt $n = p^1$(wenn $n$ schon eine Potenz ist, dann ist $n$ trivialerweise zusammengesetzt). Das heißt $n$ ist eine Primzahl.
+Wir nehmen nun an, dass $n$ eine Potenz einer Primzahl $p$ ist($p$ ist ein Primfaktor von $n$)\footnote{Hier ist $n$ natürlich auch eine zusammengesetzte Zahl für die die Kongruenz \ref{iden-aks} wahr ist.}. Danach wird versucht, Bedingungen für $a, r,p,n$ zu finden, um $n$ zu zwingen, eine Potenz zu sein. Wenn $n$ dann keine Potenz ist, gilt $n = p^1$(wenn $n$ schon eine Potenz ist, dann ist $n$ trivialerweise zusammengesetzt). 
 
 \subsubsection{Introspektivität}
 Für die Bedingungen für $r$ und $a$ wird zuerst die Introspektivität Eigenschaft definiert.
@@ -969,9 +967,12 @@ Für eine Primzahl $p$, gilt (nach Theorem \ref{Th_2}) $a^p = a \, (mod \, p)$
 $\Rightarrow \, X^{\frac{n}{p}} + a = (X + a)^{\frac{n}{p}} (\, mod \, X^r - 1,p). \; \, \forall\,a, \, 0 \leq a \leq \ell.$
 \end{proof}
 
-Nun Kann man die Bedingungen für $r$ und $r$ definieren. 
+Nun Kann man die Bedingungen für $r$ und $a$ definieren. 
 
 \subsubsection{AKS-Bedingungen}
+In diesem Abschnitt werden die erforderlichen Einschränkungen für $r$ und $a$ hergeleitet. Mit Hilfe dieser Einschränkungen wird das sogenannte AKS-Theorem formuliert. Auf Diesem Theorem baut der AKS-Primzahltest auf.
+
+Sei $n$ eine zusammengesetzte Zahl mit dem Primteiler $p$. 
 
 Zuerst werden folgende Mengen definiert:\newline\newline
 \begin{equation}\label{I_Set}
@@ -1002,7 +1003,7 @@ Jetzt, dass wir die obigen Mengen definiert haben, ist es möglich Bedingungen f
 p \mid n, p \in \mathbb{P}    
 \end{equation}
 
-Die erste endliche Teilmenge ist Menge mit $i,j < k$ für ein $k \in \mathbb{N}$.
+Die erste endliche Teilmenge von $\mathcal{I}$ ist Menge mit $i,j < k$ für ein $k \in \mathbb{N}$.
 
 Sei $\mathcal{I}_k= \{ p^{i} \cdot (\frac{n}{p})^j \mid 0 \leq i,j < k\} \subseteq \mathcal{I}$.\newline
 
@@ -1050,7 +1051,7 @@ Nun wird auch eine zweite Teilmenge von $\mathcal{P}$ definiert, dies ist die Te
 
 Sei $\mathbb{Z}_p$ der Ring der ganzen Zahlen modulo $p$ (Def. \ref{ring_mod}). Da $p$ eine Primzahl ist($p$ ist ein Primfaktor von $n$), ist $\mathbb{Z}_p$ in dem Fall sogar ein endlicher Körper $\mathbb{K}_p$(Def. \ref{field_axioms}) der Ordnung $p$. Betrachte den Polynomring $\mathbb{K}_p[X]$ (Def. \ref{polynom-ring}). Für ein Polynom $q(X) \in \mathbb{K}_p[X]$ ist $\mathbb{K}_p[X]/q(X)$ ein Körper, wenn $q(X)$ irreduzibel in $\mathbb{K}_p[X]$ ist(Theorem \ref{irred-poly-over-ext-fields}).
 
-Das heißt, es wird  ein irreduzibels Polynom in $\mathbb{K}_p[X]/q(X)$ gesucht. Aus der Algebra ist aber bekannt, dass für das Polynom $X^r - 1$\footnote{Das ist das Polynom in der oberen Kongruenz \ref{iden-aks}} hat das $r$-te zyklotomische Polynom $\Phi_{r}(X)$ diese Eigenschaft, falls $(r,p) = 1$.
+Das heißt, es wird  ein irreduzibeles Polynom in $\mathbb{K}_p[X]/q(X)$ gesucht. Aus der Algebra ist aber bekannt, dass für das Polynom $X^r - 1$\footnote{Das ist das Polynom in der oberen Kongruenz \ref{iden-aks}} hat das $r$-te zyklotomische Polynom $\Phi_{r}(X)$ diese Eigenschaft, falls $(r,p) = 1$.
 
 \begin{lemma}\label{cyc_ov_fields}
 \textbf{Irreduzible Teiler zyklotomischer Polynome}\newline
@@ -1103,7 +1104,7 @@ Mit diesen Bedingungen kann man nun eine untere Schranke für $\mathcal{G}$ find
 Diese Bedingungen können in einem Lemma zusammengefasst werden.
 
 \begin{lemma}\label{second-group-first-bound}
-Sei $n$ eine Potenz von $p$. Des Weiteren seien $\mathcal{P}_{d} = \{ f \in \mathcal{P} \mid deg f < d \}$, $\mathcal{J} = \{ x \, mod \, r \mid x \in I\}, \mathcal{G} = \{f \; (mod \, h(X), p) \mid f \in \mathcal{P} \}$, mit $|\mathcal{J}| = t \geq d = |\mathcal{P}_{d}|, o_{r}(p) > 1$ und $\ell= max(\{a \mid (a,n)= 1\}) \geq d$, dann gilt:
+Sei $n$ eine Potenz von $p$. Des Weiteren seien $\mathcal{P}_{d} = \{ f \in \mathcal{P} \mid deg f < d \}$, $\mathcal{J} = \{ x \, mod \, r \mid x \in I\}, \mathcal{G} = \{f \; (mod \, h(X), p) \mid f \in \mathcal{P} \}$, mit $|\mathcal{J}| = t \geq d = |\mathcal{P}_{d}|, o_{r}(p) > 1$ und $\ell= max \{a \mid (a,n)= 1\} \geq d$, dann gilt:
 \begin{enumerate}
 \item $|\mathcal{G}| > 2^d$.\newline
 
@@ -1126,14 +1127,14 @@ Das bedeutet, dass $g(X) \in \mathcal{G}$ eine Wurzel von $Q(Y) = Y^{m_1} - Y^{m
 
 Das bedeutet, wenn $n$ keine Potenz von $p$ ist, gilt $|\mathcal{G}| \leq n^{s - 1}$ und wenn $n$ eine Potenz ist, gilt $|\mathcal{G}| > n^{n - 1}$.
 
-Nach Theorem \ref{second-group-first-bound} gilt $|\mathcal{G}| \geq 2^d, d \leq t$. Das heißt mit einer geeigneten Wahl von $d,s$, sodass $2^d > n^{s - 1}$, dann folgt $n = p^m$.\footnote{$ \; 2^d > n^{s - 1} \, \Rightarrow |\mathcal{G}| > n^{s - 1} \Rightarrow \, n = p^m ,m \in \mathbb{N}$\cite{akalin}.} Zuerst kann man $log$ von $2^d > n^{s - 1}$ nehmen. Daraus folgt $d > (s - 1) \cdot log \, n$. Da $d \leq t$, gilt auch, dass $t > d > (s - 1) \cdot log \, n$. Aus dieser Ungleichung folgt $s < \frac{t}{log \, n} + 1$. $s$ ist nach Voraussetzung größer als $\sqrt{t}$, folglich $\sqrt{t} < \frac{t}{log \, n} + 1 $. Nach Umstellung gilt $ log \, n < \frac{t}{\sqrt{t} - 1}$. Außerdem gilt auch $\sqrt{t} <  \frac{t}{\sqrt{t} - 1}$\footnote{$\frac{t}{\sqrt{t} - 1} = \frac{\sqrt{t} \cdot \sqrt{t}}{\sqrt{t} - 1} > \frac{(\sqrt{t} - 1) \cdot \sqrt{t}}{\sqrt{t} - 1} > \sqrt{t}$.} und daher ist es ausreichend zu fordern, dass $t > log^2 n$\footnote{$\, t > log \, n \cdot (\sqrt{t} - 1) > log \, n \cdot \sqrt{t} \Rightarrow t > log^2 n$.}, damit $n$ eine Potenz sein kann. $s$ ist eine natürliche Zahl, das heißt $s = \lfloor t \rfloor + 1$\footnote{$\; s > \sqrt{t}$ ist nicht zwangsweise eine natürliche Zahl.}, folglich gilt:
+Nach Theorem \ref{second-group-first-bound} gilt $|\mathcal{G}| \geq 2^d, d \leq t$. Das heißt mit einer geeigneten Wahl von $d,s$, sodass $2^d > n^{s - 1}$, dann folgt $n = p^m$.\footnote{$ \; 2^d > n^{s - 1} \, \Rightarrow |\mathcal{G}| > n^{s - 1} \Rightarrow \, n = p^m ,m \in \mathbb{N}$\cite{akalin}.} Zuerst kann man $log$ von $2^d > n^{s - 1}$ nehmen. Daraus folgt $d > (s - 1) \cdot log \, n$. Da $d \leq t$, gilt auch, dass $t > d > (s - 1) \cdot log \, n$. Aus dieser Ungleichung folgt $s < \frac{t}{log \, n} + 1$. $s$ ist nach Voraussetzung größer als $\sqrt{t}$, folglich $\sqrt{t} < \frac{t}{log \, n} + 1 $. Nach Umstellung gilt $ log \, n < \frac{t}{\sqrt{t} - 1}$. Außerdem gilt auch $\sqrt{t} <  \frac{t}{\sqrt{t} - 1}$\footnote{$\frac{t}{\sqrt{t} - 1} = \frac{\sqrt{t} \cdot \sqrt{t}}{\sqrt{t} - 1} > \frac{(\sqrt{t} - 1) \cdot \sqrt{t}}{\sqrt{t} - 1} > \sqrt{t}$.} und daher ist es ausreichend zu fordern, dass $t > log^2 n$\footnote{$\, t > log \, n \cdot (\sqrt{t} - 1) > log \, n \cdot \sqrt{t} \Rightarrow t > log^2 n$.}, damit $n$ eine Potenz sein kann. $s$ ist eine natürliche Zahl, das heißt $s = \lfloor t \rfloor + 1$\footnote{$\; \sqrt{t}$ ist nicht zwangsweise eine natürliche Zahl.}, folglich gilt:
 \begin{align*}
     d > (s - 1) \cdot log \, n = (\sqrt{t} + 1 - 1) \cdot log \, n = \sqrt{t} \cdot log \, n. 
 \end{align*}
 
 Das Ziel ist eine Potenzzahl zu erzeugen. $n$ ist eine Potenz, wenn $|\mathcal{G}| > n^{s - 1}$. Alle bisherige Bedingungen können ausschließlich mit $n,r$ ausgedrückt werden. Dies sind:
 \begin{align*}
-    \ell > d > \sqrt{t} \cdot log \, n. \; \;  (Lemma \ref{lemma-cond-3.5}).
+    \ell > d > \sqrt{t} \cdot log \, n. \; \;  (Lemma \,  \ref{lemma-cond-3.5}).
 \end{align*}
 und 
 \begin{align*}
@@ -1145,7 +1146,7 @@ Die Menge $\mathcal{J} = \{ x \, mod \, r \mid x \in \mathcal{I} \}$, mit $|\mat
 \begin{align*}
     |\mathbb{Z}_r^{*}| = \phi(r) > |\mathcal{J}| = t. 
 \end{align*}
-Daraus folgt $\ell \geq d > \sqrt{t} log \, n$, da $\phi(r)$ das Maximum von $t$ ist.
+Daraus folgt $\ell \geq d > \sqrt{\phi(r)} log \, n$, da $\phi(r)$ das Maximum von $t$ ist.
 
 Schließlich kann man diese Resultate in einem Satz zusammenfassen. Das Ziel war eine Bedingung für $n,r,a$ und $p$ zu finden, sodass $n$ eine Potenz von $p$ ist. Es wurde gezeigt, dass folgende drei Bedingungen dafür erforderlich sind:
 \begin{enumerate}
@@ -1166,7 +1167,7 @@ Sei $n \geq 2$ mit $(n,r) = 1, o_{r}(n) > log^2 n ,\ell > \lfloor \sqrt{\phi(r)}
 Für alle $0 \leq a \leq \ell$ erfüllt, dann ist $n$ eine Potenz von $p$.
 \end{theorem}
 
-Mithilfe von Theorem \ref{aks-main-theorem} kann jetzt ein Algorithmus entwickelt werden, sodass für ein geeignetes $r$($o_{r}(n) > log^2 n$) nur $\lfloor \phi(r) log \, n \rfloor$ verschiedene $a$ Werte im Polynom getestet werden, da Zahlen mit einem Primfaktor $> \lfloor \phi(r) log \, n \rfloor$  Potenzen sind. Das heißt, dass die Anzahl an zu testenden $a$ Werte durch ein Polynom von $log \, n$ abhängig ist. Es bleibt nur zu zeigen, dass das $r$ auch durch in Polynom von $log \, n$ abhängig ist und dies wird im fünften Kapitel gezeigt.  
+Mithilfe von Theorem \ref{aks-main-theorem} kann jetzt ein Algorithmus entwickelt werden, sodass für ein geeignetes $r$ ($o_{r}(n) > log^2 n$) nur $\lfloor \phi(r) log \, n \rfloor$ verschiedene $a$ Werte im Polynom getestet werden, da Zahlen mit einem Primfaktor $> \lfloor \phi(r) log \, n \rfloor$  Primzahlpotenzen sind. Das heißt, dass die Anzahl an zu testenden $a$ Werte durch ein Polynom von $log \, n$ abhängig ist. Es bleibt nur zu zeigen, dass das $r$ auch durch in Polynom von $log \, n$ abhängig ist und dies wird im vierten Kapitel gezeigt.  
 
 
 
@@ -1208,7 +1209,7 @@ Mithilfe von Theorem \ref{aks-main-theorem} kann jetzt ein Algorithmus entwickel
 \caption{AKS-Primzahltest}
 \end{algorithm}
 
-\textbf{Beschreibung des Algorithmus}\newline
+\textbf{Beschreibung des Algorithmus:}\newline
 
 \textbf{Schritt 1: }Im ersten Schritt sucht der Algorithmus zwei Zahlen $a,b \in \mathbb{N}, \, b > 1$, sodass $n = a^b$. Wenn solche Zahlen existieren, gibt er COMPOSITE zurück.\footnote{$\,$ Primzahlen lassen sich nicht als eine Potenz von einer anderen Zahl darstellen.}  
 
@@ -1295,20 +1296,19 @@ Der 5. Schritt des Algorithmus überprüft $\ell$ Gleichungen. Nach Voraussetzun
 
 
 
-Hier werden die Mengen $\mathcal{I}$ und $\mathcal{P}$ aus dem letzten Abschnitt gebraucht.\newline
+Hier werden die Mengen $\mathcal{I}$ und $\mathcal{P}$ aus dem letzten Abschnitt wieder gebraucht.\newline
 
-Zu Erinnerung: $\mathcal{I} := \{ p^{i} \cdot (\frac{n}{p})^j \mid i,j > 0 \}$ und $\mathcal{P} := := \{ \prod_{a = 0}^{\ell} (X + a)^{e_{a}} \mid e_{a} \geq 0 \}$.
+Zu Erinnerung: $\mathcal{I} := \{ p^{i} \cdot (\frac{n}{p})^j \mid i,j > 0 \}$ und $\mathcal{P} := \{ \prod_{a = 0}^{\ell} (X + a)^{e_{a}} \mid e_{a} \geq 0 \}$.
 Aufbauend auf diese Mengen werden zwei Gruppen definiert, die für den Beweis von Bedeutung sind. Das Ziel ist eine Abschätzung für diese Gruppen zu machen, und dann dadurch einen Widerspruch herzuleiten.\newline\newline
 
-Zuerst wird die Gruppe $\mathcal{J}$ aus dem letzten Abschnitt der Vollständigkeit halber nochmal definiert und es werden darüber hinaus Eigenschaften der Gruppe $\mathcal{J}$ explizit definiert. 
+Beide Gruppen wurden schon im vorherigen Abschnitt definiert, aber sie werden hier der Vollständigkeit halber nochmal definiert und es werden darüber hinaus Eigenschaften für die beiden Gruppen explizit definiert.
 
 
 \begin{definition}\label{first_group}
 \textbf{Die multiplikative Gruppe $\mathcal{J} \subseteq \mathbb{Z}_{n}^{*}$}\newline
-Die erste Gruppe $\mathcal{J}$ sei die Gruppe aller Restklassen in $\mathcal{I}$ modulo $r$, das heißt $\mathcal{J} = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist $\mathcal{J}$ eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$.\footnote{$\; {Z}_{r}^{*} = \{ x \in Z_{r} \mid (x,r) =1 \}$.} Sei die Kardinalität im weiteren $ | \mathcal{J} | = t $. $\mathcal{J}$ wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\footnote{$ \,$Da $n \in \mathcal{J}$ mit Ordnung $> log^2 $, folgt $t = |\mathcal{J}| > log^2n$.}\newline\newline
+Die erste Gruppe $\mathcal{J}$ sei die Gruppe aller Restklassen in $\mathcal{I}$ modulo $r$, das heißt $\mathcal{J} = \{(\frac{n}{p})^i \cdot p^j ( mod \, r) \mid i,j \geq 0 \}$. Da $(n,r) = (p,r) = 1 $ ist $\mathcal{J}$ eine multiplikative Untergruppe von $\mathbb{Z}_{r}^{*}$.\footnote{$\; {Z}_{r}^{*} = \{ x \in Z_{r} \mid (x,r) =1 \}$.} Sei die Kardinalität im weiteren $ | \mathcal{J} | = t $. $\mathcal{J}$ wird von $n$ und $p$ modulo $r$ erzeugt, und da $o_{r}(n) > log^2 n$, gilt auch $t > log^2 n$.\footnote{$ \,$Da $n \in \mathcal{J}$ mit Ordnung $> log^2 $, folgt $t = |\mathcal{J}| > log^2n$.}\newline
 \end{definition}
 
-Die zweite Gruppe wurde auch schon im letzten Kapitel definiert. Dies ist die Gruppe $\mathcal{G}$. Sie wird aber hier nochmal definiert, damit man den Überblick nicht verliert. 
 
 \begin{definition}\label{second-group}
 \textbf{Die multiplikative Gruppe $\mathcal{G}$}\newline
@@ -1360,7 +1360,7 @@ Man betrachtet zuerst folgende Teilmenge von $\mathcal{I}$:
 \begin{equation}
     \widetilde{\mathcal{I}} = \{ (\frac{n}{p})^i p^j \mid 0 \leq i,j \leq \sqrt{t}\} \subseteq \mathcal{I}.
 \end{equation}
-Wenn $n$ keine Potenz von $p$ ist, sind alle $p^j$ und $(\frac{n}{p})^i$ $\forall \, 1 <  i \neq j < \sqrt{t}$ verschieden. Das heißt es gilt $|\widetilde{\mathcal{I}}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |\mathcal{J}|$, da es $ \lfloor \sqrt{t} \rfloor + 1$  mögliche Werte für jeweils $i$ und $j$ gibt. Deshalb müssen (nach Theorem \ref{pigeonhole}) mindestens zwei Elemente $m_1,m_2 \in \widetilde{\mathcal{I}}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A sei $m_1 > m_2 $, dann gilt:\newline
+Wenn $n$ keine Potenz von $p$ ist, sind alle $p^j$ und $(\frac{n}{p})^i$ $\forall \, 1 <  i \neq j < \sqrt{t}$ verschieden. Das heißt es gilt $|\widetilde{\mathcal{I}}| = (\lfloor \sqrt{t} \rfloor + 1)^2 > t = |\mathcal{J}|$\footnote{ Da es $ \lfloor \sqrt{t} \rfloor + 1$  mögliche Werte für jeweils $i$ und $j$ gibt}. Deshalb müssen (nach Theorem \ref{pigeonhole}) mindestens zwei Elemente $m_1,m_2 \in \widetilde{\mathcal{I}}$ existieren, sodass $m_1 = m_2 \, mod \, r$. O.B.d.A sei $m_1 > m_2 $, dann gilt:\newline
 \begin{align*}
     X^{m_1} = X^{m_2} \, (mod \, X^r - 1).
 \end{align*}
@@ -1389,7 +1389,7 @@ Ist die Ausgabe PRIME, dann ist $n$ eine Primzahl
 \smallskip
 
 \begin{proof}
-Nach Voraussetzung ist die Ausgabe PRIME. Nach Lemma \ref{lemma47} gilt für $t = |\mathcal{J}|$, und $\ell = \lfloor \sqrt{\phi(r)} log n \rfloor$ das folgende:\newline\newline
+Nach Lemma \ref{lemma47} gilt für $t = |\mathcal{J}|$, und $\ell = \lfloor \sqrt{\phi(r)} \, log \, n \rfloor$ das folgende:\newline\newline
 \begin{align*}
 |\mathcal{G}| & \geq {t + \ell \choose t - 1} \\
 \\
@@ -1418,13 +1418,12 @@ Aus Theorem \ref{hin_rich} und Theorem \ref{rueck_rich} folgt der Hauptsatz der 
 \newpage
 \section{Laufzeitanalyse}
 
-In diesem Kapitel wird die Laufzeit des AKS-Algorithmus untersucht und experimentell evaluiert. Aber Bevor man mit der eigentlichen Laufzeitanalyse beginnt, muss man zeigen, dass das geeignete $r$ mit $o_{r}(n) > log^2 n$ im zweiten Schritt des Algorithmus existiert und durch eine Polynom von $log \, n$ beschränkt ist.
+In diesem Kapitel wird die Laufzeit des AKS-Algorithmus untersucht. Aber Bevor man mit der eigentlichen Laufzeitanalyse beginnt, muss man zeigen, dass das geeignete $r$ mit $o_{r}(n) > log^2 n$ im zweiten Schritt des Algorithmus existiert und durch ein Polynom von $log \, n$ beschränkt ist.
 
 \subsection{Abschätzung von $r$}
-In diesem Abschnitt wird der Existenz Beweis für das geeignete $r$ durchgeführt.
+In diesem Abschnitt wird der Existenzbeweis für das geeignete $r$ durchgeführt.
 
-Für diesen Teil ist eine Vorarbeit nötig. Zuerst wird eine obere Schranke für das geeignete $r$ bestimmt. Hierzu benötigt man das folgende Lemma über das kleinste gemeinsame Vielfaches von $n$ Zahlen\footnote{Der Beweis basiert auf Argumentationen in \cite{aks-aachen} und \cite{nair}}.
-
+Hierzu benötigt man zuerst folgendes Lemma über das kleinste gemeinsame Vielfaches von $n$ Zahlen\footnote{Der Beweis basiert auf Argumentationen in \cite{aks-aachen} und \cite{nair}}.
 
 \begin{lemma}\label{lemma_1}
 Für $n \geq 7$ gilt:\newline
@@ -1628,11 +1627,12 @@ Im fünften Schritt des Algorithmus werden $\ell = \lfloor \sqrt{\phi(n)} log \,
     &=O^{\sim}(log^{21/2}n) = O^{\sim}( \lVert n \rVert^{21/2}).
 \end{align*}
 
-Die Laufzeit des fünften Schritts ist größer als alle anderen. folglich gilt, dass die asymptotische Laufzeit des Algorithmus $O^{\sim}(log^{21/2}n) = O^{\sim}( \lVert n \rVert^{21/2}) = O^{\sim}(\lVert n \rVert^{10.5})$ ist.\newline
+Die Laufzeit des fünften Schritts ist größer als alle verkommenden Laufzeiten. Daher ist die asymptotische Laufzeit des Algorithmus $O^{\sim}(log^{21/2}n) = O^{\sim}( \lVert n \rVert^{21/2}) = O^{\sim}(\lVert n \rVert^{10.5})$.\newline
+
 \end{proof}
 
 \subsection{Verbesserungen der Laufzeit}
-In diesem Abschnitt werden Verbesserungen der Laufzeit des AKS-Algorithmus diskutiert. Die Laufzeitverbesserung hängt von der Abschätzung für das passende $r$ im zweiten Schritt des Algorithmus ab, kann man eine kleinere obere Schranke für das Finden des geeigneten $r$ bestimmen, dann lässt sich die gesamte Zeitkomplexität des Algorithmus verringern. Es gibt zwei Vermutungen, die es nahelegen, dass es für das geeignete $r$ tatsächlich eine obere Schranke gibt. Diese Vermutungen sind aber noch nicht bewiesen.
+In diesem Abschnitt werden Verbesserungen der Laufzeit des AKS-Algorithmus diskutiert. Die Laufzeitverbesserung hängt von der Abschätzung für das passende $r$ im zweiten Schritt des Algorithmus ab. Kann man eine kleinere obere Schranke für das Finden des geeigneten $r$ bestimmen, dann lässt sich die gesamte Zeitkomplexität des Algorithmus verringern. Es gibt zwei Vermutungen, die es nahelegen, dass es für das geeignete $r$ tatsächlich eine obere Schranke gibt. Diese Vermutungen sind aber noch nicht bewiesen.
 
 \begin{conj}[\textbf{Artins Vermutung}]\label{artin_conj}
 Sei $n \in \mathbb{N}$ beliebig aber keine Quadratzahl. Dann gilt, dass die Anzahl der Primzahlen $q \leq m$ mit $o_{q}(n) = q - 1$ asymptotisch gleich $A(n) \cdot \frac{m}{ln(n)}$ ist. Wobei $A(n) > 0.35$ für die Artin-Konstante steht und $ln$ der natürliche Logarithmus(Basis $e$) ist.
@@ -1640,7 +1640,7 @@ Sei $n \in \mathbb{N}$ beliebig aber keine Quadratzahl. Dann gilt, dass die Anza
 
 Es wurden Fortschritte zum Beweis dieser Vermutung gemacht,beispielsweise in \cite{artin}, oder  \cite{artinSecond}. Sollte die erweiterte Riemannsche Hypothese richtig sein, dann ist Vermutung \ref{artin_conj} auch richtig.
 
-Die zweite Vermutung beruht auf folgende Definition.
+Die zweite Vermutung beruht auf folgender Definition.
 \begin{definition}
 Sei $p$ eine Primzahl. $p$ heißt Sophie-Germain Primzahl, wenn $2p + 1$ auch eine Primzahl ist. $2p + 1$ heißt in dem Fall eine sichere Primzahl(engl. safe prime).
 \end{definition}
@@ -1649,7 +1649,7 @@ Sei $p$ eine Primzahl. $p$ heißt Sophie-Germain Primzahl, wenn $2p + 1$ auch ei
 Die Anzahl der Sophie-Germain-Primzahlen bis einer Zahl $m$ lässt sich asymptotisch durch $\frac{2C_{2}m}{ln^2m}$ abschätzen, wobei $C_2$ die Zwillingskonstante ist und ungefähr 0.66 beträgt.
 \end{conj}
 
-Gemäß Vermutung \ref{sophie-ger} existiert für eine passende Konstante $c$ mindestens $log^2n$ Sophie-Germain Primzahlen zwischen $8 log^2 n$ und $c log^2n(log \, log \, n)^2$. Für eine Primzahl $p$ und ihre sichere Primzahl $q = 2p + 1$ gilt, dass $o_{q}(n) \leq  2$ oder $o_{q}(n) \geq (q - 1)/2$, da $\mathbb{K}_{p}^{*}$ die Ordnung $q - 1 = 2p$ hat. Wenn $o_{q}(n) \leq 2$ gilt, dann gilt $q \mid n^2 - 1$.\footnote{$ \, o_{q}(n) = 1 \Rightarrow q \mid (n - 1)$ und wenn $o_{q}(n) = 2 \Rightarrow q \mid (n^2 - 1)$. Das heißt $q$ teilt $(n^2 - 1) = (n - 1) \cdot (n + 1)$ in beiden Fällen.} Daraus folgt, dass die Anzahl der $q$ Werter durch $O(log \, n)$ beschränkt ist. Nach Vermutung \ref{sophie-ger} existiert daher eine Primzahl $r = O^{\sim}(log^2 n)$, sodass $o_{r}(n) > log^2n$. 
+Gemäß Vermutung \ref{sophie-ger} existiert für eine passende Konstante $c$ mindestens $log^2n$ Sophie-Germain Primzahlen zwischen $8 log^2 n$ und $c log^2n(log \, log \, n)^2$. Für eine Primzahl $p$ und ihre sichere Primzahl $q = 2p + 1$ gilt, dass $o_{q}(n) \leq  2$ oder $o_{q}(n) \geq (q - 1)/2$, da $\mathbb{K}_{p}^{*}$ die Ordnung $q - 1 = 2p$ hat. Wenn $o_{q}(n) \leq 2$ gilt, dann gilt $q \mid n^2 - 1$.\footnote{$ \, o_{q}(n) = 1 \Rightarrow q \mid (n - 1)$ und wenn $o_{q}(n) = 2 \Rightarrow q \mid (n^2 - 1)$. Das heißt $q$ teilt $(n^2 - 1) = (n - 1) \cdot (n + 1)$ in beiden Fällen.} Daraus folgt, dass die Anzahl der zu testenden $q$ Werte durch $O(log \, n)$ beschränkt ist. Nach Vermutung \ref{sophie-ger} existiert daher eine Primzahl $r = O^{\sim}(log^2 n)$, sodass $o_{r}(n) > log^2n$. 
 
 Aus beiden Vermutungen folgt eine bessere Abschätzung für $r$. Unter der Annahme, dass eine der Vermutungen ist, lässt sich die Zeitkomplexität des AKS-Algorithmus von $O^{\sim}(log^{21/2}n)$ auf $O^{\sim}(log^6n)$ reduzieren. Das geeignete $r$ kann auch ohne Vermutungen begrenzt werden. Fouvry hat in \cite{fouvry} ein Lemma vorgestellt, mit dem eine Laufzeit von $O^{\sim}(log^{7.5}n)$ erzielt werden kann. 
 
@@ -1662,7 +1662,7 @@ Es existiert ein $c > 0$ und ein $n_0$, sodass
 $\forall x \geq n_0$.
 \end{lemma}
 
-Nach den Berechnungen in \cite{baker-hartman} gilt das Lemma für $c \leq 0.6683$. Mit Hilfe von Lemma \ref{fovury-lemma} kann die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^{15/2}n)$ verbessert werden.
+Nach den Berechnungen in \cite{baker-hartman} ist das Lemma für $c \leq 0.6683$ erfüllt. Mit Hilfe von Lemma \ref{fovury-lemma} kann die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^{15/2}n)$ verbessert werden.
 
 \begin{theorem}
 Sei $n \in \mathbb{N}, \, n \geq 2$, dann ist die Laufzeit des AKS-Algorithmus $O^{\sim}(log^{15/2}n)$.
@@ -1674,7 +1674,7 @@ Gemäß Lemma \ref{fovury-lemma} kann man für ein $q$ mit $P(q - 1) > q^{ \frac
 
 Lenstra und Pomerance haben in \cite{lenstra-pomerance} eine modifizierte Version des AKS-Algorithmus veröffentlicht, die in $O^{\sim}(log^6 n)$ läuft. Der modifizierte Algorithmus von Lenstra und Pomerance hat eine ähnliche Form wie der AKS-Algorithmus, aber die Ringe in der modifizierten Version werden nicht von Einheitswurzeln erzeugt, sondern von gaußschen Perioden. Damit lässt sich die Laufzeit des AKS-Algorithmus, ohne auf unbewiesene Vermutungen zurückzugreifen, auf $O^{\sim}(log^6 n)$ verbessern.
 
-Eine weitere mögliche Verbesserung des AKS-Algorithmus wurde von einer   der Autoren des AKS-Algorithmus Agrawal vorgeschlagen, mit deren Hilfe die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^3n)$ verbessert werden kann. Seine Vermutung(bekannt als Agrawals Vermutung) beruht auf das Resultat in \cite{bhattc-pandey}.
+Eine weitere mögliche Verbesserung des AKS-Algorithmus wurde von einer   der Autoren des AKS-Algorithmus Agrawal vorgeschlagen, mit deren Hilfe die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^3n)$ verbessert werden kann. Seine Vermutung(bekannt als Agrawals Vermutung) beruht auf dam Resultat in \cite{bhattc-pandey}.
 
 \begin{conj}[\textbf{Agrawals Vermutung}]\label{agrawals-conj}
 Falls $r$ eine Primzahl ist und $n$ nicht teilt, dann gilt
@@ -1683,9 +1683,9 @@ Falls $r$ eine Primzahl ist und $n$ nicht teilt, dann gilt
 \end{equation}
 so ist entweder $n$ eine Primzahl oder $n^2 = 1 \,( mod \, r)$.
 \end{conj}
-Kayal und Saxena \cite{kayal-saxena} habe gezeigt, dass Vermutung \ref{agrawals-conj} für $r \leq 100$ und $n \leq 10^10$ gilt.
+Kayal und Saxena \cite{kayal-saxena} haben gezeigt, dass Vermutung \ref{agrawals-conj} für $r \leq 100$ und $n \leq 10^{10}$ wahr ist.
 
-Wenn Vermutung \ref{agrawals-conj} richtig wäre, dann kann die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^3 n)$verbessert werden. Jedoch haben heuristische Resultate von Lenstra und Pomerance darauf hingewiesen, dass Vermutung \ref{agrawals-conj} allgemein nicht gilt\cite{aks}. Daher bleibt die beste Laufzeit von dem AKS-Algorithmus $O^{\sim}(log^6n)$. Das heißt aber nicht, dass der AKS-Algorithmus schnell ist bzw. in der Praxis einsetzbar ist. Der AKS-Algorithmus braucht deutlich länger als viele bekannte probabilistische Primzahltests, um zu entscheiden, ob eine gegebene Zahl eine Primzahl ist oder nicht. Deswegen wird der AKS-Algorithmus nicht in der Praxis benutzt. 
+Wenn Vermutung \ref{agrawals-conj} allgemein richtig wäre, dann kann die Laufzeit des AKS-Algorithmus auf $O^{\sim}(log^3 n)$verbessert werden. Jedoch haben heuristische Resultate von Lenstra und Pomerance darauf hingewiesen, dass Vermutung \ref{agrawals-conj} allgemein nicht gilt\cite{aks}. Daher bleibt die beste Laufzeit von dem AKS-Algorithmus $O^{\sim}(log^6n)$. Das heißt aber nicht, dass der AKS-Algorithmus schnell ist bzw. in der Praxis einsetzbar ist. Der AKS-Algorithmus braucht deutlich länger als viele bekannte probabilistische Primzahltests, um zu entscheiden, ob eine gegebene Zahl eine Primzahl ist oder nicht. Deswegen wird der AKS-Algorithmus nicht in der Praxis benutzt. 
 
 Folgende Grafik illustriert, wie langsam der AKS-Algorithmus(dunkelgrün in der Grafik) im Vergleich zu anderen populären Primzahltests läuft\cite{comparison}.\footnote{Die Grafik wurde auf dem öffentlichen Forum StackExchange gefunden. Dort gibt es auch eine Erklärung für die Grafik.}
 
@@ -1698,59 +1698,31 @@ Folgende Grafik illustriert, wie langsam der AKS-Algorithmus(dunkelgrün in der 
 \newpage
 
 \section{Experimentelle Auswertung}
-In diesem Kapitel werden die Ergebnisse aus dem vierten Kapitel experimentell geprüft. Zuerst werden die Laufzeiten der im Kapitel 4 untersuchten Schritte des AKS-Algorithmus geprüft. Des Weiteren wird geprüft welchen Einfluss die Primalität einer Zahl auf die Laufzeit hat. Das heißt es wird auf die folgende Frage benatowertet:
-\begin{question}
-Was ist mit dem AKS-Algorithmus im Durchschnitt schneller zu bestimmen, ob eine Zahl Primzahl oder zusammengesetzt ist?
-\end{question}
+In diesem Kapitel werden die Hauptschritte des AKS-Algorithmus(Schritt 2 und 5) untersucht, es wird unter anderem gezeigt, dass die Laufzeit dieser Schritte polynomiell von der Eingabegröße abhängig ist. Der Fokus liegt hier nicht auf die Korrektheit dieser Schritte(Dies wurde schon im 4. Kapitel gezeigt) sondern auf die polynomielle Laufzeit. Schließlich wird der AKS-Primzahltest mit dem naiven Primzahltest verglichen\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.}. 
 
 Um dies illustrieren zu können, sind folgende Mengen erforderlich:
 \begin{enumerate}
-    \item \textbf{Menge 1:} Die Menge aller Zahlen, die auch Potenzen von anderen Zahlen sind. $M_1 = \{ n \in \mathbb{N} \mid n = a^b, \, a,b \in \mathbb{N}\}$.\newline
+    \item \textbf{Menge 1:} Die Menge der Primzahlpotenzen.\newline
+    $M_1 = \{ n \in \mathbb{N} \mid n = a^b, \, a \in \mathbb{P}, \, b \in \mathbb{N}\}$.\newline
     
     \item \textbf{Menge 2:} Die Menge aller Zahlen, die nicht aus der ersten Menge sind, aber zusammengesetzt sind. $M_2 = \{ n \in \mathbb{N}\setminus	 M_1 \mid 1 < (a,n) < n, \forall a \leq \sqrt{n} \}$.\newline
     
     \item \textbf{Menge 3:} Die Menge der Zahlen, die weder aus $M_1$ noch aus $M_2$, sodass die Gleichung \ref{eq:2}, die im 3 Kapitel beschrieben wurde, erfüllt ist. $M_3 = \{ n \in \mathbb{N} \setminus (M_1 \cup M_2) \mid \exists a,r : (X + a)^n \neq X^n + a \, (\, mod \, X^r - 1,p) \}$
 \end{enumerate}
 
-Zusätzlich wird der AKS-Algorithmus mit dem naiven Algorithmus\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.} verglichen, um zeigen, dass der AKS-Ansatz eine bessere asymptotische Laufzeit als der naive Ansatz hat.\newline
+
 
 \subsection{Implementierungsdetails}
-Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf meinem Github: \url{https://github.com/salman13s/Bachelorarbeit} zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.\footnote{$\,$ Alle Zeitmessungen wurden mit der Python-Funktion process\_time() gemessen.}\newline
+Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf meinem Github: \url{https://github.com/salman13s/Bachelorarbeit} zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.\footnote{$\,$ Alle Zeitmessungen wurden mit der Python-Funktion process\_time() gemessen.}
 
 \subsection{Experimentelle Ergebnisse}
 
-\subsubsection{Experiment 1: Potenz-Prüfung}
-Zunächst wird der Potenz-Prüfung Algorithmus untersucht. Eine Zahl ist eine Potenz, wenn sie aus der ersten Menge $M_1$ ist. Algorithmus \ref{appendix:potenz} kann in $O^{\sim}(log^3n)$ entscheiden, on eine gegebene Zahl eine Potenz ist oder nicht. In diesem Experiment wird gezeigt, dass der Potenz-Prüfung Algorithmus eine geringere Zeitkomplexität hat und auch eine polynomielle Laufzeit hat(das Wachstum ist nicht exponentiell). Dabei ist einerseits wichtig, sicherzustellen, dass der Algorithmus korrekt ist, andererseits soll der Algorithmus eine Entscheidung in Polynomialzeit für $\lVert n \rVert$ treffen.\footnote{. Hier entspricht $\lVert n \rVert$ die Bitlänge einer Zahl $n$.}.
-Die Zeitmessung wurde gem. der Beschreibung in Anhang (\ref{appendix:fast_expo}) durchgeführt. 
-\begin{table}[h!]
-\centering
-\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}| |p{1.5cm}| }
- \hline
- \multicolumn{5}{|c|}{\texttt{check\_perfect\_power}} \\
- \hline
- Zahl & Inputgröße &Ergebnis&Zeit in s & $n = a^b $\\
- \hline
- 32   & 6    &True&   $0.00007$& $2^5$\\
- 8199&   14  & False   &$0.000112$ & --\\
- 10019 &14 & False&  $0.000109$ & --\\
- 474552    &19 & True&  $0.000028$ & $78^3$\\
- 941192&   20  & True&$0.000026$ & $98^3$\\
- 1643032& 21  & True   &$0.00003$ & $118^3$\\
- 294024210& 29  & False&$0.000588$ & --\\
- \hline
-\end{tabular}
- \caption{Laufzeituntersuchung der Potenz-Prüfung (Algorithmus \ref{appendix:potenz})}
-\label{table:1}
-\end{table}
+\subsubsection{Experiment 1: Die Suche nach einem geeigneten $r$}
+Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem geeinigten $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird die Laufzeit des zweiten Schritt geprüft. Hierzu wird die Funktion \texttt{find\_r}(siehe Quellcode)benutzt.
 
+\textbf{\samll{Beschreibung des Experiments:}}\newline
+In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS-Primzahltest demonstriert werden. Hierzu werden verschiedene Inputgröße betrachtet. Für jede Inputgröße werden 100 zufällig ausgewählte Datenpunkte verwendet, danach wird für jeden Datenpunkt die Laufzeit gemessen. Dadurch erhält man mehrere verstreute Punkte im zweidimensional Raum. Nun wird ein Polynom an diese Punkte angepasst, diese Polynom soll (Gemäß Kapitel 4) Grad 7 haben.   
 
-Tabelle \ref{table:1} macht deutlich, wie schnell der Potenztest entscheiden kann, ob eine Zahl eine Potenz einer anderen ist oder nicht. Es ist auch offensichtlich, dass die Laufzeit nicht exponentiell steigt. Dabei ist es wichtig zu beachten, dass der Potenz-Prüfung Algorithmus nur 1 (True)oder 0 (False) ausgibt. Um die Korrektheit dieses Algorithmus zu prüfen, sollen für jede Potenzzahl $n$ zwei Zahlen $a,b$ gefunden, sodass $n = a^b$. Es gibt verschiedene Algorithmen, dass dies berechnen. Ein bekannter Algorithmus ist der Potenz Algorithmus von Sympy.\footnote{Für Sympy Algorithmus siehe:\url{https://docs.sympy.org/latest/modules/ntheory.html}}\newline\newline 
-
-
-\subsubsection{Experiment 2: Die Suche nach einem geeigneten $r$}
-Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem geeinigten $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird die Laufzeit des zweiten Schritt geprüft. Hierzu wird die Funktion \texttt{find\_r}(siehe Quellcode)benutzt. Dabei ist wieder die Korrektheit des Algorithmus wichtig, das bedeutet der Algorithmus findet immer ein $r$. Außerdem ist die Laufzeit dabei von Bedeutung. 
- 
-\newpage
 \begin{table}[h!]
 \centering
 \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
@@ -1772,13 +1744,20 @@ Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten S
 \label{table:2}
 \end{table}
 
-Obige Tabelle \ref{table:2} zeigt, dass das geeignete $r$ auch für große Zahlen relativ schnell bestimmt werden kann. Es ist jedoch auffällig, dass der Algorithmus mehr zeit gebraucht hat um das geeignete $r$ für eine 22 Bit Zahl (3875741) zu finden, als für eine 29 Bit Zahl (294024210). Das liegt aber daran, dass der Algorithmus bei 294024210 weniger Zahlen ausprobieren musste.
+Obige Tabelle \ref{table:2} zeigt, dass das geeignete $r$ auch für große Zahlen relativ schnell bestimmt werden kann. Es ist jedoch auffällig, dass der Algorithmus mehr zeit gebraucht hat um das geeignete $r$ für eine 22 Bit Zahl (3875741) zu finden, als für eine 29 Bit Zahl (294024210). Das liegt aber daran, dass der Algorithmus bei 294024210 weniger Zahlen ausprobieren musste. 
+
+\begin{figure}[h]
+\includegraphics[width=7.06cm]{plots/aks.png}
+\centering
+\caption{Laufzeit des AKS-Primzahltests}
+\label{aks-runtime}
+\end{figure}
 
 
 
 
-\subsubsection{Experiment 3: Laufzeit des AKS-Algorithmus}
-In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannte Primzahlen gemessen\footnote{$\,$ Für die Primzahlen siehe \url{http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php} und \url{https://en.wikipedia.org/wiki/Largest_known_prime_number}.}. Es wurden auch bekannte zusammengesetzte Zahlen eingegeben, um die Korrektheit des Algorithmus zu testen. Diese sind aber nicht in der Laufzeit enthalten, da sie den schlechtestmöglichen Fall nicht darstellen.
+\subsubsection{Experiment 2: Laufzeit des AKS-Algorithmus}
+In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannte Primzahlen gemessen\footnote{$\,$ Für die Primzahlen siehe \url{http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php} und \url{https://en.wikipedia.org/wiki/Largest_known_prime_number}.}. Es wurden auch bekannte zusammengesetzte Zahlen eingegeben, um die Korrektheit des AKS-Algorithmus zu testen.
 \begin{table}[h!]
 \centering
 \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
@@ -1805,7 +1784,7 @@ In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannt
 \label{table:3}
 \end{table}
 
-Man kann nun anhand der obigen Tabelle eine Grafik plotten, um die Steigerung der Laufzeit zu verdeutlichen. 
+Man kann nun anhand der Primzahlen der obigen Tabelle eine Grafik plotten, um die Steigerung der Laufzeit zu verdeutlichen. 
 
 \begin{figure}[h]
 \includegraphics[width=7.06cm]{plots/aks.png}
@@ -1817,12 +1796,11 @@ Man kann nun anhand der obigen Tabelle eine Grafik plotten, um die Steigerung de
 
 
 % TODO: rewrite the whole passage !!
-Tabelle \ref{table:3} und Abbildung \ref{aks-runtime} zeigen deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn die Eingabegröße größer wird. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Potenzen sind. Ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für 147763360000 hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das ist wesentlich weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.
+Tabelle \ref{table:3} und Abbildung \ref{aks-runtime} zeigen deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn die Eingabegröße größer wird. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Primzahlpotenzen sind. Ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für diese Zahl hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das ist wesentlich weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.
 
-Aus dieser Beobachtung kann man nun auf die im Einleitung dieses Kapitels gestellte Frage beantworten. Der AKS-Algorithmus liefert die schnellste Antwort(ja oder nein), wenn die Zahl aus der Menge $M_1$ ist. Das liegt daran, dass solche Zahlen im ersten Schritt identifiziert werden, das heißt in $O(log^3 n)$. Es gibt jedoch zusammengesetzte Zahlen, die, im dritten(Zahlen aus $M_2$) oder im fünften Schritt(Zahlen aus $M_3$) identifiziert werden. Für diese Zahlen ist der maximale Aufwand $O^{\sim}(log^{21/2}n)$.\footnote{$\,$ Diese sind Zahlen, die in der Schleife des 5. Schritts identifiziert werden.} Während Primzahlen entweder im vierten oder im sechsten Schritt identifiziert werden, das bedeutet entweder in $O^{\sim}(log^7n)$ oder $O^{\sim}(log^{21/2}n)$. Daraus kann man folgern, dass Primzahlen und zusammengesetzte Zahlen im schlimmsten Fall nach $O^{\sim}(log^{21/2}n)$ erkannt werden. Im besten Fall kann der AKS-Algorithmus eine schnellere Antwort liefern, wenn die Zahl zusammengesetzt ist. Daher lautet die Antwort auf die Frage: der AKS-Algorithmus liefert für zwei gleich große Zahlen(eine Primzahl und eine zusammengesetzte Zahl) im Durchschnitt eine schnellere Antwort\footnote{$\,$ Schneller im Sinne von der Anzahl an Schritte.}, wenn die Zahl zusammengesetzt ist. Das heißt, dass die durchschnittliche Laufzeit für zusammengesetzte Zahlen kleiner als die durchschnittliche Laufzeit für Primzahlen ist.      
 
-\subsubsection{Experiment 4: AKS vs naiver Primzahltest}
-In der Einführung wurde ein Algorithmus erwähnt, der das Primalitätsproblem in $\Omega(\sqrt{n})$ löst. Allerdings hat dieser Algorithmus eine exponentielle Laufzeit. Der AKS-Algorithmus hat eine polynomielle Laufzeit, und ist somit schneller als der naive Primzahltest(engl. brute-force primality test). In diesem Experiment wurden die Laufzeiten beider Algorithmen bis zur Inputgröße $37$ verglichen.  
+\subsubsection{Experiment 3: AKS vs naiver Primzahltest}
+In der Einführung dieser Arbeit wurde ein Algorithmus(naiver Algorithmus) erwähnt, der das Primalitätsproblem in $\Omega(\sqrt{n})$ löst. Allerdings hat dieser Algorithmus eine exponentielle Laufzeit. Der AKS-Algorithmus hat eine polynomielle Laufzeit, und ist somit schneller als der naive Primzahltest(engl. brute-force primality test). In diesem Experiment wurden die Laufzeiten beider Algorithmen bis zur Inputgröße $37$ verglichen.  
 
 Zur Untersuchung der Laufzeit beider Algorithmen als Primzahltest werden bewusst nur Primzahlen als Eingabewerte herangezogen. Das liegt einerseits daran, dass diese den schlechtest möglichen Fall beider Algorithmen darstellt. Andererseits ist oft der Fall, dass der AKS-Algorithmus für zusammengesetzte Zahlen aus $M_1$ das Ergebnis  schnell liefern kann.\footnote{. Dadurch soll ein Verglich zwischen der Potenz-Prüfung und dem naiven Algorithmus vermieden werden.}\newline
 
@@ -1854,7 +1832,6 @@ Der naive Primzahltest hat eine exponentielle Laufzeit, das heißt aber nicht, d
 
 Obige Tabelle macht auch deutlich, dass der AKS-Algorithmus eine bessere asymptotische Laufzeit als der naive Algorithmus hat. Es ist aber augenfällig, dass der AKS-Algorithmus für Inputgrößen kleiner gleich 26 langsamer als der naive Algorithmus ist. Das liegt daran, dass die Laufzeit des AKS-Algorithmus $O^{\sim}(log^{10.5}n)$ beziehungsweise $O^{\sim}(log^7n)$(wenn $n \leq r$) für "kleine" $ $ Inputgrößen größer oder gleich als die Laufzeit des naiven Algorithmus $O(\sqrt{n})$ ist. Dies lässt sich am besten durch eine Grafik illustrieren. 
 
-\newpage
 
 \begin{figure}[h]
 \includegraphics[width=8cm]{plots/aksVsNaive.png}
@@ -1863,20 +1840,20 @@ Obige Tabelle macht auch deutlich, dass der AKS-Algorithmus eine bessere asympto
 \label{plot_aks_naive}
 \end{figure}
 
-Grafik \ref{plot_aks_naive} zeigt deutlich, dass der AKS-Algorithmus bei Inputgröße $37$ in unter $200 \, s$ eine Antwort geliefert hat, während der naive Algorithmus mehr als $6500 \, s(> 1.5 h)$ brauchte.\footnote{In der Tabelle wurde die Laufzeit von Zahlen bis Inputgröße 37 gemessen, während in der Grafik nur Zahlen mit Inputgröße bis 35 zu sehen sind. Das liegt  einerseits daran, dass die Grafik für diese Werte übersichtlicher ist. Andererseits sind diese ausreichend, um zu zeigen, dass die Laufzeit des AKS-Algorithmus wesentlich besser ist.}
+In der Grafik \ref{plot_aks_naive} sieht man, dass der AKS-Algorithmus bei Inputgröße $37$ in unter $200 \, s$ eine Antwort geliefert hat, während der naive Algorithmus mehr als $6500 \, s(> 1.5 h)$ brauchte.\footnote{In der Tabelle wurde die Laufzeit von Zahlen bis Inputgröße 37 gemessen, während in der Grafik nur Zahlen mit Inputgröße bis 35 zu sehen sind. Das liegt  einerseits daran, dass die Grafik für diese Werte übersichtlicher ist. Andererseits sind diese ausreichend, um zu zeigen, dass die Laufzeit des AKS-Algorithmus wesentlich besser ist.} Aber bei Inputgrößen bis ungefähr 29 ist die Laufzeit beider Algorithmen fast identisch. Das heißt, der AKS-Algorithmus hat eine bessere asymptotische Laufzeit. 
 
 \newpage
 
 \section{Zusammenfassung}
-Zur Anfang der Arbeit wurde der Stand vom Primalitätstesten kurz vor dem AKS-Algorithmus dargestellt. Danach wurden der AKS-Algorithmus und seine Grunde im Detail beschrieben. Hierzu gehörte unter anderem die Identität, auf der der AKS-Primzahltest aufbaut. Diese Identität war der Ausgangspunkt dieser Arbeit. Zuerst wurden bestimmte Anforderungen für die Variablen $a,r$ Vorausgesetzt, die unbedingt für die Polynomiallaufzeit des AKS-Algorithmus erforderlich sind. Aus diesen Voraussetzungen konnte man eine obere Schranke für die Anzahl der zu testenden $a$ Werte herleiten.
+Zur Anfang der Arbeit wurde der Stand vom Primalitätstesten vor dem AKS-Algorithmus kurz dargestellt. Danach wurden der AKS-Algorithmus und seine Grunde im Detail beschrieben. Hierzu gehörte unter anderem die Identität, auf der der AKS-Primzahltest aufbaut. Diese Identität war der Ausgangspunkt dieser Arbeit. Zuerst wurden bestimmte Anforderungen für die Variablen $a,r$ Vorausgesetzt, die unbedingt für die Polynomiallaufzeit des AKS-Algorithmus erforderlich sind. Aus diesen Voraussetzungen wurde eine obere Schranke für die Anzahl der zu testenden $a$ Werte hergeleitet.
 
-Nach der Vorstellung des AKS-Algorithmus und die nötigen Voraussetzungen wurde der Korrektheitsbeweis durchgeführt. Im Beweis wurde gezeigt, dass der Algorithmus als ein Primzahltest verwendet werden kann, das heißt der Algorithmus liefert stets 1 (PRIME), wenn die Eingabe $n$ eine Primzahl ist. Aber auch wenn die Ausgabe 1 (PRIME) ist, dann ist die eingegebene Zahl $n$ tatsächlich eine Primzahl.
+Nach der Vorstellung des AKS-Algorithmus und seine nötigen Voraussetzungen wurde der Korrektheitsbeweis durchgeführt. Im Beweis wurde gezeigt, dass der Algorithmus als ein Primzahltest verwendet werden kann, das heißt der Algorithmus liefert stets 1 (PRIME), wenn die Eingabe $n$ eine Primzahl ist. Aber auch wenn die Ausgabe 1 (PRIME) ist, dann ist die eingegebene Zahl $n$ tatsächlich eine Primzahl.
 
-Nachdem die Korrektheit des Algorithmus bewiesen wurde, wurde die Laufzeitanalyse dargestellt. Zunächst wurde eine Abschätzung für das $r$ gemacht und mit Hilfe dieser Abschätzung wurde die Laufzeitanalyse durchgeführt. Diese Analyse ergab, dass der Algorithmus eine polynomielle Laufzeit hat. Es wurden außerdem mehrere Verbesserungen für die Laufzeit vorgeschlagen. Einige Verbesserungen waren auf Vermutungen basiert. Es gab aber auch einen anderen Ansatz mit dem sich die Laufzeit $O^{\sim}(log^{10.5}n)$, ohne auf Vermutungen zurückgreifen zu müssen auf $O^{\sim}(log^6n)$ reduzieren. Im gleichen Kapitel wurde kurz diskutiert, warum der AKS-Algorithmus nicht in der Praxis einsetzbar ist.
+Nachdem die Korrektheit des Algorithmus bewiesen wurde, wurde die Laufzeitanalyse dargestellt. Zunächst wurde eine Abschätzung für das $r$ gemacht und mit Hilfe dieser Abschätzung wurde die Laufzeitanalyse durchgeführt. Diese Analyse ergab, dass der Algorithmus eine polynomielle Laufzeit hat. Es wurden außerdem mehrere Verbesserungen für die Laufzeit vorgeschlagen. Einige Verbesserungen waren auf Vermutungen basiert. Es gab aber auch einen anderen Ansatz mit dem sich die Laufzeit $O^{\sim}(log^{10.5}n)$, ohne auf Vermutungen zurückgreifen zu müssen auf $O^{\sim}(log^6n)$ reduzieren lässt. Im gleichen Kapitel wurde kurz diskutiert, warum der AKS-Algorithmus nicht in der Praxis einsetzbar ist.
 
-Es wurde auch mit Hilfe von mehreren Experimenten demonstriert, dass der AKS-Algorithmus deterministisch ist und darüber hinaus eine polynomielle Laufzeit hat. Schließlich wurde der AKS-Algorithmus mit dem naiven Algorithmus --der Probedivision Algorithmus-- verglichen. Dadurch hat sich herausgestellt, dass der AKS-Algorithmus geringere Laufzeit hat.
+Es wurde auch mit Hilfe von mehreren Experimenten demonstriert, dass der AKS-Algorithmus korrekt ist und darüber hinaus eine polynomielle Laufzeit hat. Schließlich wurde der AKS-Algorithmus mit dem naiven Algorithmus --der Probedivision Algorithmus-- verglichen. Dadurch hat sich herausgestellt, dass der AKS-Algorithmus eine bessere asymptotische Laufzeit hat.
 
-Mit anderen Worten, der AKS-Primzahltest ist ein wichtiger theoretischer Durchbruch im Bereich der Primalitätstesten, er war der erste deterministische bedingungslose Algorithmus mit polynomielle Laufzeit. Aber in der Tat ist der Algorithmus Trotz seiner Eigenschaften immer noch für große Primzahlen sehr langsam\footnote{Die größte bekannte Primzahl $2^{82589933} - 1$ hat $24862048$ Stellen.}. Daher wird weder der AKS-Algorithmus noch seine randomisierte Version in der Praxis benutzt.
+Der AKS-Primzahltest ist ein wichtiger theoretischer Durchbruch im Bereich der Primalitätstesten, er war der erste deterministische bedingungslose Algorithmus mit polynomielle Laufzeit. Aber in der Tat ist der Algorithmus Trotz seiner Eigenschaften immer noch für große Primzahlen sehr langsam\footnote{Die größte bekannte Primzahl $2^{82589933} - 1$ hat $24862048$ Stellen.}. Daher wird weder der AKS-Algorithmus noch seine randomisierte Version in der Praxis benutzt\cite{mit_aks}.
 
 
 
