@@ -49,6 +49,7 @@ def find_r(n):
 		# check for all k's in [1,log^2 n] if n^k != 1(mod r)
 		for k in range(1,b):
 			if (n**k) % r ==1:
+
 				c = c + 1
 		if c ==0:
 			break
@@ -87,6 +88,8 @@ def naive_prime(n):
             return False
     return True
 
+
+print(find_r(32))
 		
 # Runtime complexity plot
 
@@ -99,7 +102,7 @@ n = 10
 
 for a in x:
 	start = time.process_time()
-	check_perfect_powers(a)
+	find_r(a)
 	#find_r(a) # pick any algorithm, and test its runtime
 	# naive_aks(a)
 	end = time.process_time()
@@ -111,6 +114,7 @@ for a in x:
 
 
 
+g = [i**2 for i in bl]
 y = sorted(y)
 
 
@@ -158,10 +162,9 @@ print(y)
 
 ##################################################################################################
 
-
-g = [u**(3) for u in bl]
-plt.plot(bl,y,label = 'perfect-power')
-plt.plot(bl,g, label = 'polynomial')
+#tests 
+plt.plot(bl,y)
+plt.plot(bl,g)
 plt.xlabel("#Bits")
 plt.ylabel("required time")
 plt.title("test")
