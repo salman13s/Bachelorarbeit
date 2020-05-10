@@ -276,6 +276,29 @@ for i in xData:
         t = e - s
         yData.append(t)
 
+
+#gather the max. run time of each input length
+# t_8 = max([i[1] for i in tupels if i[0] == 8])
+# t_9 = max([i[1] for i in tupels if i[0] == 9])
+# t_10 = max([i[1] for i in tupels if i[0] == 10])
+# t_12 = max([i[1] for i in tupels if i[0] == 12])
+# t_13 = max([i[1] for i in tupels if i[0] == 13])
+# t_15 = max([i[1] for i in tupels if i[0] == 15])
+# t_16 = max([i[1] for i in tupels if i[0] == 16])
+# t_17 = max([i[1] for i in tupels if i[0] == 17])
+# t_19 = max([i[1] for i in tupels if i[0] == 19])
+# t_22 = max([i[1] for i in tupels if i[0] == 22])
+# t_23 = max([i[1] for i in tupels if i[0] == 23])
+# t_24 = max([i[1] for i in tupels if i[0] == 24])
+# t_25 = max([i[1] for i in tupels if i[0] == 25])
+# t_27 = max([i[1] for i in tupels if i[0] == 27])
+
+
+# worst_case_runtimes = []
+# worst_case_runtimes.extend([t_8,t_9,t_10,t_12,t_13,t_15,t_16,t_17,t_19,t_22,t_23,t_24,t_25,t_27])
+# print(worst_case_runtimes)
+
+
 # seperate the data
 
 x_8_t = []
@@ -353,9 +376,17 @@ popt,pcov = curve_fit(p,xData_bits,yData)
 
 
 
-plt.plot(xData_bits,p(xData_bits,*popt),'r-',label='polynomial')
+plt.plot(xData_bits,p(xData_bits,*popt),'r',label='polynomial')
 plt.plot(xData_bits,yData,'bo',label='data points')
-plt.plot(xData_bits_reduced,means,'g-',label = 'mean')   
+plt.plot(xData_bits_reduced,means,'g--',label = 'mean')   
+
+# worst case
+# z = np.polyfit(xData_bits_reduced,worst_case_runtimes,10.5) # deg has to be 7 (more or less)
+# p = np.poly1d(z)
+# plt.plot(xData_bits_reduced,worst_case_runtimes,'c^',label ='worst-case')
+# plt.plot(xData_bits_reduced,p(xData_bits_reduced),'m:',label ='polynomial-worst-case')
+
+
 
 plt.xlabel('log n')
 plt.ylabel('time required')
