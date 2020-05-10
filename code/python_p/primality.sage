@@ -351,9 +351,11 @@ def p(x,a,b,c,d,e,f,g,h,i,j,k):
 
 popt,pcov = curve_fit(p,xData_bits,yData)
 
+
+
 plt.plot(xData_bits,p(xData_bits,*popt),'r-',label='polynomial')
 plt.plot(xData_bits,yData,'bo',label='data points')
-plt.plot(xData_bits_reduced,means,label = 'mean')   
+plt.plot(xData_bits_reduced,means,'g-',label = 'mean')   
 
 plt.xlabel('log n')
 plt.ylabel('time required')
