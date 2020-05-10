@@ -1726,7 +1726,10 @@ In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS
 \begin{enumerate}
     \item $I = \{ I_{1},I_{2}, \dots, I_{n} \}$ Menge der Inputs, die Inputs sind in diesem Fall Arrays von  Bitlängen. $I_{k}$ beschreibt die Menge der Zahlen, die Bitlänge $k$ haben\footnote{$I_{k} = \{ n \in \mathbb{N} \mid \lVert n\rVert = k\}$}\newline
     
-    \item $ T = \{T_{1},T_{2}, \dots, T_{n}\}$ Menge der Outputs, hier sind die Outputs Arrays von gemessenen Laufzeiten für die jeweiligen Inputs. 
+    \item $ T = \{T_{1},T_{2}, \dots, T_{n}\}$ Menge der Outputs, hier sind die Outputs Arrays von gemessenen Laufzeiten für die jeweiligen Inputs.\newline 
+    
+    \item $T_{max} = \{ &max\{ T_{1} \},max\{ T_{2} \}, \dots, max \{ T_{n} \} \}$.\newline
+    \item $I_{r} = \{ k \mid \, \forall  I_{k} \in I \}$
 \end{enumerate}
 Das Ziel ist eine bestmögliche Approximation(durch ein Polynom) für die Funktion $f(x) = y$ zu berechnen, wobei $x \in I_{k}$ und $y \in T_{k}, k = 1,2, \dots, n$.
 
@@ -1745,7 +1748,24 @@ $I = \{ I_{8},I_{9},I_{10},I_{12},I_{13},I_{15},I_{16},I_{17},I_{19},I_{22},I_{2
 \label{runtime-find_r}
 \end{figure}
 
-Abbildung \ref{runtime-find_r} zeigt, dass das gewählte Polynom vom Grad 7 (rot) die Funktion der Mittelwerte von den Inputgrößen(grün) nahezu zu perfekt darstellt. Mit Hilfe dieser empirischen Evidenz kann folgern, dass 
+Abbildung \ref{runtime-find_r} zeigt, dass das gewählte Polynom vom Grad 7 (rot) die Funktion der Mittelwerte von den Inputgrößen(grün) nahezu zu perfekt darstellt. Mit Hilfe dieser empirischen Evidenz kann man nun folgern, dass die Average-Case-Complexity $\Theta(t(n))$ polynomiell ist. Das heißt $\Theta^{\sim}(log^k  n), k > 0$. In diesem Fall ist $k = 7$\footnote{$k =7$, da die Laufzeit vom zweiten Schritt $O^{\sim}(log^7 n)$ ist}.
+
+
+Des Weiteren kann mit Hilfe dieser Datenpunkte auf ähnlicher Weise auch den schlechtmöglichsten Fall(Worst-case-Complexity) bestimmen. Hierzu wird das Polynom durch die Maximumpunkte von $T_{k}, \, k = 1,2, \dots, n$ angepasst.
+Folgende Funktion wird nun approximiert: 
+\begin{align*}
+    f(x) = y, \, wobei \,y \in T_{max} , x \in I_{r}.
+\end{align*}
+
+\begin{figure}[h]
+\includegraphics[width=10cm]{plots/runtime_find_r.png}
+\centering
+\caption{Anpassung des Polynoms an die Laufzeiten}
+\label{runtime-find_r}
+\end{figure}
+
+
+
 
 
 
