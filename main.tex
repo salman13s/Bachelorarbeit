@@ -1698,30 +1698,20 @@ Folgende Grafik illustriert, wie langsam der AKS-Algorithmus(dunkelgrün in der 
 \newpage
 
 \section{Experimentelle Auswertung}
-In diesem Kapitel werden die Hauptschritte des AKS-Algorithmus(Schritt 2 und 5) untersucht, es wird unter anderem gezeigt, dass die Laufzeit dieser Schritte polynomiell von der Eingabegröße abhängig ist. Der Fokus liegt hier nicht auf die Korrektheit dieser Schritte(Dies wurde schon im 4. Kapitel gezeigt) sondern auf die polynomielle Laufzeit. Schließlich wird der AKS-Primzahltest mit dem naiven Primzahltest verglichen\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.}. 
-
-Um dies illustrieren zu können, sind folgende Mengen erforderlich:
-\begin{enumerate}
-    \item \textbf{Menge 1:} Die Menge der Primzahlpotenzen.\newline
-    $M_1 = \{ n \in \mathbb{N} \mid n = a^b, \, a \in \mathbb{P}, \, b \in \mathbb{N}\}$.\newline
-    
-    \item \textbf{Menge 2:} Die Menge aller Zahlen, die nicht aus der ersten Menge sind, aber zusammengesetzt sind. $M_2 = \{ n \in \mathbb{N}\setminus	 M_1 \mid 1 < (a,n) < n, \forall a \leq \sqrt{n} \}$.\newline
-    
-    \item \textbf{Menge 3:} Die Menge der Zahlen, die weder aus $M_1$ noch aus $M_2$, sodass die Gleichung \ref{eq:2}, die im 3 Kapitel beschrieben wurde, erfüllt ist. $M_3 = \{ n \in \mathbb{N} \setminus (M_1 \cup M_2) \mid \exists a,r : (X + a)^n \neq X^n + a \, (\, mod \, X^r - 1,p) \}$
-\end{enumerate}
+In diesem Kapitel werden die Hauptschritte des AKS-Algorithmus(Schritt 2 und 5) untersucht. Des Weiteren wird überprüft, dass die Laufzeit dieser Schritte polynomiell von der Eingabegröße abhängig ist. Der Fokus liegt hier nicht auf die Korrektheit dieser Schritte(Dies wurde schon im 4. Kapitel gezeigt) sondern auf die polynomielle Laufzeit. Schließlich wird der AKS-Primzahltest mit dem naiven Primzahltest verglichen\footnote{. Der naive Algorithmus testet ob die eine Zahl $n$ einen Primfaktor $\leq  \sqrt{n}$ hat.}. 
 
 
 
 \subsection{Implementierungsdetails}
 Zur Implementierung der Algorithmen wurde das Computer-Algebra System SageMath verwendet. Die Grafiken wurden mithilfe von der öffentlichen Library MatplotLib gemacht. Der Quellcode ist auf meinem Github: \url{https://github.com/salman13s/Bachelorarbeit} zu finden. Die Experimente wurden auf einem Computer mit einem Intel Core i7 mit vier Kernen, die jeweils auf 2,8 GHz getaktet sind, und mit 16GB Arbeitsspeicher unter Mac OS Catalina 10.15.3 ausgeführt.\footnote{$\,$ Alle Zeitmessungen wurden mit der Python-Funktion process\_time() gemessen.}
 
-\subsection{Experimentelle Ergebnisse}
+\subsection{Experimente}
 
 \subsubsection{Experiment 1: Die Suche nach einem geeigneten $r$}
-Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird gezeigt, dass die Laufzeit des 2. Schritts polynomiell von der Eingabegröße abhängig ist.
+Einer der Hauptschritte des AKS-Algorithmus ist der zweite Schritt. Im zweiten Schritt wird nach einem $r$ gesucht, sodass $o_r(n) > log^2 n$. Dies passiert durch ausprobieren von mehreren $r$ Werten. In Lemma \ref{limit_of_r} wurde gezeigt, dass dieses $r$ existiert, es wurde außerdem gezeigt, dass $r \leq log^5 n$. In diesem Experiment wird gezeigt, dass die mittlere Laufzeit sowie die worst-case Laufzeit des 2. Schritts polynomiell von der Eingabegröße abhängig sind.
 
 \textbf{\samll{Beschreibung des Experiments:}}\newline
-In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS-Primzahltest demonstriert werden. Hierzu werden verschiedene Inputgrößen betrachtet. Für jede Inputgröße werden 100 zufällig ausgewählte Datenpunkte verwendet, danach wird für jeden Datenpunkt die Laufzeit gemessen. Dadurch erhält man mehrere verstreute Punkte im zweidimensional Raum. Nun wird ein Polynom an diese Punkte angepasst, dieses Polynom soll (Gemäß Kapitel 4) Grad 7 haben. Dafür sind folgende Mengen erforderlich:
+In diesem Experiment soll die polynomielle Laufzeit des zweiten Schritts vom AKS-Primzahltest demonstriert werden. Hierzu werden verschiedene Inputgrößen betrachtet. Für jede Inputgröße werden 100 zufällig\footnote{Es wurden 100 sukzessive Datenpunkte für jede Eingabegröße berechnet und diese wurde dann mithilfe der random.shuffle() Funktion zufällig aufgeteilt(für die random.shuffle() Funktion siehe: \cite{random-python}).} ausgewählte Datenpunkte verwendet, danach wird für jeden Datenpunkt die Laufzeit gemessen. Dadurch erhält man mehrere verstreute Punkte im zweidimensional Raum. An diese Punkte wird ein Polynom angepasst, dieses Polynom soll (Gemäß Kapitel 4) Grad 7 haben. Für dieses Experiment(und weitere Experimente) sind folgende Mengen erforderlich:
 
 \begin{enumerate}
     \item $I = \{ I_{1},I_{2}, \dots, I_{n} \}$ Menge der Inputs, die Inputs sind in diesem Fall Arrays von  Bitlängen. $I_{k}$ beschreibt die Menge der Zahlen, die Bitlänge $k$ haben\footnote{$I_{k} = \{ n \in \mathbb{N} \mid \lVert n\rVert = k\}$}\newline
@@ -1758,11 +1748,13 @@ Folgende Funktion wird nun approximiert:
 \end{align*}
 
 \begin{figure}[h]
-\includegraphics[width=10cm]{plots/aks_run_time.png}
+\includegraphics[width=10cm]{plots/find_r_worst_case.png}
 \centering
 \caption{Anpassung des Polynoms an die höchsten Laufzeiten}
 \label{runtime-aks}
 \end{figure}
+
+Es ist leicht zu sehen, dass das Polynom (mit Grad 7) durch die Maximumpunkte bei jeder Eingabe durchströmt. Dies ist gerade eine empirische Evidenz für die polynomielle Laufzeit des 2. Schritts des AKS-Algorithmus.  
 
 
 
@@ -1771,46 +1763,19 @@ Folgende Funktion wird nun approximiert:
 
 
 \subsubsection{Experiment 2: Laufzeit des AKS-Algorithmus}
-In diesem Experiment wurde die Laufzeit des AKS-Algorithmus für mehrere bekannte Primzahlen gemessen\footnote{$\,$ Für die Primzahlen siehe \url{http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php} und \url{https://en.wikipedia.org/wiki/Largest_known_prime_number}.}. Es wurden auch bekannte zusammengesetzte Zahlen eingegeben, um die Korrektheit des AKS-Algorithmus zu testen.
-\begin{table}[h!]
-\centering
-\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
- \hline
- \multicolumn{4}{|c|}{AKS-Algorithmus} \\
- \hline
- Zahl & Inputgröße &Ergebnis&Zeit in s\\
- \hline
- 49   & 6    &False&   $8.5 \cdot 10^{-5}$\\
- 233&   8  & True   &$0.063$\\
- 12923 &14 & True&  $0.302$\\
- 131071    &17 & True&  $1.006$\\
- 3875741& 22  & True   &$2.9943$\\
- 38890279& 26  & True& $7.890$\\
- 2147483647&   31  & True& $43.54$\\
- 90552556447&   37  & False& $18.781$\\
- 140141183298&   38  & False& $0.019$\\
- 147763360000&   38  & False& $0.000065$\\
- 170141183297& 38 & True& $119.432$\\
- \hline
-\end{tabular}
+In diesem Experiment wurde die polynomielle Laufzeit des AKS-Algorithmus überprüft. Im vierten Kapitel wurde gezeigt, dass der AKS-Algorithmus eine polynomielle Laufzeit hat ($O^{\sim}(log^{10.5} n)$), dies wird in diesem Experiment getestet.
 
- \caption{Laufzeituntersuchung des AKS-Algorithmus.}
-\label{table:3}
-\end{table}
+\textbf{\samll{Beschreibung des Experiments:}}\newline
+In diesem Experiment wird auch wie beim ersten Experiment ein Polynom(vom Grad 10.5) an die Datenpunkte  angepasst, die Datenpunkte sind Paare $(x,y) \in I \times T$. Hier wird auch für jede Eingabegröße 100 Datenpunkte ausgewählt. 
 
-Man kann nun anhand der Primzahlen der obigen Tabelle eine Grafik plotten, um die Steigerung der Laufzeit zu verdeutlichen. 
+\textbf{\small{Erwartetes Verhalten:}}
+Das Polynom mit Grad 10.5 soll die Mittelwerte der 100 Datenpunkte von jeder Eingabegröße passieren. Im idealen Fall sind beide Funktionen überall gleich, das kann aber praktisch nicht erreicht werden.
 
-\begin{figure}[h]
-\includegraphics[width=7.06cm]{plots/aks.png}
-\centering
-\caption{Laufzeit des AKS-Primzahltests}
-\label{aks-runtime}
-\end{figure}
+\textbf{\small{Die Daten:}}
+Es werden die gleichen Inputdaten aus dem ersten Experiment auch hier verwendet. Das heißt: $I = \{ I_{8},I_{9},I_{10},I_{12},I_{13},I_{15},I_{16},I_{17},I_{19},I_{22},I_{24},I_{25},I_{27} \}$.
 
+\textbf{\small{Ergebnisse:}}
 
-
-% TODO: rewrite the whole passage !!
-Tabelle \ref{table:3} und Abbildung \ref{aks-runtime} zeigen deutlich, dass der zeitliche Aufwand des AKS-Algorithmus für Primzahlen kontinuierlich steigt, wenn die Eingabegröße größer wird. Das ist aber nicht unbedingt der Fall für zusammengesetzte Zahlen, da es zusammengesetzte Zahlen gibt, die schon im ersten Schritt des Algorithmus identifiziert werden, da sie Primzahlpotenzen sind. Ein Beispiel dafür wäre die Zahl 147763360000 mit der Inputgröße 38. Für diese Zahl hat der Algorithmus $6.5 \cdot 10^{-5}$ s gebraucht, und das ist wesentlich weniger als die gemessene Zeit für 90552556447 mit Inputgröße 37.
 
 
 \subsubsection{Experiment 3: AKS vs naiver Primzahltest}
