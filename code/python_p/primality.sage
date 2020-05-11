@@ -387,9 +387,9 @@ plt.plot(xData_bits_reduced,means,'g--',label = 'mean')
 # plt.plot(xData_bits_reduced,p(xData_bits_reduced),'m:',label ='polynomial-worst-case')
 
 
-
+plt.title('AKS average complexity')
 plt.xlabel('log n')
-plt.ylabel('time required')
+plt.ylabel('time required[s]')
 plt.legend()
 plt.show()
 
