@@ -1,59 +1,13 @@
-############################Packages and imports ###################################### 
 import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
+from numpy.polynomial import polynomial as P
+import random
 import math
 import time
-import matplotlib.pyplot as plt 
-from sympy import perfect_power
-from numpy.polynomial import polynomial as P
-from scipy.special import binom
-from scipy.optimize import curve_fit
-from numpy.random import randint
 import warnings
-from random import shuffle
-import timeit
-from sage.all import *
-import tkinter as tk
 
-################ Helper Functions #####################################################
-"""
-gcd: N x N - > N 
-calculates the gcd of 2 numbers using euclid's algorithm
-"""
-def gcd(a,b):
-	if b == 0:
-		return a
-	return gcd(b,a % b)	
-
-
-
-"""
-check for perfect powers, i.e. n = a^b, for some a,b £ N 
-"""
-
-def check_perfect_power(n):
-
-    b = 2
-
-    while 2**b <= n:
-        a = 1
-        c = n
-        while c - a >= 2:
-            m = math.floor((a+c)/2)
-            p = min([m**b, n + 1])
-
-            if p == n:
-                return True
-            if p < n:
-                a = m
-            else:
-                c = m
-        b = b + 1
-    return False         
-
-"""
- a function to find the smalles r,
-such that n^k != 1 (mod r), for all k <= log^2 n
-"""
+# finds suitable r 
 def find_r(n):
 	m = max(3,math.floor(math.log2(n)**5))
 	r = 2
@@ -70,139 +24,27 @@ def find_r(n):
 		
 
 
-##### The-Algorithm #############################################################
-
-def aks(n):
-    #STEP 1    
-    if check_perfect_power(n) == True:
-        return False
-    #STEP 2    
-    r = find_r(n)
-
-    #STEP 3
-    for k in range(1,r):
-        if 1 < gcd(k,n) and gcd(k,n) < n:
-            return False
-    #STEP 4        
-    if n <= r:
-        return True
-    #STEP 5
-    l=floor((2*sqrt(euler_phi(r))*log(n,2)+1))
-    for a in range(1,l):
-        s =Integers(n) # define s in Z_n 
-        R.<x> = PolynomialRing(s) # define the polynomial ring
-        Q = R.quotient((x^r)-1) # quotient ring Q = Z_n\(X^r - 1)
-        q = Q((x+a)) # representation of x + a in the Quotient ring Q  
-        V = Q((q^n)) # (x + a)^n in Q
-        e = Mod(n,r) #  e = n mod r
-        d = (x^e) + a # x^e + a, i.e exponents reduction
-        if (V != d): # if (x + a)^n != x^e + a -> COMPOSITE  
-            return False
-    return True #STEP 6           
-
-##########################################################################################
-
-# naive primality test
-def naive_prime(n):
-    limit = int(n)
-    for i in range(2,limit):
-        if n % i == 0:
-            return False
-    return True     
-
-
-
-#### Time-Complexity_Analysis ############################################################
-
 #return the bit size of a non-negative integer
 def bit_length(n):
     bits = 0
     while n >> bits: bits += 1
     return bits
 
-#best test values so far(random large primes) 
-# x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
-# x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163]
-# x = [8191,131071,524287,38757413,58890301,2147483647,2547587681,17014120163,90552556889,170141183297]#,570141191371]#x = [i  for i in range(2,200000,100)]
+# limit = 200000000
+# inputs = [i for i in range(3,limit)]  # input range
 
-# y = []
-# bl = []
-# y_2 = []
-# bl_2 = []
+# x_27 = []
 
-# for a in x:
-#     start = time.process_time()
-   
-#     aks(a)
-    
-#     end = time.process_time()
-#     t = end - start
-#     l = bit_length(a)
-#     if l not in bl:
-#         y.append(t)
-#         bl.append(l)
+# for i in inputs:
+# 	if bit_length(i) == 12:
+# 		x_27.append(i)
+# 	if len(x_27) > 99:
+# 		break
 
-# for a in x:
-#     start = time.process_time()
-#     naive_prime(a)
-#     end = time.process_time()
-#     t = end - start
-#     l = bit_length(a)
-#     if l not in bl_2:
-#         y_2.append(t)
-#         bl_2.append(l)
+# print(x_27)
 
 
-
-# ############################### Plotting #################################################
-
-
-z = []
-
-t = []
-
-# print(bl,y)
-
-# print(bl_2,y_2)
-# # y = sorted(y)
-
-# plt.plot(bl,y,bl_2,y_2)
-# plt.xlabel("#Bits")
-# plt.ylabel("required time")
-# plt.title("AKS")
-# plt.show()
-
-
-
-# we can use the follwing commands to empirically verify the correctness of the aks algorithm
-# it is known that there are 25 prime numbers in [2,100):
-
-# nums = [i for i in range(2,100)]
-
-# primes_1_100 = []
-# for n in nums:
-#     if aks(n):
-#         primes_1_100.append(n)
-
-# print("#primes < 100 = {}".format(len(primes_1_100))) # should return 25
-# print("primes < 100 = {}".format(primes_1_100))# should list the primes 
-
-
-
-# used to record the runtime of the aks and the naive algorithm
-# for i in x:
-#     s = time.process_time() #start 
-#     res = naive_prime(i) # pick any algorithm to record its runtime
-#     e = time.process_time() # end 
-#     z.append(bit_length(i))
-#     t.append(e-s)
-#     print("n = {}, bits = {}, result = {}, time = {}".format(i,bit_length(i),res,e-s))
-
-# print(z,t)
-
-#####################################################################################################################################
-
-
+# the index i of each x indicates the input length of all of the numbers inside x_i
 x_8 =  [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
 x_9 = [256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355]
 x_10 = [512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611]
@@ -223,20 +65,20 @@ x_27 = [67108864, 67108865, 67108866, 67108867, 67108868, 67108869, 67108870, 67
 
 
 # random shuffle 
-shuffle(x_8)
-shuffle(x_9)
-shuffle(x_10)
-shuffle(x_12)
-shuffle(x_13)
-shuffle(x_15)
-shuffle(x_16)
-shuffle(x_17)
-shuffle(x_19)
-shuffle(x_22)
-shuffle(x_23)
-shuffle(x_24)
-shuffle(x_25)
-shuffle(x_27)
+random.shuffle(x_8)
+random.shuffle(x_9)
+random.shuffle(x_10)
+random.shuffle(x_12)
+random.shuffle(x_13)
+random.shuffle(x_15)
+random.shuffle(x_16)
+random.shuffle(x_17)
+random.shuffle(x_19)
+random.shuffle(x_22)
+random.shuffle(x_23)
+random.shuffle(x_24)
+random.shuffle(x_25)
+random.shuffle(x_27)
 # # # x = [33,63,128,513,4096,262145,2097155,30097115,294024210,2147483647]
 # data
 
@@ -262,19 +104,20 @@ with warnings.catch_warnings():
 
 
 
-    
+	
 
 tupels = []
 # measure the run time
 yData = []
 for i in xData:
-    for j in i:
-        s = time.process_time()
-        result = aks(j)
-        e = time.process_time()
-        tupels.append((bit_length(j),e - s)) # collect run times for each input length
-        t = e - s
-        yData.append(t)
+	for j in i:
+		s = time.process_time()
+		result = find_r(j)
+		e = time.process_time()
+		tupels.append((bit_length(j),e - s)) # collect run times for each input length
+		t = e - s
+		yData.append(t)
+
 
 
 #gather the max. run time of each input length
@@ -299,7 +142,8 @@ worst_case_runtimes.extend([t_8,t_9,t_10,t_12,t_13,t_15,t_16,t_17,t_19,t_22,t_23
 print(worst_case_runtimes)
 
 
-# seperate the data
+
+# separate the data
 
 x_8_t = []
 x_9_t = []
@@ -316,34 +160,34 @@ x_24_t = []
 x_25_t = []
 x_27_t = []
 for element in tupels:
-    if element[0] == 8:
-        x_8_t.append(element[1])
-    if element[0] == 9:
-        x_9_t.append(element[1])
-    if element[0] == 10:
-        x_10_t.append(element[1])
-    if element[0] == 12:
-        x_12_t.append(element[1])
-    if element[0] == 13:
-        x_13_t.append(element[1])
-    if element[0] == 15:
-        x_15_t.append(element[1])
-    if element[0] == 16:
-        x_16_t.append(element[1])
-    if element[0] == 17:
-        x_17_t.append(element[1])
-    if element[0] == 19:
-        x_19_t.append(element[1])                               
-    if element[0] == 22:
-        x_22_t.append(element[1])
-    if element[0] == 23:
-        x_23_t.append(element[1])
-    if element[0] == 24:
-        x_24_t.append(element[1])
-    if element[0] == 25:
-        x_25_t.append(element[1])
-    if element[0] == 27:
-        x_27_t.append(element[1])                   
+	if element[0] == 8:
+		x_8_t.append(element[1])
+	if element[0] == 9:
+		x_9_t.append(element[1])
+	if element[0] == 10:
+		x_10_t.append(element[1])
+	if element[0] == 12:
+		x_12_t.append(element[1])
+	if element[0] == 13:
+		x_13_t.append(element[1])
+	if element[0] == 15:
+		x_15_t.append(element[1])
+	if element[0] == 16:
+		x_16_t.append(element[1])
+	if element[0] == 17:
+		x_17_t.append(element[1])
+	if element[0] == 19:
+		x_19_t.append(element[1])								
+	if element[0] == 22:
+		x_22_t.append(element[1])
+	if element[0] == 23:
+		x_23_t.append(element[1])
+	if element[0] == 24:
+		x_24_t.append(element[1])
+	if element[0] == 25:
+		x_25_t.append(element[1])
+	if element[0] == 27:
+		x_27_t.append(element[1])					
 
 
 x_i_t = []
@@ -351,13 +195,13 @@ x_i_t.extend([x_8_t,x_9_t,x_10_t,x_12_t,x_13_t,x_15_t,x_16_t,x_17_t,x_19_t,x_22_
 means = []
 
 for i in x_i_t:
-    means.append(np.mean(i))
+	means.append(np.mean(i))
 
 xData_bits =[] # input lenght
 
 for i in xData:
-    for j in i:
-        xData_bits.append(bit_length(j))
+	for j in i:
+		xData_bits.append(bit_length(j))
 
 xData_bits = np.array(xData_bits) # run-time 
 
@@ -368,30 +212,45 @@ xData_bits_reduced =  list(set(xData_bits))
 # remark: x-axis = log n(input length), y-axis = O^(7+ e)(log n), e > 0.  
 
 # first fitting approach 
-def p(x,a,b,c,d,e,f,g,h,i,j,k):
-    return a * x**(10.5) + b * x**9 + c * x**8 + d * x**7 + e * x**6 + f * x**5 + g * x**4 + h * x**3 + i * x**2 + j * x + k
+def p(x,a,b,c,d,e,f,g,h):
+	return a * x**7 + b * x**6 + c * x**5 + d * x**4 + e * x**3 + f * x**2 + g * x + h
 
 
 popt,pcov = curve_fit(p,xData_bits,yData)
 
-
-
 plt.plot(xData_bits,p(xData_bits,*popt),'r',label='polynomial')
 plt.plot(xData_bits,yData,'bo',label='data points')
-plt.plot(xData_bits_reduced,means,'g--',label = 'mean')   
+plt.plot(xData_bits_reduced,means,'g--',label = 'mean')	
 
 # worst case
-z = np.polyfit(xData_bits_reduced,worst_case_runtimes,10.5) # deg has to be 7 (more or less)
+z = np.polyfit(xData_bits_reduced,worst_case_runtimes,7) # deg has to be 7 (more or less)
 p = np.poly1d(z)
 plt.plot(xData_bits_reduced,worst_case_runtimes,'c^',label ='worst-case')
 plt.plot(xData_bits_reduced,p(xData_bits_reduced),'m:',label ='polynomial-worst-case')
 
-
-plt.title('AKS worst case complexity')
+# ploting stuff 
+plt.title('find_r worst-case complexity')
 plt.xlabel('log n')
 plt.ylabel('time required[s]')
 plt.legend()
 plt.show()
+
+
+
+# # # second fitting approach 
+
+# # z = np.polyfit(xData_bits,yData,7) # deg has to be 7 (more or less)
+
+# # p = np.poly1d(z)
+
+
+# # plt.plot(xData_bits,yData,'bo',label ='data points ')
+# # plt.plot(xData_bits,p(xData_bits),'r--',label = 'polynomial')
+# # plt.xlabel('log n')
+# # plt.ylabel('time required')
+# # plt.legend()
+# # plt.show()
+
 
 
 
