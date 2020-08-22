@@ -27,7 +27,7 @@ def gcd(a,b):
 
 
 """
-check for perfect powers, i.e. n = a^b, for some a,b £ N 
+check for perfect powers, i.e. n = a^b, for some a,b in N 
 """
 
 def check_perfect_power(n):
@@ -102,7 +102,7 @@ def aks(n):
 
 ##########################################################################################
 
-# naive primality test
+# Naive primality test
 def naive_prime(n):
     limit = int(n)
     for i in range(2,limit):
@@ -114,13 +114,13 @@ def naive_prime(n):
 
 #### Time-Complexity_Analysis ############################################################
 
-#return the bit size of a non-negative integer
+# Return the bit size of a non-negative integer
 def bit_length(n):
     bits = 0
     while n >> bits: bits += 1
     return bits
 
-#best test values so far(random large primes) 
+# Best test values so far(random large primes) 
 # x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163,170141183297,570141191371]#x = [i  for i in range(2,200000,100)]
 # x = [8191,131071,524287,38757413,388903733,38890279,2147483647,2247586547,2547587681,17014120163]
 # x = [8191,131071,524287,38757413,58890301,2147483647,2547587681,17014120163,90552556889,170141183297]#,570141191371]#x = [i  for i in range(2,200000,100)]
@@ -173,9 +173,11 @@ t = []
 # plt.show()
 
 
-
-# we can use the follwing commands to empirically verify the correctness of the aks algorithm
+##################################### A small Test to find prime numbers < 100 ###################################################
+# we can use the follwing commands to empirically verify the correctness of the AKS algorithm
 # it is known that there are 25 prime numbers in [2,100):
+
+# uncomment and execute to see the results 
 
 # nums = [i for i in range(2,100)]
 
@@ -187,7 +189,7 @@ t = []
 # print("#primes < 100 = {}".format(len(primes_1_100))) # should return 25
 # print("primes < 100 = {}".format(primes_1_100))# should list the primes 
 
-
+############################################################################################
 
 # used to record the runtime of the aks and the naive algorithm
 # for i in x:
@@ -202,7 +204,7 @@ t = []
 
 #####################################################################################################################################
 
-
+# x_i contains all numbers such that len(bin(n)) = i (i.e input length)
 x_8 =  [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
 x_9 = [256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355]
 x_10 = [512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611]
@@ -243,17 +245,9 @@ shuffle(x_27)
 # extend the data 
 xData = []
 xData.extend([x_8,x_9,x_10,x_12,x_13,x_15,x_16,x_17,x_19,x_22,x_23,x_24,x_25,x_27])
-# xData.extend(x_8)
-# xData.extend(x_9)
-# xData.extend(x_10)
-# xData.extend(x_12)
-# xData.extend(x_13)
-# xData.extend(x_15)
-# xData.extend(x_16)
-# xData.extend(x_17)
-# xData.extend(x_19)
-# xData.extend(x_22)
  
+
+# uncomment to display the run-time analysis 
 
 # ignore Rankwarning error 
 with warnings.catch_warnings():
@@ -272,12 +266,12 @@ for i in xData:
         s = time.process_time()
         result = aks(j)
         e = time.process_time()
-        tupels.append((bit_length(j),e - s)) # collect run times for each input length
+        tupels.append((bit_length(j),e - s)) # collects run times for each input length
         t = e - s
         yData.append(t)
 
 
-#gather the max. run time of each input length
+#gather the max. run time of each input length (only for the worst case)
 t_8 = max([i[1] for i in tupels if i[0] == 8])
 t_9 = max([i[1] for i in tupels if i[0] == 9])
 t_10 = max([i[1] for i in tupels if i[0] == 10])
@@ -299,7 +293,7 @@ worst_case_runtimes.extend([t_8,t_9,t_10,t_12,t_13,t_15,t_16,t_17,t_19,t_22,t_23
 print(worst_case_runtimes)
 
 
-# seperate the data
+# seperates the data
 
 x_8_t = []
 x_9_t = []
@@ -367,7 +361,7 @@ xData_bits_reduced =  list(set(xData_bits))
 
 # remark: x-axis = log n(input length), y-axis = O^(7+ e)(log n), e > 0.  
 
-# first fitting approach 
+################### average case complexity ######################################
 def p(x,a,b,c,d,e,f,g,h,i,j,k):
     return a * x**(10.5) + b * x**9 + c * x**8 + d * x**7 + e * x**6 + f * x**5 + g * x**4 + h * x**3 + i * x**2 + j * x + k
 
@@ -378,20 +372,29 @@ popt,pcov = curve_fit(p,xData_bits,yData)
 
 plt.plot(xData_bits,p(xData_bits,*popt),'r',label='polynomial')
 plt.plot(xData_bits,yData,'bo',label='data points')
-plt.plot(xData_bits_reduced,means,'g--',label = 'mean')   
+plt.plot(xData_bits_reduced,means,'g--',label = 'mean')
 
-# worst case
-z = np.polyfit(xData_bits_reduced,worst_case_runtimes,10.5) # deg has to be 7 (more or less)
-p = np.poly1d(z)
-plt.plot(xData_bits_reduced,worst_case_runtimes,'c^',label ='worst-case')
-plt.plot(xData_bits_reduced,p(xData_bits_reduced),'m:',label ='polynomial-worst-case')
-
-
-plt.title('AKS worst case complexity')
+plt.title('AKS average case complexity')
 plt.xlabel('log n')
 plt.ylabel('time required[s]')
 plt.legend()
-plt.show()
+plt.show()   
 
+############################## worst case complexity #################################################################################
+
+
+# z = np.polyfit(xData_bits_reduced,worst_case_runtimes,10.5) # deg has to be 7 (more or less)
+# p = np.poly1d(z)
+# plt.plot(xData_bits_reduced,worst_case_runtimes,'c^',label ='worst-case')
+# plt.plot(xData_bits_reduced,p(xData_bits_reduced),'m:',label ='polynomial-worst-case')
+
+
+# plt.title('AKS worst case complexity')
+# plt.xlabel('log n')
+# plt.ylabel('time required[s]')
+# plt.legend()
+# plt.show()
+
+#####################################################################################################################################
 
 
