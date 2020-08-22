@@ -1,9 +1,7 @@
 ## Bachelorarbeit(main.pdf)
 Bachelorarbeit zum Thema AKS-Primzahltest
 
-## thesis 
-1. the thesis contains a theoretical overview of the AKS-Algorithm and a proof of correctness(all in german)
-2. The thesis also contains the runtime analysis of each step of the AKS-algorithm(including plots). You can access the plots by simply going to the directory named plots. 
+
 
 
 ## prerequisites
@@ -16,6 +14,5 @@ Bachelorarbeit zum Thema AKS-Primzahltest
 ### how to run the code
 cd to the directory named code and then to subdirectory python_p and run the primality.sage file to run the script use `sage primality.sage`
 ### to see and run the run time analysis
-uncomment the lines where it says "uncomment to see the run time analysis"
-to display the plots presented in the thesis, go to code and run the file `rt_tests.py`(uncomment the method you want analyse)   
+uncomment the lines where it says "uncomment to see the run time analysis" 
 
