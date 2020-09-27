@@ -1,5 +1,5 @@
 ## Bachelorarbeit(main.pdf)
-Bachelorarbeit zum Thema AKS-Primzahltest
+Bachelorarbeit zum Thema AKS-Primzahltest (in German)
 
 
 
