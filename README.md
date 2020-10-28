@@ -1,6 +1,7 @@
 ## Bachelorarbeit(main.pdf)
-Bachelorarbeit zum Thema AKS-Primzahltest (in German)
+Bachelorarbeit zum Thema AKS-Primzahltest (in German).
 
+My Bachelor’s thesis on the AKS primality test. 
 
 
 
