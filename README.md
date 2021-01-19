@@ -13,7 +13,7 @@ My Bachelor’s thesis on the AKS primality test.
 
 ## how to run the code and the run time analysis 
 ### how to run the code
-cd to the directory named code and then to subdirectory python_p and run the primality.sage file to run the script use `sage primality.sage`
+Cd to the directory named code and then to the subdirectory python_p, and run the primality.sage file. To run the script use `sage primality.sage`
 ### to see and run the run time analysis
-uncomment the lines where it says "uncomment to see the run time analysis" 
+Uncomment the lines where it says "uncomment to see the run time analysis" 
 
